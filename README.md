@@ -21,3 +21,5 @@
            <b>Libsass</b> - <code>pip install libsass</code>
        </li>
    </ul>
+<h3>Hello</h3>
+Welcome to my website experimenting with Flask, MySQL, and SCSS.
