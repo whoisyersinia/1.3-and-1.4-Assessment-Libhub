@@ -28,11 +28,13 @@
    
 <h3>If cloning repo:</h3>
 
-3. Install a version of <a href="https://nodejs.org/en/download/">node.js</a> (latest)
+1. Install Python and Python packages, same as above.
 
-4. Clone repo and run <code>npm ci</code> on terminal.
+2. Install a version of <a href="https://nodejs.org/en/download/">node.js</a> (latest)
 
-5. To run put <code>flask run</code>, and click the link provided to view.
+3. Clone repo and run <code>npm ci</code> on terminal.
+
+4. To run put <code>flask run</code>, and click the link provided to view.
 
 <h3>Hello</h3>
 Welcome to my website experimenting with Flask, MySQL, and SCSS.
