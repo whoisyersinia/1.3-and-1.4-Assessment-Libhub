@@ -21,5 +21,8 @@
            <b>Libsass</b> - <code>pip install libsass</code>
        </li>
    </ul>
+   
+3. Install a version of <a href="https://nodejs.org/en/download/">node.js</a> (latest)
+4. Clone repo and run <code>npm ci</code> on terminal.
 <h3>Hello</h3>
 Welcome to my website experimenting with Flask, MySQL, and SCSS.
