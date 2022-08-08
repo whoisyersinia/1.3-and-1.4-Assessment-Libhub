@@ -1,0 +1,4 @@
+__pycache__
+.DS_Store
+node_modules
+style.scss.css.map
