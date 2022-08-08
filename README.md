@@ -6,7 +6,10 @@
 <li>(Linux) The built-in Python 3 installation works well, but to install other Python packages you must run <br><code>sudo apt install python3-pip</code> in the terminal.</li>
 </ul>
 
-2. Install Python packages using terminal:
+2. Update pip:
+   <code>pip install --upgrade pip</code>
+
+3. Install Python packages using terminal:
    <ul>
        <li>
            <b>Flask</b> - <code>pip install flask</code>
@@ -22,9 +25,9 @@
        </li>
    </ul>
    
-3. Download latest relase
+4. Download latest release
 
-4. To run put <code>flask run</code>, and click the link provided to view.
+5. To run put <code>flask run</code>, and click the link provided to view.
    
 <h3>If cloning repo:</h3>
 
