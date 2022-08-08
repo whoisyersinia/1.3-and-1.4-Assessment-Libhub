@@ -1,0 +1,13 @@
+$theme-colors: (
+  'primary': #ac3b61,
+  'secondary':#123c69,
+  'danger': #fff,
+);
+
+.banner-image{
+  background-image: url("{% static 'images/books.jpeg' %}");
+  background-size: cover;
+}
+
+
+@import "website/node_modules/bootstrap/scss/bootstrap";
