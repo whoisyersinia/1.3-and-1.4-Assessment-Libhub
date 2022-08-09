@@ -1,9 +1,16 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %}{% block content%}
-<section class="home" id="home">
-  <div class="bg-text">
-    <small>random latin words</small>
-    <h1>books</h1>
-    <button type="button" class="btn btn-outline-light btn-lg" onclick="window.location.href='#beginnerguide'" tabindex=0>random latin words</button>
+<main class="bg-text">
+  <div class="px-4 py-5 my-5 text-center">
+    <!-- <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="57"> -->
+    <h1 class="display-5 fw-bold text-dark">Books</h1>
+    <div class="col-lg-6 mx-auto text-light fw-semibold">
+      <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Nulla facilisi. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
+
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4" onclick="window.location.href='/sign-up'">Sign-Up for Free</button>
+      </div>
+    </div>
   </div>
-</section>
+</main>
+
 {% endblock %}

@@ -1,22 +1,23 @@
 {% extends "base.html" %} {% block title %}Sign-Up{% endblock %}{% block content
 %}
-<main class="form-signin w-100 m-auto">
+<main class="form-signin text-center w-100 m-auto bg-light rounded-4 pe-3">
   <form>
-    <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+    <h1 class="h3 mb-3 fw-semibold">Sign Up</h1>
 
     <div class="form-floating">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
       <label for="floatingInput">Email address</label>
       <div id="emailHelp" class="form-text">We'll never share your email with anyone else</div>
     </div>
-    <div class="form-floating">
+    <div class="form-floating mt-2">
       <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
       <div id="passwordHelp" class="form-text">Your password must be at least 7 characters long</div>
     </div>
+    <br>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Create Account</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2022</p>
   </form>
 </main>
 

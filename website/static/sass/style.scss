@@ -1,12 +1,57 @@
 $theme-colors: (
-  'primary': #ac3b61,
-  'secondary':#123c69,
-  'danger': #fff,
+  'primary': #c9ddff,
+  'secondary':#ecb0e1,
+  'success': #6b8f71,
+  'info': #ADCAEB,
+  'warning': #9a031e,
+  'light': #F3FCF0,
+  'dark': #181C1F,
+  
 );
 
+@import "website/node_modules/bootstrap/scss/bootstrap";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
 .banner-image{
-  background-image: url("{% static 'images/books.jpeg' %}");
+  background-image: url("../images/books3.jpg");
   background-size: cover;
 }
 
-@import "website/node_modules/bootstrap/scss/bootstrap";
+@media (min-width: 992px) {
+  .rounded-lg-3 { border-radius: .3rem; }
+}
+

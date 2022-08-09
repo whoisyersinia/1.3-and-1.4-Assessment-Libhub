@@ -1,11 +1,19 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}{% block content
 %}
-<div>
-  <small class="text-secondary"> Welcome to</small>
-  <h1 class="text-primary">My<br>Library</h1>
-</div>
-<div>
-  <button type="button" class="btn btn-outline-light btn-sm" onclick="window.location.href='#beginnerguide'" tabindex=0>Explore Options</button>
-</div>
+<main class="bg-text">
+  <div class="px-4 py-5 my-5 text-center">
+    <!-- <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="57"> -->
+    <h1 class="display-5 fw-bold text-dark">Libhub</h1>
+    <div class="col-lg-6 mx-auto text-light fw-semibold">
+      <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Nulla facilisi. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
+
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore Options</button>
+        <button type="button" class="btn btn-outline-dark btn-lg px-4" onclick="window.location.href='/sign-up'">Sign-Up for Free</button>
+      </div>
+    </div>
+  </div>
+</main>
+
 
 {% endblock %}

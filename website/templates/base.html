@@ -23,38 +23,39 @@
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
       <div class="container">
-        <a class="navbar-brand" href="#">test</a>
+
+        <a class="navbar-brand fw-bold" href="/">Libhub</a>
+
         <button
           class="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+            <i class="fa fas fa-bars"></i>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-          <div class="mx-auto"></div>
-          <ul class="navbar-nav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-white" href="/">Home</a>
+              <a class="nav-link text-light fw-normal" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="/books">Books</a>
+              <a class="nav-link text-light fw-normal" href="/books">Books</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="/login">Sign-In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/sign-up">Sign-Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/logout">Logout</a>
+              <a class="nav-link text-light fw-normal" href="/logout">Logout</a>
             </li>
           </ul>
+
+            <div class="d-flex align-items-center">
+              <button type="button" class="btn btn-link btn-sm px-3 me-1.5 text-decoration-none" onclick="window.location.href='/login'" tabindex=0>Already have an account?</button>
+              <button type="button" class="btn btn-secondary btn-sm text-capitalize" onclick="window.location.href='/sign-up'" tabindex=0>Sign Up for Free</button>
+            </div>
+
         </div>
       </div>
     </nav>
