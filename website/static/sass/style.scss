@@ -6,6 +6,7 @@ $theme-colors: (
   'warning': #9a031e,
   'light': #F3FCF0,
   'dark': #181C1F,
+  'danger': #9a031e,
   
 );
 
@@ -13,15 +14,14 @@ $theme-colors: (
 
 html,
 body {
-  height: 100%;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
-body {
-  display: flex;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .form-signin {
@@ -45,13 +45,25 @@ body {
   border-top-right-radius: 0;
 }
 
-
 .banner-image{
-  background-image: url("../images/books3.jpg");
+  background-image: url("../images/book.jpg");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.bg-text-shadow-logo{ 
+  text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.3);
 }
 
 @media (min-width: 992px) {
   .rounded-lg-3 { border-radius: .3rem; }
+}
+
+@media (max-width: 768px) {
+  .banner-image{
+    min-width: 30vh;
+  }
 }
 

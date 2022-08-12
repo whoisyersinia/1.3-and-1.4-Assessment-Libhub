@@ -1,9 +1,10 @@
+import sqlite3
 from flask import Flask
 from sassutils.wsgi import SassMiddleware
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '123456'
+    app.config['SECRET_KEY'] = '79fbb45b557f4402167be70f8c8820c05d4047255c8dc29a'
 
     from .views import views
     from .auth import auth

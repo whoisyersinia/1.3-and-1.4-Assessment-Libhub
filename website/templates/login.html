@@ -1,25 +1,29 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %}{% block content%}  
-<main class="form-signin w-100 m-auto text-center bg-light rounded-4 pe-3"">
-  <form>
-    <h1 class="h3 mb-3 fw-semibold text-black">Sign in</h1>
+{% extends "base.html" %} {% block title %}Login - Libhub{% endblock %}{% block content%}  
 
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating mt-3">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+<div class="container-fluid bg-dark vh-100 w-100 d-flex justify-content-center align-content-center">
+  <main class="text-center w-auto m-auto border border-light rounded-3 px-5 py-4">
+    <form method="POST">
+      <img class="p-0 mb-2" src="./static/images/Libhub-2.svg" alt="logo">
+      <h1 class="h3 mb-3 fw-semibold text-light">Sign in</h1>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
-  </form>
-</main>
+      <div class="form-floating">
+        <input type="email" class="form-control border border-3 border-info" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating mt-3">
+        <input type="password" class="form-control border border-3 border-info" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label class="text-light py-2">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+    </form>
+  </main>
+</div>
 
 {% endblock %}

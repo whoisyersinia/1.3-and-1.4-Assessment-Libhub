@@ -18,28 +18,32 @@
 
       <link href="{{ url_for('static', filename='css/style.scss.css') }}"
       rel="stylesheet" type="text/css">
-      <title>{% block title %}Landing Page{% endblock %}</title>
+      <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
-      <div class="container">
 
-        <a class="navbar-brand fw-bold" href="/">Libhub</a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
+
+      <div class="container-fluid">
+
+        <a href="/">
+         <img src="./static/images/banner.svg" alt="logo-banner" class="navbar-brand ms-4 ">
+        </a> 
 
         <button
-          class="navbar-toggler"
+          class="navbar-toggler me-4"
           type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#navbarNav"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-            <i class="fa fas fa-bars"></i>
+          <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div id="navbarNav" class="collapse navbar-collapse">
+          <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link text-light fw-normal" href="/">Home</a>
             </li>
@@ -51,28 +55,53 @@
             </li>
           </ul>
 
-            <div class="d-flex align-items-center">
-              <button type="button" class="btn btn-link btn-sm px-3 me-1.5 text-decoration-none" onclick="window.location.href='/login'" tabindex=0>Already have an account?</button>
-              <button type="button" class="btn btn-secondary btn-sm text-capitalize" onclick="window.location.href='/sign-up'" tabindex=0>Sign Up for Free</button>
-            </div>
+          <div class="navbar navbar-nav d-flex align-items-center">
+            <button type="button" class="nav-item btn btn-link navbar-btn btn-sm px-3 me-1.5 text-decoration-none" onclick="window.location.href='/login'" tabindex=0>Already have an account?</button>
+            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm text-capitalize" onclick="window.location.href='/sign-up'" tabindex=0>Sign Up for Free</button>
+          </div>
 
         </div>
       </div>
     </nav>
 
-    <div
-      class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center"
-    >
-      <div class="content text-left">
-        <div class="container">{% block content %}  {% endblock %}</div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+      {% if category == 'error' %}
+        <div class="alert alert-danger alter-dismissable fade show fixed-top" role="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </svg>
+          {{ message }}
+          <button type="button" class="close ml-2" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+      {% else %}
+      <div class="alert alert-success alter-dismissable fade show fixed-top" role="alert" id="success-alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="me-2"
+          id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </div>
+
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div>{% block content %} {% endblock %}</div>
 
     <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -83,9 +112,11 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
     <script
       type="text/javascript"
-      src="{{ url_for('static', filename='script.js') }}"
+      src="{{ url_for('static', filename='javascript/script.js') }}"
     ></script>
+
   </body>
 </html>
