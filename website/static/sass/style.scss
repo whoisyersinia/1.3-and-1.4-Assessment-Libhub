@@ -58,7 +58,9 @@ body {
 }
 
 @media (min-width: 992px) {
-  .rounded-lg-3 { border-radius: .3rem; }
+  .rounded-lg-3 { 
+    border-radius: .3rem; 
+  }
 }
 
 @media (max-width: 768px) {
@@ -66,4 +68,3 @@ body {
     min-width: 30vh;
   }
 }
-
