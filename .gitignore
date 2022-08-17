@@ -3,3 +3,5 @@ __pycache__
 node_modules
 style.scss.css.map
 database.db
+.tmp.drivedownload
+.tmp.driveupload

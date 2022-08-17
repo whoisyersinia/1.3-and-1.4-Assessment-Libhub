@@ -7,9 +7,9 @@
   > 
   <main class="bg-text">
     <div class="px-4 py-5 my-5 text-center content">
-      <img class="d-block mx-auto" src="./static/images/Libhub-4.svg" alt="logo">
+      <img class="d-block mx-auto" src="./static/images/Libhub-4.svg" alt="logo" >
       <div class="lead col-lg-6 mx-auto text-light fw-semibold">
-        <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
+        <p class="lead mb-4 ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           <button type="button" class="btn btn-outline-light  btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
           <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='/sign-up'">Sign-Up for Free</button>
@@ -20,22 +20,31 @@
 
   </div>
 
-  <div class="container-fluid my-5 d-grid gap-5">
-    <div class="p-5 border text-dark">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
-    </div>
-    <div class="p-5 border text-dark">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec elit sed lacus rutrum condimentum at in est. Quisque non tortor vitae libero luctus suscipit id imperdiet elit. Etiam eleifend metus enim. Praesent ut sem imperdiet, hendrerit felis a, mattis nisi. Morbi sagittis diam a facilisis maximus. Praesent molestie sapien orci, vel rutrum ex viverra eget. Duis et nunc sodales, blandit mauris nec, fermentum velit. Donec dolor magna, luctus nec nulla ac, varius sagittis enim.</p>
-    </div>
-    <div class="p-5 border text-dark">
-      Sed sed nulla metus. Phasellus interdum erat nec orci dignissim, ac sodales quam dapibus. Curabitur nec vulputate tellus. Donec in erat sodales, scelerisque ligula ac, fermentum tellus. Aenean nec arcu nec tellus blandit pellentesque vel sed sapien. Maecenas lectus dolor, condimentum eu placerat id, elementum at augue. Proin at imperdiet urna, eget ullamcorper urna. Morbi nec eros tempus, iaculis nunc sit amet, vulputate eros. Vivamus sed nunc consequat, aliquet urna ut, tincidunt magna. Sed id sapien urna. Morbi eget felis eu lacus rutrum faucibus. Quisque malesuada gravida lobortis. Integer bibendum condimentum hendrerit. Duis suscipit nec velit vitae faucibus. Aliquam ullamcorper dapibus sollicitudin.</p>
-    </div>
-    <div class="p-5 border text-dark">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec elit sed lacus rutrum condimentum at in est. Quisque non tortor vitae libero luctus suscipit id imperdiet elit. Etiam eleifend metus enim. Praesent ut sem imperdiet, hendrerit felis a, mattis nisi. Morbi sagittis diam a facilisis maximus. Praesent molestie sapien orci, vel rutrum ex viverra eget. Duis et nunc sodales, blandit mauris nec, fermentum velit. Donec dolor magna, luctus nec nulla ac, varius sagittis enim.
-    </p>
-    </div>
+  <div class="container-fluid my-5 d-grid">
+    <div class="row row-cols-1 gy-3 align-items-center overflow-hidden">
 
+      <div class="col-sm-6 offset-sm-3 d-flex justify-content-center align-content-center text-center">
+        <h1 class="reveal_once text_2 display-4 position-relative overflow-hidden fw-semibold">Find your book using</h1>
+      </div>
+
+      <div class="text-center col-sm-4 offset-sm-4 d-flex justify-content-center align-content-center text-center">
+        <h3 class="text_3 fs-2 text-dark display-1 position-relative overflow-hidden fw-normal my-6">our extensive database.</h3>
+      </div>  
+
+      <div class="d-flex justify-content-center align-content-center">
+        <div class="col-sm-11 mt-4 offset-sm-8 pe-7">
+          <div class="input-group">
+            <input name="search" type="search" class="form-control-lg border border-1 border-secondary" placeholder="'The Bible'" value="search" aria-label="search" aria-describedby="button-addon">
+          
+            <button type="button" class="btn btn-outline-secondary" id="button_addon">
+              <i class="fa fa-search"></i>      
+            </button>
+              
+          </div>
+
+        </div>
+     </div>
+    </div>
   </div>
 
 

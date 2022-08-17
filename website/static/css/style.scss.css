@@ -8345,7 +8345,8 @@ textarea.form-control-lg {
 html,
 body {
   min-height: 100vh;
-  scroll-behavior: smooth; }
+  scroll-behavior: smooth;
+  background-color: #fff; }
 
 * {
   margin: 0;
@@ -8379,12 +8380,106 @@ body {
 .bg-text-shadow-logo {
   text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.3); }
 
+.text_2 {
+  letter-spacing: 5px;
+  white-space: nowrap;
+  border-right: 2px solid black; }
+
+.text_3 {
+  background-image: linear-gradient(90deg, #c9ddff, #ecb0e1);
+  background-size: 0% 5px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 300ms ease;
+  text-decoration: none; }
+
+.text_3:hover {
+  background-size: 100% 5px; }
+
+.reveal {
+  position: relative;
+  opacity: 0; }
+
+.reveal_once {
+  position: relative;
+  opacity: 0; }
+
+.reveal_once.active {
+  opacity: 1; }
+
+.reveal.active {
+  opacity: 1; }
+
+.active.text_2 {
+  animation: typewriter 4s steps(44) 1s 1 normal both, blinkTextCursor 500ms infinite; }
+
+.active.fade-bottom {
+  animation: fade-bottom 1s ease; }
+
+.active.fade-left {
+  animation: fade-left 1s ease; }
+
+.active.fade-right {
+  animation: fade-right 1s ease; }
+
+.active.fade-video {
+  animation: fade-video 0.3s ease; }
+
+.arrow_icon.active {
+  animation: arrow 1s linear; }
+
+@keyframes typewriter {
+  from {
+    width: 0; }
+  to {
+    width: 620px; } }
+
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: black; }
+  to {
+    border-right-color: transparent; } }
+
+@keyframes fade-bottom {
+  0% {
+    transform: translateY(50px);
+    opacity: 0; }
+  100% {
+    transform: translateY(0);
+    opacity: 1; } }
+
+@keyframes fade-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
+@keyframes fade-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
+@keyframes fade-video {
+  0% {
+    transform: translateY(30px);
+    opacity: 0; }
+  100% {
+    transform: translateY(0);
+    opacity: 1; } }
+
 @media (min-width: 992px) {
   .rounded-lg-3 {
     border-radius: .3rem; } }
 
 @media (max-width: 768px) {
   .banner-image {
-    min-width: 30vh; } }
+    min-width: 30vh; }
+  .text_2 {
+    font-size: 30px !important; } }
 
 /*# sourceMappingURL=style.scss.css.map */
