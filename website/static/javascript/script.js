@@ -14,6 +14,7 @@ dark.addEventListener("change", (e) => {
         }
       }
     }else{
+      nav.classList.remvove('bg-dark', 'shadow')
       window.addEventListener('scroll', function(){
         if(window.scrollY > 100){
           nav.classList.add('bg-dark', 'shadow')

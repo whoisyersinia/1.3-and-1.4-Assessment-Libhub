@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, url_for, flash, redirect
 from flask_login import login_required, current_user
+from . import db
 
 
 views = Blueprint('views', __name__)
@@ -16,3 +17,11 @@ def books():
 @login_required
 def dashboard():
    return render_template("dashboard.html", user=current_user)
+
+@views.route('/lend')
+def lend():
+  return render_template("lend.html", user=current_user)
+
+@views.route('/borrow')
+def borrow():
+  return render_template("borrow.html", user=current_user)
