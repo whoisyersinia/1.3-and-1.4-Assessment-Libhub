@@ -1,3 +1,4 @@
+import re
 from os import path
 from flask import Flask
 from sassutils.wsgi import SassMiddleware
@@ -39,7 +40,7 @@ def create_app():
         from .models import User
         db.create_all()
 
-    from .models import User
+    from .models import User, Borrower, Borrowed_book, Book
 
     create_database(app)
     

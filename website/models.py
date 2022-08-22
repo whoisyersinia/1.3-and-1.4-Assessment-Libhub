@@ -1,6 +1,7 @@
 from website import db
 from flask_login import UserMixin
 from datetime import datetime
+
 class Book(db.Model):
 
   __tablename__ = 'book'
@@ -11,7 +12,7 @@ class Book(db.Model):
   )
 
   title = db.Column(
-    db.String(256),
+    db.String(150),
     nullable=False,
     unique=False
   )
@@ -23,16 +24,11 @@ class Book(db.Model):
     default='Anonymous'
   )
 
-  isbn_no = db.Column(
+  lender_id= db.Column(
     db.Integer,
+    db.ForeignKey('lender.id'),
     nullable=False
   )
-
-  # lender_id= db.Column(
-  #   db.Integer,
-  #   db.ForeignKey('lender.id'),
-  #   nullable=False
-  # )
 
 class Borrower(db.Model):
 
@@ -75,7 +71,7 @@ class Borrower(db.Model):
     unique=True,
     nullable=False
   )
-  
+
   phone = db.Column(
     db.Integer,
     unique=True,
@@ -94,59 +90,59 @@ class Borrower(db.Model):
     lazy=True
   )
 
-# class Lender(db.Model):
+class Lender(db.Model):
 
-#   __tablename__ = 'lender'
+  __tablename__ = 'lender'
 
-#   id=db.Column(
-#     db.Integer,
-#     primary_key=True
-#   )
+  id=db.Column(
+    db.Integer,
+    primary_key=True
+  )
 
-#   fName = db.Column(
-#     db.String(150),
-#     unique=False,
-#     nullable=False
-#   )
+  fName = db.Column(
+    db.String(150),
+    unique=False,
+    nullable=False
+  )
     
-#   lName = db.Column(
-#     db.String(150),
-#     unique=False,
-#     nullable=False
-#   )
+  lName = db.Column(
+    db.String(150),
+    unique=False,
+    nullable=False
+  )
   
-#   address1 = db.Column(
-#     db.String(150),
-#     nullable=False
-#   )
+  address1 = db.Column(
+    db.String(150),
+    nullable=False
+  )
 
-#   address2 = db.Column(
-#     db.String(150),
-#     nullable=True
-#   )
+  address2 = db.Column(
+    db.String(150),
+    nullable=True
+  )
 
-#   city = db.Column(
-#     db.String(80),
-#     nullable=True
-#   )
+  city = db.Column(
+    db.String(80),
+    nullable=True
+  )
 
-#   phone = db.Column(
-#     db.Integer,
-#     unique=True,
-#     nullable=True
-#   )
+  phone = db.Column(
+    db.Integer,
+    unique=True,
+    nullable=True
+  )
 
-#   user_id = db.Column(
-#     db.Integer,
-#     db.ForeignKey('user.id'),
-#     nullable=False
-#   )
+  user_id = db.Column(
+    db.Integer,
+    db.ForeignKey('user.id'),
+    nullable=False
+  )
 
-#   lender_id = db.relationship(
-#     "lender",
-#     backref='lender',
-#     lazy=True
-#   )
+  lender_id = db.relationship(
+    "Book",
+    backref='lender',
+    lazy=True
+  )
 
 
 class Borrowed_book(db.Model):

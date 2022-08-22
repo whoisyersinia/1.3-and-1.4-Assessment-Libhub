@@ -10,7 +10,7 @@
         <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           {% if user.is_authenticated %}
-          <button type="button" class="btn btn-primary btn-lg px-4" onclick="window.location.href='/borrow'">Borrow a Book</button>
+          <button type="button" class="btn btn-primary btn-lg px-4" onclick="window.location.href='#library'">Borrow a Book</button>
           <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='/lend'">Lend a Book</button>
           {% else %}
           <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='/sign-up'">Sign-Up for Free</button>
@@ -21,5 +21,26 @@
   </main>
 
   </div>
+
+  <div class="container-fluid p-5 d-grid" id="library" > 
+    <div class="row row-cols-3 d-flex gy-3 gx-0 align-items-center overflow-hidden justify-content-lg-between p-0">
+    {% for book in books %}
+      <div class="card col-mb-4 p-0" style="width: 18rem;">
+        <img src="./static/images/book.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ book.title }}</h5>
+          <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
+          {% if current_user.id == book.lender_id %}
+          <a href="{{ url_for('views.edit', book_id=book.id ) }}">Edit</a>
+          {% else %}
+          <a href="{{ url_for('views.borrow') }}" class="text-warning text-decoration-none">Borrow this book?</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+
+  </div>
+</body>
 
 {% endblock %}

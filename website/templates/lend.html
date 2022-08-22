@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Sign-Up - Lend{% endblock %}{% block content
+%}
+  
+  <div class="container-fluid bg-dark vh-100 w-100 d-flex justify-content-center align-content-center">
+    <main class="text-center w-auto m-auto border border-light rounded-3 px-4 py-4 ">
+
+      <form method="POST">
+        <img class="p-0 mb-2" src="./static/images/Libhub-2.svg" alt="logo">
+        <h1 class="h3 fw-semibold text-light">Enter Book Details</h1>
+        <p class="mb-3 fw-normal text-muted">Please enter details as accurately as possible</p>
+
+        <div class="form-floating">
+          <input name="title" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="'Animal Farm'" value="{{ request.form['title'] }}">
+          <label for="floatingInput">Title</label>
+        </div>
+  
+        <div class="form-floating mt-4">
+          <input name="author" type="text" class="form-control border border-3 border-info" id="floatingAuthor" placeholder="George Orwell" value="{{ request.form['author'] }}">
+          <label for="floatingAuthor">Author</label>
+        </div>
+
+        <div class="mt-4">
+          <input type="checkbox" value="checked" name="tcs">
+          <label class="text-white">Agree to terms and conditions</label>  
+        </div>
+
+        <div class="mt-4">
+          <button class="btn btn-lg btn-primary w-100" type="submit">Submit book</button>
+        </div>
+        <p class="mt-5 mb-3 text-muted text-center text-light">&copy; 2017-2022</p>
+
+      </div>
+      </form>
+    </main>
+  </div>
+  {% endblock %}
