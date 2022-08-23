@@ -5677,9 +5677,6 @@ textarea.form-control-lg {
 .position-sticky {
   position: sticky !important; }
 
-.top-0 {
-  top: 0 !important; }
-
 .top-10 {
   top: 10% !important; }
 
@@ -5709,9 +5706,6 @@ textarea.form-control-lg {
 
 .top-100 {
   top: 100% !important; }
-
-.bottom-0 {
-  bottom: 0 !important; }
 
 .bottom-10 {
   bottom: 10% !important; }
@@ -5743,9 +5737,6 @@ textarea.form-control-lg {
 .bottom-100 {
   bottom: 100% !important; }
 
-.start-0 {
-  left: 0 !important; }
-
 .start-10 {
   left: 10% !important; }
 
@@ -5775,9 +5766,6 @@ textarea.form-control-lg {
 
 .start-100 {
   left: 100% !important; }
-
-.end-0 {
-  right: 0 !important; }
 
 .end-10 {
   right: 10% !important; }

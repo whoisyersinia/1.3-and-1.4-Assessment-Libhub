@@ -1,4 +1,3 @@
-style.scss.css
 __pycache__
 .DS_Store
 node_modules
@@ -6,3 +5,4 @@ style.scss.css.map
 database.db
 .tmp.drivedownload
 .tmp.driveupload
+style.scss.css
