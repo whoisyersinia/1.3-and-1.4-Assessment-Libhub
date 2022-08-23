@@ -40,4 +40,4 @@
 4. To run put <code>flask run</code>, and click the link provided to view.
 
 <h3>Hello</h3>
-Welcome to my website experimenting with Flask, MySQL, and SCSS.
+Welcome to my website experimenting with Flask, other flask extenstions, SQLite, Bootstrap 5, and SCSS.
