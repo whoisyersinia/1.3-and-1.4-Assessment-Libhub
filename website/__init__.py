@@ -1,6 +1,6 @@
 import re
 from os import path
-from flask import Flask
+from flask import Flask, render_template, request, url_for, flash, redirect
 from sassutils.wsgi import SassMiddleware
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -19,9 +19,11 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .handlers import errors
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(errors, url_prefix="/")
 
     app.wsgi_app = SassMiddleware(
         app.wsgi_app,

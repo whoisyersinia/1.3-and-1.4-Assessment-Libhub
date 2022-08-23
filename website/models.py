@@ -12,7 +12,7 @@ class Book(db.Model):
   )
 
   title = db.Column(
-    db.String(150),
+    db.String(256),
     nullable=False,
     unique=False
   )
@@ -194,6 +194,13 @@ class User(db.Model, UserMixin):
     db.Integer, 
     primary_key=True
   )
+
+  username = db.Column(
+    db.String(150), 
+    unique=True,
+    nullable=False
+  )
+  
   email = db.Column(
     db.String(150), 
     unique=True,

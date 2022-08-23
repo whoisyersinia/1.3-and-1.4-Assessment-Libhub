@@ -54,13 +54,10 @@
             <li class="nav-item">
               <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link text-light fw-normal" href="{{ url_for('views.dashboard') }}">Dashboard</a>
-            </li>
-            
           </ul>
           <div class="navbar navbar-nav d-flex align-items-center justify-content-center">
-            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm text-capitalize" onclick="window.location.href='/logout'" tabindex=0>Logout</button>
+            <a class="nav-link text-primary fw-normal me-3 " href="{{ url_for('views.dashboard') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
+            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm " onclick="window.location.href='/logout'" tabindex=0>Logout </button>
           </div>
         </div>
 

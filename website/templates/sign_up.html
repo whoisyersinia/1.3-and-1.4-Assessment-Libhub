@@ -8,6 +8,11 @@
       <h1 class="h3 mb-3 fw-semibold text-light">Sign Up</h1>
 
       <div class="form-floating">
+        <input name="username" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Username" value="{{ request.form['username'] }}">
+        <label for="floatingInput">Username</label>
+      </div>
+
+      <div class="form-floating mt-4">
         <input name="email" type="email" class="form-control border border-3 border-info" id="floatingInput" placeholder="name@example.com" value="{{ request.form['email'] }}">
         <label for="floatingInput">Email address</label>
         <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else</div>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, flash, redirect
+from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
@@ -31,41 +31,45 @@ def edit(book_id):
 
   book = Book.query.get_or_404(book_id)
 
-  if request.method == 'POST':
-    title = request.form.get('title')
-    author = request.form.get('author')
-    delete = request.form.get('delete')
+  if current_user.id != book.lender_id:
+    abort(403)
     
-    if len(delete) == 0:
-      if len(title) > 150:
-        flash('Title exceeds character limit!', category='error')
-      elif len(title) < 2:
-        flash('Title must be greater than 2 characters!', category='error')
-      elif len(author) < 3:
-        flash('Author must be greater than 3 characters!', category='error')
-      elif len(author) > 256:
-        flash('Author exceeds character limit!', category='error')
-      elif title == book.title and author == book.author:
-        flash('Please edit to continue!', category='error')
+  else:
+    if request.method == 'POST':
+      title = request.form.get('title')
+      author = request.form.get('author')
+      delete = request.form.get('delete')
+      
+      if len(delete) == 0:
+        if len(title) > 150:
+          flash('Title exceeds character limit!', category='error')
+        elif len(title) < 2:
+          flash('Title must be greater than 2 characters!', category='error')
+        elif len(author) < 3:
+          flash('Author must be greater than 3 characters!', category='error')
+        elif len(author) > 256:
+          flash('Author exceeds character limit!', category='error')
+        elif title == book.title and author == book.author:
+          flash('Please edit to continue!', category='error')
 
+        else:
+          book.title = title
+          book.author = author
+
+          db.session.add(book)
+          db.session.commit()
+
+          flash('Book sucessfully edited', category='success')
+          return redirect(url_for('views.books'))
       else:
-        book.title = title
-        book.author = author
+        if delete != title:
+          flash('Please try again to confirm!', category='error')
+        else:
+          db.session.delete(book)
+          db.session.commit()
 
-        db.session.add(book)
-        db.session.commit()
-
-        flash('Book sucessfully edited', category='success')
-        return redirect(url_for('views.books'))
-    else:
-      if delete != title:
-        flash('Please try again to confirm!', category='error')
-      else:
-        db.session.delete(book)
-        db.session.commit()
-
-        flash('Book sucessfully deleted!', category='success')
-        return redirect(url_for('views.books'))
+          flash('Book sucessfully deleted!', category='success')
+          return redirect(url_for('views.books'))
 
   return render_template("edit.html", user=current_user, book=book)
    

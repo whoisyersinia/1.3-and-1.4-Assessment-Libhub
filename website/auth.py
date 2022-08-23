@@ -38,29 +38,33 @@ def logout():
 @auth.route('/sign-up', methods=['GET','POST'])
 def sign_up():
   if request.method == 'POST':
+    username = request.form.get('username')
     email = request.form.get('email')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
 
     user = User.query.filter_by(email=email).first()
-    if user:
-      flash('Email already exists.', category='error')
-    elif len(email) < 4:
-      flash('Email must be more than 3 characters!', category='error')
-    elif password1 != password2:
-      flash('Passwords do not match!', category='error')
-    elif len(password1) < 7:
-      flash('Password must be greater than 7 characters!', category='error')
+    name = User.query.filter_by(username=username).first()
+    if name:
+      flash('Username already taken.', category='error')
     else:
-      new_user = User(email=email, password=generate_password_hash(password1, method='sha256'))
-      db.session.add(new_user)
-      db.session.commit()
+      if user:
+        flash('Email already exists.', category='error')
+      elif len(email) < 4:
+        flash('Email must be more than 3 characters!', category='error')
+      elif password1 != password2:
+        flash('Passwords do not match!', category='error')
+      elif len(password1) < 7:
+        flash('Password must be greater than 7 characters!', category='error')
+      else:
+        new_user = User(username=username, email=email, password=generate_password_hash(password1, method='sha256'))
+        db.session.add(new_user)
+        db.session.commit()
 
-      login_user(new_user, remember=True)
+        login_user(new_user, remember=True)
 
-      flash('Welcome to Libhub!', category='success')
-      return redirect(url_for('views.home'))
-
+        flash('Welcome to Libhub!', category='success')
+        return redirect(url_for('views.home'))
 
   return render_template("sign_up.html", user=current_user)
 
