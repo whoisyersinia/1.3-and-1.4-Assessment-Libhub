@@ -12,7 +12,7 @@ def home():
 
 @views.route('/books')
 def books():
-  books = Book.query.all()
+  books = Book.query.order_by(Book.created_on).limit(4).all()
   return render_template("books.html", user=current_user, books=books)
 
 @views.route('/book/<path:book_title>/')
@@ -63,7 +63,7 @@ def edit(book_id):
           return redirect(url_for('views.books'))
       else:
         if delete != title:
-          flash('Please try again to confirm!', category='error')
+          flash('Please try again to confirm for deletion!', category='error')
         else:
           db.session.delete(book)
           db.session.commit()
@@ -102,7 +102,11 @@ def lend():
 
   return render_template("lend.html", user=current_user)
 
-@views.route('/borrow', methods=['GET', 'POST'])
+@views.route('/borrow/<int:book_id>', methods=['GET', 'POST'])
 @login_required
-def borrow():
-  return render_template("borrow.html", user=current_user)
+def borrow(book_id):
+
+  books = Book.query.get(book_id)
+
+  return render_template("borrow.html", user=current_user, book=books)
+  

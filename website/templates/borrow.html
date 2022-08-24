@@ -1,1 +1,86 @@
-e
+{% extends "base.html" %} {% block title %}Borrowing {{book.title}}{% endblock %}{% block content
+  %} 
+  <div class="container-fluid bg-dark w-100 h-100 d-grid position-absolute top-0 start-0 ">
+    <div class="row row-cols-2 align-items-center ">
+      <div class="col-sm-4">
+        <div class="row row-cols-1 justify-content-center">
+          <h1 class="text-center pb-3 text-light">Borrowing:</h1>
+          <div class="card col-mb-4 p-0" style="width: 18rem;">
+            <img src="/static/images/book.jpg" class="card-img-top" alt="book">
+            <div class="card-body">
+              <h5 class="card-title"> {{ book.title }} </h5>
+              <h6 class="card-subtitle mb-2"> {{ book.author }} </h6>
+              <h6 class="card-subtitle mb-2"> {{ book.lender_id }} </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8 p-5">
+        <main class="text-center border border-light rounded-3 px-4 py-4 m-auto">
+          <form method="POST">
+            <div class="row row-cols-2 gy-3">
+              <div class="col-6 offset-3">
+                <img class="p-0 mb-2" src="/static/images/Libhub-2.svg" alt="logo">
+                <h1 class="h3 fw-semibold text-light">Enter Borrower Details</h1>
+                <p class="mb-3 fw-normal text-muted">Lender will immediately be notifed and will be sent any necessary details.</p>
+              </div>
+
+              <div class="col-4 offset-2">
+                <div class="form-floating">
+                  <input name="fName" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="First Name" value="{{ request.form['fName'] }}">
+                  <label for="floatingInput">First Name*</label>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="form-floating">
+                  <input name="lName" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Last Name" value="{{ request.form['lName'] }}">
+                  <label for="floatingInput">Last Name*</label>
+                </div>
+              </div>
+        
+              <div class="col-4 offset-2">
+                <div class="form-floating">
+                  <input name="address" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="123 ABC St." value="{{ request.form['address1'] }}">
+                  <label for="floatingInput">Address*</label>
+                </div>
+              </div>
+
+              <div class="col-3">
+                <div class="form-floating">
+                  <input name="city" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Christchurch" value="{{ request.form['city'] }}">
+                  <label for="floatingInput">City*</label>
+                </div>
+              </div>
+
+              <div class="col-3 offset-2 mb-2">
+                <div class="form-floating">
+                  <input name="phone" type="tel" pattern="" class="form-control border border-3 border-info" id="floatingInput" placeholder="Phone Number" value="{{ request.form['city'] }}">
+                  <label for="floatingInput">Phone No.*</label>
+                </div>
+              </div>
+
+              <div class="col-4 offset-4">
+                <div class="mt-4">
+                  <input type="checkbox" value="checked" name="tcs">
+                  <label class="text-white">Agree to terms and conditions</label>  
+                </div>
+              </div>
+      
+              <div class="col-4 offset-4">
+                <div class="mt-4">
+                  <button class="btn btn-lg btn-primary w-100" type="submit">Borrow book</button>
+                </div>
+              </div>
+
+              <div class="col-4 offset-4">
+                <p class="mt-5 text-center text-light">* fields are required</p>
+                <p class="mb-3 text-muted text-center text-light">&copy; 2017-2022</p>
+              </div>
+            </div>
+          </form>
+        </main>
+      </div>
+    </div>
+  </div>
+{% endblock %}

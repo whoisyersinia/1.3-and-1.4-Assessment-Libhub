@@ -10,10 +10,10 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET','POST'])
 def login():
   if request.method == 'POST':
-    email = request.form.get('email')
+    email_user = request.form.get('email_user')
     password = request.form.get('password')
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email_user).first()
     if user:
       if check_password_hash(user.password, password):
         flash('Logged in sucessfully!', category='success')
@@ -25,7 +25,20 @@ def login():
       else:
         flash('Incorrect password, please try again!', category='error')
     else: 
-      flash('Email does not exist!', category='error')
+      user = User.query.filter_by(username=email_user).first()
+      if user:
+        if check_password_hash(user.password, password):
+          flash('Logged in sucessfully!', category='success')
+          if request.form.get('remember_me'):
+            login_user(user, remember=True)
+          else:
+            login_user(user)
+          return redirect(url_for('views.home'))
+        else:
+         flash('Incorrect password, please try again!', category='error')
+
+      else:
+        flash('User does not exist! Please check for any typos!', category='error')
 
   return render_template("login.html", user=current_user)
 
@@ -48,7 +61,11 @@ def sign_up():
     if name:
       flash('Username already taken.', category='error')
     else:
-      if user:
+      if len(username) < 3:
+        flash('Username must be more than 3 characters!', category='error')
+      elif len(username) > 15:
+        flash('Username exceeds character limit!', category='error')
+      elif user:
         flash('Email already exists.', category='error')
       elif len(email) < 4:
         flash('Email must be more than 3 characters!', category='error')

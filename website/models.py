@@ -24,6 +24,14 @@ class Book(db.Model):
     default='Anonymous'
   )
 
+  created_on = db.Column(
+    db.DateTime,
+    unique=False,
+    nullable=False,
+    default=datetime.utcnow
+  )
+
+
   lender_id= db.Column(
     db.Integer,
     db.ForeignKey('lender.id'),
@@ -196,7 +204,7 @@ class User(db.Model, UserMixin):
   )
 
   username = db.Column(
-    db.String(150), 
+    db.String(15), 
     unique=True,
     nullable=False
   )

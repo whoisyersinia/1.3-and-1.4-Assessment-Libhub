@@ -5,7 +5,7 @@
   > 
   <main class="bg-text">
     <div class="px-4 py-5 my-5 text-center content">
-      <img src="./static/images/library.svg" alt="my_library" class="d-block mx-auto">
+      <img src="/static/images/library.svg" alt="my_library" class="d-block mx-auto">
       <div class="lead col-lg-6 mx-auto text-light fw-semibold">
         <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
@@ -22,6 +22,7 @@
 
   </div>
 
+  {% if books %}
   <div class="container-fluid p-5 d-grid" id="library" > 
     <div class="row row-cols-3 d-flex gy-3 gx-0 align-items-center overflow-hidden justify-content-lg-between p-0">
     {% for book in books %}
@@ -33,14 +34,15 @@
           {% if current_user.id == book.lender_id %}
           <a href="{{ url_for('views.edit', book_id=book.id ) }}">Edit</a>
           {% else %}
-          <a href="{{ url_for('views.borrow') }}" class="text-warning text-decoration-none">Borrow this book?</a>
+          <a href="{{ url_for('views.borrow', book_id=book.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
           {% endif %}
         </div>
       </div>
     {% endfor %}
     </div>
-
   </div>
+  {%else%}
+  {%endif%}
 </body>
 
 {% endblock %}
