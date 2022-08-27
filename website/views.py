@@ -1,3 +1,5 @@
+from ctypes import addressof
+import re
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user
 from . import db
@@ -90,7 +92,7 @@ def lend():
     elif len(author) > 256:
       flash('Author exceeds character limit!', category='error')
     else:
-      book = Book(title=title, author=author, lender_id=current_user.id)
+      book = Book(title=title, author=author, lender_id=current_user.id, lender_username=current_user.username)
       db.session.add(book)
       db.session.commit()
 
@@ -106,7 +108,52 @@ def lend():
 @login_required
 def borrow(book_id):
 
-  books = Book.query.get(book_id)
+  books = Book.query.get_or_404(book_id)
+
+  if request.method == 'POST':
+    fName = request.form.get('fName')
+    lName = request.form.get('lName')
+    address1 = request.form.get('address')
+    city = request.form.get('city')
+    phone = request.form.get('phone')
+
+    phone_check = Borrower.query.filter_by(phone=phone).first()
+    id = Borrower.query.filter_by(user_id=current_user.id).first()
+    if phone_check:
+      flash('Phone number already in use!', category='error')
+    elif id:
+      flash('Request already sent!', category='error')
+      return redirect(url_for('views.books'))
+    else:
+      if len(fName) > 150:
+        flash('First name exceeds character limit!', category='error')
+      elif len(fName) < 1:
+        flash('First name must be more than one character!', category='error')
+      elif len(lName) > 150:
+        flash('Last name exceeds character limit!', category='error')
+      elif len(lName) < 1:
+        flash('Last name must be more than one character!', category='error')
+      elif len(address1) > 150:
+        flash('Address exceeds character limit!', category='error')
+      elif len(address1) < 8:
+        flash('Address must be more than eight characters!', category='error')
+      elif len(city) > 80:
+        flash('City exceeds character limit!', category='error')
+      elif len('City') < 2:
+        flash('City must be more than two characters!', category='error')
+      elif len(phone) > 10:
+        flash('Phone exceeds character limit!', category='error')
+      elif len(lName) < 9:
+        flash('Phone must be more than eight characters!', category='error')
+
+      else:
+        borrower = Borrower(fName=fName, lName=lName, address1=address1, city=city, email=current_user.email, phone=phone, user_id=current_user.id)
+        db.session.add(borrower)
+        db.session.commit()
+        
+        flash('Lender notifed, please wait for response!', category='success')
+        return redirect(url_for('views.books'))
+
 
   return render_template("borrow.html", user=current_user, book=books)
   

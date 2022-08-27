@@ -38,6 +38,12 @@ class Book(db.Model):
     nullable=False
   )
 
+  lender_username=db.Column(
+    db.String(15),
+    nullable=False,
+    unique=True
+  )
+
 class Borrower(db.Model):
 
   __tablename__ = 'borrower'

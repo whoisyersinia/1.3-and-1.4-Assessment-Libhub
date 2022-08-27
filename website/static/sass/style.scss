@@ -76,7 +76,7 @@ body {
 .text_2{
   letter-spacing: 5px;
   white-space: nowrap;
-  border-right: 2px solid hsl(0, 0%, 0%);
+  // border-right: 2px solid hsl(0, 0%, 0%);
 }
 
 .text_3{
@@ -87,6 +87,7 @@ body {
   transition: background-size 300ms ease;
   text-decoration: none;
 }
+
 .text_3:hover{
   background-size: 100% 5px;
 }
@@ -135,7 +136,7 @@ body {
     width: 0;
   }
   to {
-    width: 620px;
+    width: 600px;
   }
 }
 @keyframes blinkTextCursor {

@@ -59,7 +59,7 @@ def sign_up():
     user = User.query.filter_by(email=email).first()
     name = User.query.filter_by(username=username).first()
     if name:
-      flash('Username already taken.', category='error')
+      flash('Username already taken!', category='error')
     else:
       if len(username) < 3:
         flash('Username must be more than 3 characters!', category='error')
