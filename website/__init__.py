@@ -1,11 +1,13 @@
 import re
 from os import path
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, request, url_for
 from sassutils.wsgi import SassMiddleware
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 DB_NAME = 'database.db'
 
 
@@ -14,8 +16,7 @@ def create_app():
     app.config['SECRET_KEY'] = '79fbb45b557f4402167be70f8c8820c05d4047255c8dc29a'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
-
-
+    migrate.init_app(app, db)
 
     from .views import views
     from .auth import auth
@@ -36,14 +37,14 @@ def create_app():
             }
         }
     )
-
+    
     @app.before_first_request
     def create_tables():
-        from .models import User
+        from .models import User, Borrower, Borrowed_book, Lender, Book
         db.create_all()
 
-    from .models import User, Borrower, Borrowed_book, Book
-
+    from .models import User, Borrower, Borrowed_book, Lender, Book
+    
     create_database(app)
     
     login_manager = LoginManager()

@@ -41,7 +41,6 @@ class Book(db.Model):
   lender_username=db.Column(
     db.String(15),
     nullable=False,
-    unique=True
   )
 
 class Borrower(db.Model):
