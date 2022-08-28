@@ -7,3 +7,4 @@ database.db
 .tmp.driveupload
 style.scss.css
 /migrations
+/.venv
