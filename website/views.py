@@ -1,5 +1,3 @@
-from ctypes import addressof
-import re
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user
 from . import db
