@@ -19,10 +19,6 @@ def create_app():
     
     app.config.from_object('config')
 
-
-    from .models import User, Borrower, Borrowed_book, Lender, Book
-
-
     db.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
