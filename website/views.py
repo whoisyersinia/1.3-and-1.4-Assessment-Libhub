@@ -1,5 +1,3 @@
-from ctypes import addressof
-import re
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user
 from . import db
@@ -22,10 +20,13 @@ def search(book_title):
   book = Book.query.get_or_404(book.title)
   return render_template('search.html', book=book)
 
-@views.route('/dashboard', methods=['GET', 'POST'])
+@views.route('/dashboard/<int:lender_id>', methods=['GET', 'POST'])
 @login_required
-def dashboard():
-   return render_template("dashboard.html", user=current_user)
+def dashboard(lender_id):
+
+  book = Book.query.get_or_404(lender_id)
+
+  return render_template("dashboard/dashboard.html", user=current_user, book=books)
 
 @views.route('/edit/<int:book_id>', methods=['GET', 'POST'])
 @login_required
@@ -98,9 +99,6 @@ def lend():
 
       flash('Book sucessfully added', category='success')
       return redirect(url_for('views.books'))
-
-
-
 
   return render_template("lend.html", user=current_user)
 

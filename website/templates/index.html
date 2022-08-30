@@ -12,9 +12,9 @@
         <p class="lead mb-4 ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           {% if user.is_authenticated %}
-          <button type="button" class="btn btn-outline-light  btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
+          <button type="button" class="btn btn-outline-light btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
           {% else %}
-          <button type="button" class="btn btn-outline-light  btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
+          <button type="button" class="btn btn-outline-light btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
           <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='/sign-up'">Sign-Up for Free</button>
           {%endif%}
         </div>

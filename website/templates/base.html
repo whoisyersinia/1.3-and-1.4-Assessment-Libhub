@@ -10,11 +10,11 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
       crossorigin="anonymous">
       
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        crossorigin="anonymous"
-      />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+     />
 
       <link href="{{ url_for('static', filename='css/style.scss.css') }}"
       rel="stylesheet" type="text/css">
@@ -56,7 +56,7 @@
             </li>
           </ul>
           <div class="navbar navbar-nav d-flex pe-4 ps-sm-4">
-            <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
+            <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard', lender_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
             <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm" onclick="window.location.href='/logout'" tabindex=0>Logout </button>
           </div>
         </div>
