@@ -12,13 +12,13 @@ class Book(db.Model):
   )
 
   title = db.Column(
-    db.String(256),
+    db.String(255),
     nullable=False,
     unique=False
   )
 
   author = db.Column(
-    db.String(256),
+    db.String(255),
     nullable=False,
     unique=False,
     default='Anonymous'
@@ -157,7 +157,6 @@ class Lender(db.Model):
     lazy=True
   )
 
-
 class Borrowed_book(db.Model):
 
   __tablename__ = 'borrowed_book'
@@ -223,10 +222,23 @@ class User(db.Model, UserMixin):
     db.String(150),
     nullable=False
   )
-  created_on = db.Column(
+
+  admin=db.Column(
+    db.Boolean,
+    nullable=False,
+    default=False
+  )
+
+  confirmed=db.Column(
+    db.Boolean,
+    nullable=False,
+    default=False
+  )
+
+  confirmed_on = db.Column(
     db.DateTime,
     unique=False,
-    nullable=False,
+    nullable=True,
     default=datetime.utcnow
   )
 
@@ -235,5 +247,4 @@ class User(db.Model, UserMixin):
     backref='user',
     lazy=True
   )
-
 

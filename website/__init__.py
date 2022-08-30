@@ -1,22 +1,27 @@
-import re
+import os
 from os import path
-from flask import Flask, render_template, request, url_for
 from sassutils.wsgi import SassMiddleware
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_mail import Mail, Message
+from flask import Flask
 
 db = SQLAlchemy()
 migrate = Migrate()
-DB_NAME = 'database.db'
+mail = Mail()
+app = Flask(__name__)
 
+DB_NAME = 'database.db'
 
 def create_app():
     app = Flask(__name__)
+    
     app.config.from_object('config')
 
     db.init_app(app)
     migrate.init_app(app, db)
+    mail.init_app(app)
 
     from .views import views
     from .auth import auth
@@ -44,7 +49,7 @@ def create_app():
         db.create_all()
 
     from .models import User, Borrower, Borrowed_book, Lender, Book
-    
+
     create_database(app)
     
     login_manager = LoginManager()
