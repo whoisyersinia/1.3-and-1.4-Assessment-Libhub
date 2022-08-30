@@ -13,8 +13,8 @@ DB_NAME = 'database.db'
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '79fbb45b557f4402167be70f8c8820c05d4047255c8dc29a'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config.from_object('config')
+
     db.init_app(app)
     migrate.init_app(app, db)
 
