@@ -17,7 +17,7 @@
 
     <link href="{{ url_for('static', filename='css/style.scss.css') }}"
     rel="stylesheet" type="text/css">
-    <link rel="icon" type="image/x-icon" href="../static/images/logo.svg">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
     
     <title>Dashboard - {{current_user.username}}</title> 
     
@@ -45,25 +45,25 @@
         <div class="position-sticky pt-3 sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <a class="nav-link active" aria-current="page" href="{{url_for('views.dashboard', user_id=current_user.id)}}">
                 <span data-feather="home" class="align-text-bottom"></span>
                 Dashboard
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{url_for('views.lended', user_id=current_user.id)}}">
                 <span data-feather="file" class="align-text-bottom"></span>
                 Books Lended
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{url_for('views.borrowed', user_id=current_user.id)}}">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
                 Books Borrowed
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{url_for('views.account', user_id=current_user.id)}}">
                 <span data-feather="users" class="align-text-bottom"></span>
                 Account Settings
               </a>

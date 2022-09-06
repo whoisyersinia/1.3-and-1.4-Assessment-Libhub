@@ -12,13 +12,13 @@ class Book(db.Model):
   )
 
   title = db.Column(
-    db.String(256),
+    db.String(255),
     nullable=False,
     unique=False
   )
 
   author = db.Column(
-    db.String(256),
+    db.String(255),
     nullable=False,
     unique=False,
     default='Anonymous'
@@ -114,7 +114,8 @@ class Lender(db.Model):
 
   fName = db.Column(
     db.String(150),
-    unique=False,
+   
+   
     nullable=False
   )
     

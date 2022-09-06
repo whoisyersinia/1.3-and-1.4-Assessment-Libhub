@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
 
@@ -17,16 +19,126 @@ def books():
 
 @views.route('/book/<path:book_title>/')
 def search(book_title):
-  book = Book.query.get_or_404(book.title)
+  book = Book.query.get_or_404(book.title)  
   return render_template('search.html', book=book)
 
-@views.route('/dashboard/<int:lender_id>', methods=['GET', 'POST'])
+@views.route('/dashboard/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def dashboard(lender_id):
+def dashboard(user_id):
 
-  book = Book.query.get_or_404(lender_id)
+  if current_user.id != user_id:
+    abort(403)
+
+  lender_id = Book.query.filter_by(lender_id=user_id).first_or_404()
 
   return render_template("dashboard/dashboard.html", user=current_user, book=books)
+
+@views.route('/dashboard/booksborrowed/<int:user_id>')
+@login_required
+def borrowed(user_id):
+
+  if current_user.id != user_id:
+    abort(403)
+
+  return render_template("dashboard/booksborrowed.html", user=current_user)
+
+@views.route('/dashboard/bookslended/<int:user_id>')
+@login_required
+def lended(user_id):
+
+  if current_user.id != user_id:
+    abort(403)
+
+  return render_template("dashboard/bookslended.html", user=current_user, book=books)
+
+@views.route('/account/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def account(user_id):
+
+  user = User.query.filter_by(id=user_id).first()
+
+  if current_user.id != user_id:
+    abort(403)
+
+  else: 
+    if request.method == 'POST':
+      username = request.form.get('username')
+      email = request.form.get('email')
+    
+      useremail = User.query.filter_by(email=email).first()
+      name = User.query.filter_by(username=username).first()
+
+      if name:
+          if useremail:
+           flash('Email already exists or email is identical to current email!', category='error')
+
+          elif len(email) < 4:
+            flash('Email must be more than 3 characters!', category='error')
+
+          else:
+            user.email = email
+            db.session.add(user)
+            db.session.commit()
+
+            flash('Login details changed sucessfully. Please login again!', category='success')
+            logout_user()
+            return redirect(url_for('auth.login'))
+      else:
+        if name:
+          flash('Username already taken or username is identical to current username!', category='error')
+        else:
+          if len(username) < 3:
+            flash('Username must be more than 3 characters!', category='error')
+          elif len(username) > 15:
+            flash('Username exceeds character limit!', category='error')
+          else:
+            user.username = username
+            db.session.add(user)
+            db.session.commit()
+
+            flash('Login details changed sucessfully. Please login again!', category='success')
+            logout_user()
+            return redirect(url_for('auth.login'))
+
+  return render_template("dashboard/account.html", user=current_user)
+
+
+@views.route('/account/passwordreset/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def passreset(user_id):
+  user = User.query.filter_by(id=user_id).first()
+
+  if current_user.id != user_id:
+    abort(403)
+
+  else: 
+    if request.method == 'POST':
+      currentpassword = request.form.get('currentpassword')
+      newpassword = request.form.get('newpassword')
+      confirmpassword = request.form.get('confirmpassword')
+
+   
+      if not check_password_hash(current_user.password, currentpassword):
+        flash('Password does not match. Please try again!', category='error')
+        
+        if newpassword == currentpassword:
+          flash('Please create a new password!', category='error')
+        elif len(newpassword) < 7:
+          flash('Password must be greater than 7 characters!', category='error')
+        elif confirmpassword != newpassword:
+          flash('Passwords do not match!', category='error')
+
+        else:
+          user.password = generate_password_hash(newpassword, method='sha256')
+
+          db.session.add(user)
+          db.session.commit()
+
+          flash('Password changed sucessfully', category='success')
+          logout_user()
+          return redirect(url_for('auth.login'))
+
+  return render_template("dashboard/passreset.html", user=current_user)
 
 @views.route('/edit/<int:book_id>', methods=['GET', 'POST'])
 @login_required
@@ -64,6 +176,7 @@ def edit(book_id):
 
           flash('Book sucessfully edited', category='success')
           return redirect(url_for('views.books'))
+
       else:
         if delete != title:
           flash('Please try again to confirm for deletion!', category='error')

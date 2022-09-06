@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block title %}Account Details - {{current_user.username}}{% endblock %}{% block content%}
+
+<div class="container-fluid flex-grow-1 container-p-y vh-100 w-100 bg-dark overflow-hidden p-5">
+
+  <h4 class="font-weight-bold py-5 mt-5 px-1 text-light mb-4">
+    Account settings
+  </h4>
+  <form method="POST">
+    <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+        <div class="col-md-3 pt-0">
+          <div class="list-group list-group-flush account-settings-links">
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="{{url_for('views.account', user_id=current_user.id)}}">Username and Email</a>
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="{{url_for('views.passreset', user_id=current_user.id)}}">Password Reset</a>
+          </div>
+        </div>
+        <div class="col-md-9">
+
+          <div class="tab-content">
+            <div class="tab-pane fade active show pt-3" id="account-general">
+
+              <h4 class="font-weight-bold text-dark px-3">
+                Password Reset
+              </h4>
+
+              <div class="card-body m-0">
+
+                <div class="form-group">
+                  <label class="form-label">Current password</label>
+                  <input name="currentpassword" type="password" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">New password</label>
+                  <input name="newpassword" type="password" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Repeat new password</label>
+                  <input name="confirmpassword" type="password" class="form-control">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-right mt-3">
+      <button type="submit" class="btn btn-primary">Save changes</button>&nbsp;
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Cancel</button>
+    </div>
+  </form>
+
+</div>
+
+
+
+
+  
+{% endblock %}

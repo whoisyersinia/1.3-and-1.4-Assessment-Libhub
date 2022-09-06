@@ -16,11 +16,13 @@
       crossorigin="anonymous"
      />
 
-      <link href="{{ url_for('static', filename='css/style.scss.css') }}"
-      rel="stylesheet" type="text/css">
-      <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-      <title>{% block title %}{% endblock %}</title>
+    <link href="{{ url_for('static', filename='css/style.scss.css') }}"
+    rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+
+    <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
 
@@ -56,8 +58,14 @@
             </li>
           </ul>
           <div class="navbar navbar-nav d-flex pe-4 ps-sm-4">
-            <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard', lender_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
-            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm" onclick="window.location.href='/logout'" tabindex=0>Logout </button>
+
+            <a href="{{ url_for('views.account', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account Settings">
+              <i class="bi bi-person-circle px-3 pb-1 text-center" style="font-size: 1.75rem; color: #c9ddff;"></i>
+            </a>
+
+            <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
+
+            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm" onclick="window.location.href='/logout'" tabindex=0>Logout</button>
           </div>
         </div>
 

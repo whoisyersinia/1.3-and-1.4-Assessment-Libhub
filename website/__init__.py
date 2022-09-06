@@ -1,4 +1,3 @@
-import re
 from os import path
 from flask import Flask, render_template, request, url_for
 from sassutils.wsgi import SassMiddleware
