@@ -2,6 +2,13 @@ from website import db
 from flask_login import UserMixin
 from datetime import datetime
 
+class MyDateTime(db.TypeDecorator):
+    impl = db.DateTime
+    
+    def process_bind_param(self, value, dialect):
+        if type(value) is str:
+            return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
+        return value
 class Book(db.Model):
 
   __tablename__ = 'book'
@@ -85,6 +92,12 @@ class Borrower(db.Model):
     nullable=False
   )
 
+  username = db.Column(
+    db.String(15), 
+    unique=True,
+    nullable=False
+  )
+
   phone = db.Column(
     db.Integer,
     unique=True,
@@ -114,8 +127,6 @@ class Lender(db.Model):
 
   fName = db.Column(
     db.String(150),
-   
-   
     nullable=False
   )
     
@@ -139,6 +150,19 @@ class Lender(db.Model):
     db.String(80),
     nullable=True
   )
+  
+  email = db.Column(
+    db.String(150), 
+    unique=True,
+    nullable=False
+  )
+  
+  username = db.Column(
+    db.String(15), 
+    unique=True,
+    nullable=False
+  )
+
 
   phone = db.Column(
     db.Integer,
@@ -176,12 +200,19 @@ class Borrowed_book(db.Model):
   )
 
   due_date = db.Column(
-    db.DateTime,
+    MyDateTime,
     nullable=False,
-    unique=False
+    unique=False,
+    default=datetime.utcnow
   )
 
   return_book = db.Column(
+    db.Boolean,
+    nullable=False,
+    default=False
+  )
+
+  lender_confirm = db.Column(
     db.Boolean,
     nullable=False,
     default=False
@@ -236,5 +267,8 @@ class User(db.Model, UserMixin):
     backref='user',
     lazy=True
   )
+
+
+
 
 

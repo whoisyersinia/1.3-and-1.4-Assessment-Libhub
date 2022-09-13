@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from datetime import datetime
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
 
@@ -22,6 +22,14 @@ def search(book_title):
   book = Book.query.get_or_404(book.title)  
   return render_template('search.html', book=book)
 
+@views.route('/user/<int:user_id>')
+def user(user_id):
+
+  user = User.query.get_or_404(user_id)
+
+  return render_template('user.html', user=user)
+
+
 @views.route('/dashboard/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def dashboard(user_id):
@@ -29,9 +37,9 @@ def dashboard(user_id):
   if current_user.id != user_id:
     abort(403)
 
-  lender_id = Book.query.filter_by(lender_id=user_id).first_or_404()
+  user = User.query.filter_by(id=user_id).first()
 
-  return render_template("dashboard/dashboard.html", user=current_user, book=books)
+  return render_template("dashboard/dashboard.html", user=user)
 
 @views.route('/dashboard/booksborrowed/<int:user_id>')
 @login_required
@@ -49,7 +57,29 @@ def lended(user_id):
   if current_user.id != user_id:
     abort(403)
 
-  return render_template("dashboard/bookslended.html", user=current_user, book=books)
+  books = Book.query.filter_by(lender_id=user_id).all()
+
+  return render_template("dashboard/bookslended.html", user=current_user, books=books)
+
+@views.route('/dashboard/bookslended/bookstatus/<int:book_id>')
+@login_required
+def status(book_id):
+
+  book = Book.query.get_or_404(book_id)
+  requests = Borrowed_book.query.filter_by(book_id=book_id).all()
+
+  username = Borrower.query\
+    .join(Borrowed_book, Borrower.id==Borrowed_book.borrower_id)\
+    .add_columns(Borrower.id, Borrower.username, Borrower.email, Borrower.phone)\
+    .filter(User.id == Borrowed_book.id)\
+
+ 
+  if current_user.id != book.lender_id:
+    abort(403)
+
+
+  return render_template("dashboard/bookstatus.html", user=current_user, books=book, requests=requests, username=username)
+
 
 @views.route('/account/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -117,10 +147,10 @@ def passreset(user_id):
       newpassword = request.form.get('newpassword')
       confirmpassword = request.form.get('confirmpassword')
 
+      userpass = User.query.filter_by(id=user_id).first()
+
    
-      if not check_password_hash(current_user.password, currentpassword):
-        flash('Password does not match. Please try again!', category='error')
-        
+      if check_password_hash(userpass.password, currentpassword):
         if newpassword == currentpassword:
           flash('Please create a new password!', category='error')
         elif len(newpassword) < 7:
@@ -137,6 +167,8 @@ def passreset(user_id):
           flash('Password changed sucessfully', category='success')
           logout_user()
           return redirect(url_for('auth.login'))
+      else:
+         flash('Password does not match. Please try again!', category='error')
 
   return render_template("dashboard/passreset.html", user=current_user)
 
@@ -254,12 +286,19 @@ def borrow(book_id):
         flash('City must be more than two characters!', category='error')
       elif len(phone) > 10:
         flash('Phone exceeds character limit!', category='error')
-      elif len(lName) < 9:
+      elif len(lName) < 8:
         flash('Phone must be more than eight characters!', category='error')
 
       else:
-        borrower = Borrower(fName=fName, lName=lName, address1=address1, city=city, email=current_user.email, phone=phone, user_id=current_user.id)
-        db.session.add(borrower)
+        if not id:
+          borrower = Borrower(fName=fName, lName=lName, address1=address1, city=city, username=current_user.username, email=current_user.email, phone=phone, user_id=current_user.id)
+          requests = Borrowed_book(return_book=False, lender_confirm=False, borrower_id=current_user.id, book_id=book_id)
+          db.session.add(borrower)
+
+        else:
+          requests = Borrowed_book(return_book=False, lender_confirm=False, borrower_id=current_user.id, book_id=book_id)
+
+        db.session.add(requests)
         db.session.commit()
         
         flash('Lender notifed, please wait for response!', category='success')

@@ -1,0 +1,16 @@
+{% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
+<div>
+  <h4 class=" pt-2 fw-semibold text-dark">'{{ books.title }}'</h4>
+  <h5 class="pt-2">Requests:</h5>
+  {%if requests %}
+  <div>
+    {% for request in requests%}
+      <p>{{request.borrower_id}}</p>
+      <p>{{username}}</p>
+    {% endfor %}
+  </div>
+  {%endif%}
+</div>
+
+
+{% endblock %}
