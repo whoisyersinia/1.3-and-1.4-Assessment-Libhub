@@ -8,8 +8,13 @@ from .models import User, Borrowed_book, Book, Borrower, Lender
 
 views = Blueprint('views', __name__)
 
-@views.route('/')
+@views.route('/', methods=['GET', 'POST'])
 def home():
+  if request.method == 'POST':
+    term = request.form.get('search')
+    
+    return redirect(url_for('views.search', searchterm=term))
+
   return render_template("index.html", user=current_user)
 
 @views.route('/books')
@@ -17,10 +22,12 @@ def books():
   books = Book.query.order_by(Book.created_on).limit(4).all()
   return render_template("books.html", user=current_user, books=books)
 
-@views.route('/book/<path:book_title>/')
-def search(book_title):
-  book = Book.query.get_or_404(book.title)  
-  return render_template('search.html', book=book)
+@views.route('/search/<path:searchterm>')
+def search(searchterm):
+
+  search = Book.query.filter_by(title=searchterm).all()
+  
+  return render_template('search.html', user=current_user, results=search, searchterm=searchterm)
 
 @views.route('/user/<int:user_id>')
 def user(user_id):
@@ -63,22 +70,23 @@ def lended(user_id):
 
 @views.route('/dashboard/bookslended/bookstatus/<int:book_id>')
 @login_required
-def status(book_id):
+def status(book_id, page=1):
 
   book = Book.query.get_or_404(book_id)
-  requests = Borrowed_book.query.filter_by(book_id=book_id).all()
 
-  username = Borrower.query\
-    .join(Borrowed_book, Borrower.id==Borrowed_book.borrower_id)\
-    .add_columns(Borrower.id, Borrower.username, Borrower.email, Borrower.phone)\
-    .filter(User.id == Borrowed_book.id)\
+  details = Borrower, Borrowed_book.query\
+    .outerjoin(Borrowed_book, Borrowed_book.borrower_id==Borrower.id)\
+    .add_columns(Borrower.username, Borrower.email, Borrower.phone)\
+    .filter(Borrower.id == Borrowed_book.borrower_id)\
+    .paginate(page, 1, False)
+
 
  
   if current_user.id != book.lender_id:
     abort(403)
 
 
-  return render_template("dashboard/bookstatus.html", user=current_user, books=book, requests=requests, username=username)
+  return render_template("dashboard/bookstatus.html", user=current_user, books=book, details=details)
 
 
 @views.route('/account/<int:user_id>', methods=['GET', 'POST'])

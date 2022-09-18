@@ -9,6 +9,7 @@ class MyDateTime(db.TypeDecorator):
         if type(value) is str:
             return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
         return value
+        
 class Book(db.Model):
 
   __tablename__ = 'book'
@@ -37,7 +38,6 @@ class Book(db.Model):
     nullable=False,
     default=datetime.utcnow
   )
-
 
   lender_id= db.Column(
     db.Integer,
@@ -150,7 +150,7 @@ class Lender(db.Model):
     db.String(80),
     nullable=True
   )
-  
+
   email = db.Column(
     db.String(150), 
     unique=True,

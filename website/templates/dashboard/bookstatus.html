@@ -1,15 +1,49 @@
 {% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 <div>
-  <h4 class=" pt-2 fw-semibold text-dark">'{{ books.title }}'</h4>
+  <h4 class=" pt-2 fw-semibold text-dark">'{{ books.title }}' - {{ details.page }}</h4>
   <h5 class="pt-2">Requests:</h5>
-  {%if requests %}
-  <div>
-    {% for request in requests%}
-      <p>{{request.borrower_id}}</p>
-      <p>{{username}}</p>
-    {% endfor %}
-  </div>
+  {% if details %}
+    {% for detail in details.items %}
+    <div>
+      <div>
+      {% for detail in details%}
+        <p>{{details}}</p>    
+      {% endfor %}
+      </div>
+    </div>
+    {%endfor%}
   {%endif%}
+
+<div class="pagination">
+  {% if details.has_prev %}
+      <span>
+          <a class='page-number' href="{{ url_for('views.status', page=details.prev_num) }}">
+              {{ '<<<' }}
+          </a>
+      </span>
+  {% endif %}
+
+  {% for number in details.iter_pages %}
+      {% if details.page != number %}
+          <span>
+                  <a class='page-number'
+                      href="{{ url_for('views.status', page=number) }}">
+                  {{ number }}
+                  </a>
+          </span>
+      {% else %}
+          <span class='current-page-number'>{{ number }}</span>
+      {% endif %}
+  {% endfor %}
+
+  {% if details.has_next %}
+      <span>
+          <a class='page-number'
+              href="{{ url_for('views.status', page=details.next_num) }}">
+              {{ '>>>' }}
+          </a>
+      </span>
+  {% endif %}
 </div>
 
 
