@@ -10,7 +10,7 @@
             <div class="card-body">
               <h5 class="card-title"> {{ book.title }} </h5>
               <h6 class="card-subtitle mb-2"> {{ book.author }} </h6>
-              <h6 class="card-subtitle mb-2">Lended by <a class="text-3" href="/">{{ book.lender_username }}</a></h6>
+              <h6 class="card-subtitle mb-2">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
 
               <div class="col-4 offset-4">
                 <p class="mt-5 text-center text-light">* fields are required</p>
-                <p class="mb-3 text-muted text-center text-light">&copy; 2017-2022</p>
+                <p class="mb-3 text-muted text-center text-light">&copy; 2022</p>
               </div>
             </div>
           </form>

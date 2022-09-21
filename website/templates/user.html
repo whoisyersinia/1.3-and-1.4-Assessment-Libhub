@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %}User - {{user.username}}{% endblock %}{% block content%} 
+  <section class="vh-100" style="background-color: #181C1F;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-8 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 text-center text-dark mt-5"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <h5>{{user.username}}</h5>
+                <h6>A libhub user</h6>
+                {% if current_user.id == user.id %}
+                  <a href="{{url_for('views.account', user_id=current_user.id )}}"><i class="fa fa-edit mb-5"></i></a>
+                {%endif%}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{user.email}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Phone</h6>
+                      <p class="text-muted">Ask user for more info</p>
+                    </div>
+                  </div>
+                  <h6>Explore</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Recent books</h6>
+                      <a href="{{url_for('views.search', searchterm = user.username)}}">Explore</a>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Report User</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

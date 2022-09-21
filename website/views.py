@@ -24,15 +24,17 @@ def books():
 
 @views.route('/search/<path:searchterm>')
 def search(searchterm):
+  term = "%{}%".format(searchterm)
 
-  search = Book.query.filter_by(title=searchterm).all()
+  search = Book.query.filter((Book.title.like(term)) | (Book.author.like(term)) | Book.lender_username.like(term)).all()
   
   return render_template('search.html', user=current_user, results=search, searchterm=searchterm)
 
-@views.route('/user/<int:user_id>')
-def user(user_id):
 
-  user = User.query.get_or_404(user_id)
+@views.route('/user/<int:userid>')
+def user(userid):
+
+  user = User.query.get_or_404(userid)
 
   return render_template('user.html', user=user)
 
@@ -78,9 +80,7 @@ def status(book_id, page=1):
     .outerjoin(Borrowed_book, Borrowed_book.borrower_id==Borrower.id)\
     .add_columns(Borrower.username, Borrower.email, Borrower.phone)\
     .filter(Borrower.id == Borrowed_book.borrower_id)\
-    .paginate(page, 1, False)
-
-
+    .paginate(page, 1, False)\
  
   if current_user.id != book.lender_id:
     abort(403)
@@ -234,6 +234,9 @@ def edit(book_id):
 @login_required
 def lend():
   if request.method == 'POST':
+    
+    book = Book.query.filter_by(lender_id=current_user.id).all()
+
     title = request.form.get('title')
     author = request.form.get('author')
 

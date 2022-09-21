@@ -1,6 +1,6 @@
 {% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 <div>
-  <h4 class=" pt-2 fw-semibold text-dark">'{{ books.title }}' - {{ details.page }}</h4>
+  <h4 class="pt-2 fw-semibold text-dark">'{{ books.title }}' - {{ details.page }}</h4>
   <h5 class="pt-2">Requests:</h5>
   {% if details %}
     {% for detail in details.items %}
@@ -12,6 +12,8 @@
       </div>
     </div>
     {%endfor%}
+  {%else%}
+    <p>No results found</p>
   {%endif%}
 
 <div class="pagination">

@@ -2,15 +2,24 @@
 {% block content
 %}
 <body class="bg-dark">
-  <div class="container-fluid position-absolute top-30 start-0 bg-dark px-3" >
-   <h1 class="text-light">Here's what we've found for '{{searchterm}}'</h1>
+  <div class="container-fluid position-absolute top-20 start-0 bg-dark px-3" >
+    {%if results%}
+      <h1 class="text-light">Here's what we've found for '{{searchterm}}'</h1>
+    {%else%}
+      <h1 class="text-light">No results for '{{searchterm}}'</h1>
+      <h3 class="text-primary">Can't find it, lend it!</h3>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-start">
+       <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
+       <button type="button" class="btn btn-primary btn-sm px-4" onclick="window.location.href='/'">Go back</button>
+      </div>
+    {%endif%}
   </div>
 
   {% if results %}
-  <div class="container-fluid p-5 d-grid" id="library"> 
-    <div class="row row-cols-4 d-flex align-items-center justify-content-evenly p-0">
+  <div class="container-fluid position-absolute top-30 start-0 bg px-3"> 
+    <div class="position-relative d-flex align-items-start justify-content-sm-evenly col-lg-12">
     {% for result in results %}
-      <div class="card col-mb-4 p-0" style="width: 18rem;">
+      <div class="card col-mb-4 p-0" style="width: 12rem;">
         <img src="/static/images/book.jpg" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ result.title }}</h5>
@@ -24,7 +33,7 @@
       </div>
     {% endfor %}
     </div>
-  </div>
+  </div>  
   {%endif%}
 
 </body>

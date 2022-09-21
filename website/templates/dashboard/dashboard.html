@@ -74,7 +74,7 @@
             <li class="nav-item">
              <span class="px-3 fw-bold"> Logged in as:</span>
              <br>
-             <span class="px-3 fs-6 fw-light">{{current_user.username}}</span>
+             <a href="{{url_for('views.user', userid=current_user.id)}}"><span class="px-3 fs-6 fw-light">{{current_user.username}}</span></a>
             </li>
            
           </ul>
