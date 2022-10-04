@@ -1,52 +1,36 @@
 {% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 <div>
-  <h4 class="pt-2 fw-semibold text-dark">'{{ books.title }}' - {{ details.page }}</h4>
-  <h5 class="pt-2">Requests:</h5>
-  {% if details %}
-    {% for detail in details.items %}
-    <div>
-      <div>
-      {% for detail in details%}
-        <p>{{details}}</p>    
-      {% endfor %}
+  <h4 class="pt-2 fw-semibold text-dark">{{ books.title }} by <small>{{ books.author }}</small></h4>
+  <h5 class="pt-3">Requests:</h5>
+  {% if borrowerlist %}
+  <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-center justify-content-evenly">
+    {% for borrower in borrowerlist %}
+    <div class="card col-mb-4 p-0" style="width: 12rem;">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start pb-1">
+          <a href="{{url_for('views.user', userid=borrower.id)}}" data-bs-toggle="tooltip" data-bs-placement="right" title="Account Details">
+            <h6 class="card-title">{{borrower.username}}</h6> 
+          </a>
+        </div>
+        <div class="d-flex justify-content-evenly align-items-center">
+          <a href="{{url_for('views.accept', book_id= {{book} )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
+            <button class="btn btn-primary btn-sm">
+              <i class="bi bi-check-circle"></i>
+               Accept 
+            </button>
+          </a>
+          <a href="{{url_for('views.home')}}" data-bs-toggle="tooltip" data-bs-placement="right" title="Deny {{ borrower.username }}">
+            <button class="btn btn-secondary btn-sm">
+              <i class="bi bi-x-circle"></i> 
+              Deny         
+            </button>
+          </a>
+        </div>
       </div>
     </div>
-    {%endfor%}
+    {% endfor %}
+  </div>
   {%else%}
     <p>No results found</p>
   {%endif%}
-
-<div class="pagination">
-  {% if details.has_prev %}
-      <span>
-          <a class='page-number' href="{{ url_for('views.status', page=details.prev_num) }}">
-              {{ '<<<' }}
-          </a>
-      </span>
-  {% endif %}
-
-  {% for number in details.iter_pages %}
-      {% if details.page != number %}
-          <span>
-                  <a class='page-number'
-                      href="{{ url_for('views.status', page=number) }}">
-                  {{ number }}
-                  </a>
-          </span>
-      {% else %}
-          <span class='current-page-number'>{{ number }}</span>
-      {% endif %}
-  {% endfor %}
-
-  {% if details.has_next %}
-      <span>
-          <a class='page-number'
-              href="{{ url_for('views.status', page=details.next_num) }}">
-              {{ '>>>' }}
-          </a>
-      </span>
-  {% endif %}
-</div>
-
-
-{% endblock %}
+{%endblock%}
