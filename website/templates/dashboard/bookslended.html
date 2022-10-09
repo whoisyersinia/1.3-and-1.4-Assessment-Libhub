@@ -1,6 +1,6 @@
 {% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 {% if books %}
-<div class="container-fluid pt-2 d-grid" id="library" > 
+<div class="container-fluid pt-2 d-grid" id="library"> 
   <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
   {% for book in books %}
     <div class="card col-mb-4 p-0" style="width: 18rem;">
@@ -13,12 +13,15 @@
         </div>
         <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
         {% if current_user.id == book.lender_id %}
-        <a href="{{ url_for('views.status', book_id=book.id) }}">Check Status</a>
+          <a href="{{ url_for('views.status', book_id=book.id) }}">Check Status</a>
         {% endif %}
       </div>
     </div>
   {% endfor %}
   </div>
+  {% else %}
+  <p>No books found</p>
+  <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
 </div>
 {%endif%}
 
