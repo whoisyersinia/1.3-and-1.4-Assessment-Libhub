@@ -1,3 +1,4 @@
+from xmlrpc.client import DateTime
 from website import db
 from flask_login import UserMixin
 from datetime import datetime
@@ -221,7 +222,7 @@ class Borrowed_book(db.Model):
   )
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
   __tablename__ = 'user'
 

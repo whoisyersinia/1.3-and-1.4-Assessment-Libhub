@@ -133,7 +133,9 @@
           <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link px-2 text-light">Home</a></li>
           <li class="nav-item"><a href="{{url_for('views.privacy')}}" target="_blank" class="nav-link px-2 text-light">Privacy</a></li>
           <li class="nav-item"><a href="{{url_for('views.tandc')}}" target="_blank" class="nav-link px-2 text-light">Terms of Use</a></li>
-          <li class="nav-item"><a href="{{url_for('views.user', userid=current_user.id)}}" target="_blank" class="nav-link px-2 text-light">User</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a href="{{url_for('views.user', userid=current_user.id)}}" target="_blank" class="nav-link px-2 text-light">User</a></li>
+          {%endif%}
           <li class="nav-item"><a href="https://github.com/whoisyersinia/1.3-and-1.4-Assessment" target="_blank" class="nav-link px-2 text-light"><i class="bi bi-github" style="font-size: 1.10rem; padding-right: 0.5rem;"></i>Github</a></li>
         </ul>
       </footer>

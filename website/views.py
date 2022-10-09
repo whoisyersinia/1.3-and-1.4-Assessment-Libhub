@@ -1,8 +1,7 @@
-from nis import cat
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import  datetime
+from datetime import datetime
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
 
@@ -160,8 +159,8 @@ def accept(book_id, borrower_id):
 #   if current_user.id != book.lender_id:
 #     abort(403)
 
+ # return render_template("dashboard/bookstatus.html", user=current_user, books=book, details=details)
 
-#   return render_template("dashboard/bookstatus.html", user=current_user, books=book, borrowerlist=borrowerlist)
 
 @views.route('/account/<int:user_id>', methods=['GET', 'POST'])
 @login_required
