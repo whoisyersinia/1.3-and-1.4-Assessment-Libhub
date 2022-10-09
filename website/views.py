@@ -2,7 +2,7 @@ from nis import cat
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date, datetime
+from datetime import  datetime
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
 
@@ -28,7 +28,7 @@ def privacy():
 
 @views.route('/books')
 def books():
-  books = Book.query.order_by(Book.created_on).limit(4).all()
+  books = Book.query.filter(Book.lender_id != current_user.id).order_by(Book.created_on).limit(4).all()
   return render_template("books.html", user=current_user, books=books)
 
 @views.route('/search/<path:searchterm>')

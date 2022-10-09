@@ -1,16 +1,6 @@
-from xmlrpc.client import DateTime
 from website import db
 from flask_login import UserMixin
 from datetime import datetime
-
-class MyDateTime(db.TypeDecorator):
-    impl = db.DateTime
-    
-    def process_bind_param(self, value, dialect):
-        if type(value) is str:
-            return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
-        return value
-        
 class Book(db.Model):
 
   __tablename__ = 'book'
@@ -231,7 +221,7 @@ class Borrowed_book(db.Model):
   )
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
 
   __tablename__ = 'user'
 

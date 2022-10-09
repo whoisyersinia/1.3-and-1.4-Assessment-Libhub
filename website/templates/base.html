@@ -49,7 +49,7 @@
 
         {% if user.is_authenticated %}
         <div id="navbarNav" class="collapse navbar-collapse">
-          <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0 ">
+          <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
             </li>
@@ -57,7 +57,7 @@
               <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
             </li>
           </ul>
-          <div class="navbar navbar-nav d-flex pe-4 ps-sm-4">
+          <div class="navbar navbar-nav pe-lg-4 px-sm-4 mb-sm-0">
 
             <a href="{{ url_for('views.account', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account Settings">
               <i class="bi bi-person-circle px-3 pb-1 text-center" style="font-size: 1.75rem; color: #c9ddff;"></i>
@@ -120,6 +120,25 @@
     {% endwith %}
 
     <div>{% block content %} {% endblock %}</div>
+
+    <div class="container-fluid bg-dark overflow-hidden">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top footer">
+        <p class="col-md-4 mb-0 text-light">&copy; 2022 Libhub, Inc</p>
+    
+        <a href="#top" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+          <img class="d-block mx-auto" src="/static/images/footer.svg" alt="logo" >
+        </a>
+    
+        <ul class="nav col-md-4 justify-content-end">
+          <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link px-2 text-light">Home</a></li>
+          <li class="nav-item"><a href="{{url_for('views.privacy')}}" target="_blank" class="nav-link px-2 text-light">Privacy</a></li>
+          <li class="nav-item"><a href="{{url_for('views.tandc')}}" target="_blank" class="nav-link px-2 text-light">Terms of Use</a></li>
+          <li class="nav-item"><a href="{{url_for('views.user', userid=current_user.id)}}" target="_blank" class="nav-link px-2 text-light">User</a></li>
+          <li class="nav-item"><a href="https://github.com/whoisyersinia/1.3-and-1.4-Assessment" target="_blank" class="nav-link px-2 text-light"><i class="bi bi-github" style="font-size: 1.10rem; padding-right: 0.5rem;"></i>Github</a></li>
+        </ul>
+      </footer>
+    </div>
+    
 
     <script 
     src="https://code.jquery.com/jquery-3.6.0.js"

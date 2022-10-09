@@ -4,7 +4,7 @@
 <body class="bg-dark">
   <div class="container-fluid position-absolute top-20 start-0 bg-dark px-3" >
     {%if results%}
-      <h2 class="text-light">Here's what we've found for '{{searchterm}}'</h2>
+      <h2 class="text-light px-4">Here's what we've found for '{{searchterm}}'</h2>
     {%else%}
       <h1 class="text-light">No results for '{{searchterm}}'</h1>
       <h3 class="text-primary">Can't find it, lend it!</h3>
@@ -17,9 +17,9 @@
 
   {% if results %}
   <div class="container-fluid position-absolute top-30 start-0 bg px-3"> 
-    <div class="position-relative d-flex align-items-start justify-content-sm-evenly col-lg-12">
+    <div class="position-relative d-flex align-items-start justify-content-sm-evenly row row-cols-4">
     {% for result in results %}
-      <div class="card col-mb-4 p-0" style="width: 12rem;">
+      <div class="card row-4 p-0" style="width: 12rem;">
         <img src="/static/images/book.jpg" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ result.title }}</h5>
