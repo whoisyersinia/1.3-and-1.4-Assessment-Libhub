@@ -9,7 +9,7 @@
     <div class="px-4 py-5 my-5 text-center content">
       <img class="d-block mx-auto" src="./static/images/Libhub-4.svg" alt="logo" >
       <div class="lead col-lg-6 mx-auto text-light fw-semibold">
-        <p class="lead mb-4 ">Libhub Incorporated. was founded, in 2022, by our esteemed CEO, Marcus Demafeliz. He had a dream that anyone, of any race, gender, and religion, can read a book at any time. Welcome to Libhub!</p>
+        <p class="lead mb-4 ">Libhub Incorporated &trade;. was founded, in 2022, by our esteemed CEO, Marcus Demafeliz. He had a dream that anyone, of any race, gender, and religion, can read a book at any time. Welcome to Libhub!</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           {% if user.is_authenticated %}
           <button type="button" class="btn btn-outline-light btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
@@ -27,11 +27,11 @@
   <div class="container-fluid my-5 d-grid">
     <div class="row row-cols-1 align-items-center justify-content-center overflow-hidden">
 
-      <div class="text-center col-sm-12 text-center">
+      <div class="text-center col-sm-12 ">
         <h3 class="text_2 fs-1 text-dark display-3 fw-semibold">Find your book using</h3>
       </div>  
 
-      <div class="text-center col-sm-3 text-center mx-auto">
+      <div class="text-center col-sm-3 mx-auto">
         <h3 class="text_3 fs-2 text-dark display-1 fw-normal">our extensive database.</h3>
       </div>  
 
@@ -55,20 +55,20 @@
 
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
       <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/images/borrow.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Short title, long jacket</h2>
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Borrow books at <strong>any time</strong>.</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" >
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-                <small>Earth</small>
+                <small></small>
               </li>
               <li class="d-flex align-items-center">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-                <small>3d</small>
+                <svg class="bi" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <a href="#jumbo" class="text-decoration-none text-white"><small>Borrow at Libhub</small></a>              
               </li>
             </ul>
           </div>
@@ -76,20 +76,20 @@
       </div>
 
       <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-2.jpg');">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/images/lend.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Much longer title that wraps to multiple lines</h2>
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">'If it exists we have it. If not, start <strong>lending</strong> today.'</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" >
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-                <small>Pakistan</small>
+                <small></small>
               </li>
               <li class="d-flex align-items-center">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-                <small>4d</small>
+                <a href="#jumbo" class="text-decoration-none text-white"><small>Lend at Libhub</small></a>
               </li>
             </ul>
           </div>
@@ -97,20 +97,20 @@
       </div>
 
       <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-3.jpg');">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/images/control.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Another longer title belongs here</h2>
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><strong>Limitless</strong> control over your books.</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" >
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
-                <small>California</small>
+                <small></small>
               </li>
               <li class="d-flex align-items-center">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
-                <small>5d</small>
+                <small>Control at Libhub</small>
               </li>
             </ul>
           </div>
@@ -119,7 +119,80 @@
     </div>
   </div>
 
+  <div class="container-fluid py-5 my-4">
+    <div class="row text-center">
+      <div class="col-md-12">
 
+        <div id="carouselBasicExample" class="carousel slide carousel-dark" data-bs-ride="carousel">
+          <!-- Inner -->
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <p class="lead font-italic mx-4 mx-md-5">
+                "Libhub&trade; is so easy to use, just one click and you're on your way (unlike Paimon). The dashboard makes
+                tracking your books so much easier!"
+              </p>
+              <img src="https://i.pinimg.com/originals/8d/52/58/8d5258236478eb38405c01857d6a5d31.jpg"
+              class="rounded-circle img-fluid shadow-1-strong" alt="sample image" width="100"
+              height="100" />
+              <p class="text-muted mb-0">- Aether</p>
+            </div>
+  
+            <div class="carousel-item">
+              <p class="lead font-italic mx-4 mx-md-5">
+                "If I like peanuts then I love Libhub&trade;!"
+              </p>
+              <img src="https://i.pinimg.com/originals/fe/ea/0d/feea0da6414eabed40ac137c08dbeef2.jpg"
+              class="rounded-circle img-fluid shadow-1-strong" alt="sample image" width="100"
+              height="100" />
+              <p class="text-muted mb-0">- Anya Forger</p>
+            </div>
+  
+            <div class="carousel-item">
+              <p class="lead font-italic mx-4 mx-md-5">
+              "Jesse we gotta start using Libhub&trade;. I heard, Jesse, its a platform for friends to share and lend books. We can start a businness using this..."
+              </p>
+              <img src="https://resizing.flixster.com/zH89xCww4gO2SKbQwyJORooLSPU=/300x300/v2/https://flxt.tmsimg.com/assets/p185846_n165082_cc_v9_aa.jpg"
+              class="rounded-circle img-fluid shadow-1-strong" alt="sample image" width="100"
+              height="100" />
+              <p class="text-muted mb-0">- Walter White</p>
+            </div>
+          </div>
+  
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselBasicExample"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselBasicExample"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row align-items-md-stretch py-5 mx-auto bg-dark overflow-hidden container-fluid" id="jumbo">
+    <div class="col-md-6">
+      <div class="h-100 p-5 text-bg-dark rounded-3">
+        <h2>Borrowing at Libhub</h2>
+        <p>Check our database and see if we have the book you're looking for. By borrowing at Libhub&trade; you ensure that your process will be safe and checked in real time. Make sure to borrow from books from people you personally know. </p>
+        <a href="{{url_for('views.books')}}">
+          <button class="btn btn-outline-primary" type="button">Borrow Now</button>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-light border rounded-3">
+        <h2>Lending at Libhub</h2>
+        <p>Lending at Libhub is easy, insert the book's, you wish to lend, title and author, as simple as that!. Your friends will now start to see your book and lend it! You will see all requests for the book using the <a href="{{ url_for('views.dashboard', user_id=current_user.id) }}">dashboard</a></p>
+        <a href="{{url_for('views.lend')}}">
+          <button class="btn btn-outline-secondary" type="button">Lend Now</button>
+        </a>
+      </div>
+    </div>
+  </div>
 
 </body>
 {% endblock %}

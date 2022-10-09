@@ -59,7 +59,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('views.borrowed', user_id=current_user.id)}}">
+              <a class="nav-link" href="{{url_for('views.borrowed', user_id=current_user.id)}}" data-bs-toggle="tooltip" data-bs-placement="right" title="A 404 Error will occur if haven't requested for a book">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
                 Books Borrowed
               </a>

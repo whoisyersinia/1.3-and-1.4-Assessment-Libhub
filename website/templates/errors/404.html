@@ -5,7 +5,7 @@
 
   <link href="{{ url_for('static', filename='css/style.scss.css') }}"
   rel="stylesheet" type="text/css">
-  <link rel="icon" type="image/x-icon" href="../static/images/logo.svg">
+  <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
 
 <title>404 - Not Found</title> 
 
@@ -13,7 +13,7 @@
 
 <body class="bg-dark">
   <div class="container-fluid position-absolute top-30 start-0 bg-dark px-3" >
-    <img src="../static/images/banner.svg" alt="logo" width="180" height="80">
+    <img src="/static/images/banner.svg" alt="logo" width="180" height="80">
     <h1 class="text-white display-5"> Oops! Page Not Found (404)</h1>
     <p class="text-secondary pb-1">That page doesn't exist. If you have manually typed the URL, please check URL for any typos!</p>
     <a href="{{ url_for('views.home') }}" class="text-decoration-none text-dark text-bg-primary border border-1 p-1 rounded-1">Return</a>
