@@ -1,4 +1,51 @@
 {% extends "dashboard/dashboard.html" %} {% block title %}Books Borrowed{% endblock %}{% block content%}
+{% if booksborrowed.lender_confirm == False %}
+  {% if books %}
+  <h3 class="fs-4 mt-2">Books awaiting response</h3>
+  <div class="container-fluid pt-2 d-grid" id="library" > 
+    <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
+    {% for book in books %}
+      <div class="card col-mb-4 p-0" style="width: 18rem;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start pb-2">
+            <h5 class="card-title">{{ book.title }}</h5> 
+          </div>
+          <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
+          <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    {% else %}
+      <p>No books found</p>
+      <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
+    {% endif %}
+  </div>
+
+{% else %}
+  {% if books%}
+  <h3 class="fs-4 mt-2">Books borrowing</h3>
+  <div class="container-fluid pt-2 d-grid" id="library" > 
+    <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
+    {% for book in books %}
+      <div class="card col-mb-4 p-0" style="width: 18rem;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start pb-2">
+            <h5 class="card-title">{{ book.title }}</h5> 
+          </div>
+          <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
+          <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    {% else %}
+      <p>No books found</p>
+      <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
+    {% endif %}
+  </div>
+
+{% endif %}
 
 
 {% endblock %}
