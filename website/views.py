@@ -1,8 +1,7 @@
-from nis import cat
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date, datetime
+from datetime import datetime
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
 
@@ -17,14 +16,6 @@ def home():
     return redirect(url_for('views.search', searchterm=term))
 
   return render_template("index.html", user=current_user)
-
-@views.route('/termsandconditions')
-def tandc():
-  return render_template('tc.html')
-
-@views.route('/privacypolicy')
-def privacy():
-  return render_template('privacypolicy.html')
 
 @views.route('/books')
 def books():
@@ -45,7 +36,7 @@ def user(userid):
 
   user = User.query.get_or_404(userid)
 
-  return render_template('user.html', userdetails=user, user=current_user)
+  return render_template('user.html', user=user)
 
 
 @views.route('/dashboard/<int:user_id>', methods=['GET', 'POST'])
@@ -65,11 +56,8 @@ def borrowed(user_id):
 
   if current_user.id != user_id:
     abort(403)
-  
-  booksborrowed = Borrowed_book.query.get_or_404(user_id)
-  books = Book.query.filter_by(id = booksborrowed.book_id)
 
-  return render_template("dashboard/booksborrowed.html", user=current_user, books=books, booksborrowed=booksborrowed)
+  return render_template("dashboard/booksborrowed.html", user=current_user)
 
 @views.route('/dashboard/bookslended/<int:user_id>')
 @login_required
@@ -84,84 +72,22 @@ def lended(user_id):
 
 @views.route('/dashboard/bookslended/bookstatus/<int:book_id>')
 @login_required
-def status(book_id):
+def status(book_id, page=1):
 
   book = Book.query.get_or_404(book_id)
 
-  borrowerlist = db.session.query(Borrower, Borrowed_book)\
-    .filter(book_id == Borrowed_book.book_id)\
+  details = Borrower, Borrowed_book.query\
     .outerjoin(Borrowed_book, Borrowed_book.borrower_id==Borrower.id)\
-    .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id)\
-    .filter(Borrower.id == Borrowed_book.borrower_id).all()
-
+    .add_columns(Borrower.username, Borrower.email, Borrower.phone)\
+    .filter(Borrower.id == Borrowed_book.borrower_id)\
+    .paginate(page, 1, False)\
  
   if current_user.id != book.lender_id:
     abort(403)
 
 
-  return render_template("dashboard/bookstatus.html", user=current_user, books=book, borrowerlist=borrowerlist)
+  return render_template("dashboard/bookstatus.html", user=current_user, books=book, details=details)
 
-@views.route('/accept/<int:book_id>/borrower/<int:borrower_id>', methods=['GET', 'POST'])
-@login_required
-def accept(book_id, borrower_id):
-  book = Book.query.get_or_404(book_id)
-  requests = Borrowed_book.query.get(book_id)
-
-  borrowerlist = db.session.query(Borrower, Borrowed_book)\
-    .filter(book_id == Borrowed_book.book_id)\
-    .filter(borrower_id == Borrowed_book.borrower_id)\
-    .outerjoin(Borrower, Borrower.id==Borrowed_book.borrower_id)\
-    .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrower.fName, Borrower.lName, Borrower.address1, Borrower.city, Borrower.phone)\
-    .filter(Borrower.id == Borrowed_book.borrower_id).first()
-
-  if current_user.id != book.lender_id:
-    abort(403)
-
-  else:
-    if request.method == 'POST':
-
-      accept = request.form.get('tcs')
-
-      if not accept:
-        flash('Please read and accept our terms and conditions!', category='error')
-      else:
-        requests.lender_confirm = True
-        date_str = datetime.utcnow
-        date_str = str(date_str)
-        b = ".0"
-        date_str = date_str + b
-        date_object = datetime.strptime(date_str, '%y/%m/%d %H:%M:%S.%f')
-        datenow = date_object.strftime('%m/%d/%y')
-        requests.borrowed_date = datenow
-        # requests.due_date =
-
-        db.session.add(requests)
-        db.session.commit()
-
-        flash('Successfully confirmed! Now returning to dashboard', category='success')
-        return redirect(url_for('views.dashboard', user_id=current_user.id))
-
-
-  return render_template("accept.html", user=current_user, book=book, borrowerlist=borrowerlist)
-
-# @views.route('/dashboard/bookslended/bookstatus/<int:book_id>', methods=['GET', 'POST'])
-# @login_required
-# def deny(book_id):
-
-#   book = Book.query.get_or_404(book_id)
-
-#   borrowerlist = db.session.query(Borrower, Borrowed_book)\
-#     .filter(book_id == Borrowed_book.book_id)\
-#     .outerjoin(Borrowed_book, Borrowed_book.borrower_id==Borrower.id)\
-#     .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id)\
-#     .filter(Borrower.id == Borrowed_book.borrower_id).all()
-
- 
-#   if current_user.id != book.lender_id:
-#     abort(403)
-
-
-#   return render_template("dashboard/bookstatus.html", user=current_user, books=book, borrowerlist=borrowerlist)
 
 @views.route('/account/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -311,7 +237,6 @@ def lend():
     
     book = Book.query.filter_by(lender_id=current_user.id).all()
 
-    accept = request.form.get('tcs')
     title = request.form.get('title')
     author = request.form.get('author')
 
@@ -323,8 +248,6 @@ def lend():
       flash('Author must be greater than 3 characters!', category='error')
     elif len(author) > 256:
       flash('Author exceeds character limit!', category='error')
-    elif not accept:
-      flash('Please read and accept our terms and conditions!', category='error')
     else:
       book = Book(title=title, author=author, lender_id=current_user.id, lender_username=current_user.username)
       db.session.add(book)
@@ -341,16 +264,12 @@ def borrow(book_id):
 
   books = Book.query.get_or_404(book_id)
 
-  if current_user.id == books.lender_id:
-    abort(403)
-
   if request.method == 'POST':
     fName = request.form.get('fName')
     lName = request.form.get('lName')
     address1 = request.form.get('address')
     city = request.form.get('city')
     phone = request.form.get('phone')
-    accept = request.form.get('tcs')
 
     phone_check = Borrower.query.filter_by(phone=phone).first()
     id = Borrower.query.filter_by(user_id=current_user.id).first()
@@ -380,8 +299,7 @@ def borrow(book_id):
         flash('Phone exceeds character limit!', category='error')
       elif len(lName) < 8:
         flash('Phone must be more than eight characters!', category='error')
-      elif not accept:
-        flash('Please read and accept our terms and conditions!', category='error')
+
       else:
         if not id:
           borrower = Borrower(fName=fName, lName=lName, address1=address1, city=city, username=current_user.username, email=current_user.email, phone=phone, user_id=current_user.id)

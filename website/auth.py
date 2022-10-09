@@ -1,6 +1,4 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect
-
-from website.views import accept
 from .models import User, Borrower
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -57,7 +55,6 @@ def sign_up():
     email = request.form.get('email')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
-    accept = request.form.get('tcs')
 
     user = User.query.filter_by(email=email).first()
     name = User.query.filter_by(username=username).first()
@@ -76,9 +73,6 @@ def sign_up():
         flash('Passwords do not match!', category='error')
       elif len(password1) < 7:
         flash('Password must be greater than 7 characters!', category='error')
-      elif not accept:
-        flash('Please read our privacy policy and terms and conditions', category='error')
-
       else:
         new_user = User(username=username, email=email, password=generate_password_hash(password1, method='sha256'))
         db.session.add(new_user)

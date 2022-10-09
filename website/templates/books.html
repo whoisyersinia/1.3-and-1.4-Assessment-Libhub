@@ -7,7 +7,7 @@
     <div class="px-4 py-5 my-5 text-center content">
       <img src="/static/images/library.svg" alt="my_library" class="d-block mx-auto">
       <div class="lead col-lg-6 mx-auto text-light fw-semibold">
-        <p class="lead mb-4">Welcome to the library! A extensive library with books to fit your needs. If you can't find! Lend it!</p>
+        <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut nibh nec tellus ultricies consequat a molestie tortor. Aliquam nec ornare orci, ac posuere felis. Nam quis tellus velit. Praesent eu finibus mauris. Praesent ornare enim non elit rutrum, vel aliquet massa tempus.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           {% if user.is_authenticated %}
           <button type="button" class="btn btn-primary btn-lg px-4" onclick="window.location.href='#library'">Borrow a Book</button>
@@ -32,9 +32,9 @@
           <h5 class="card-title">{{ book.title }}</h5>
           <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
           {% if current_user.id == book.lender_id %}
-            <a href="{{ url_for('views.edit', book_id=book.id ) }}">Edit</a>
+          <a href="{{ url_for('views.edit', book_id=book.id ) }}">Edit</a>
           {% else %}
-            <a href="{{ url_for('views.borrow', book_id=book.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
+          <a href="{{ url_for('views.borrow', book_id=book.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
           {% endif %}
         </div>
       </div>

@@ -10,7 +10,7 @@
             <div class="card-body">
               <h5 class="card-title"> {{ book.title }} </h5>
               <h6 class="card-subtitle mb-2"> {{ book.author }} </h6>
-              <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
+              <h6 class="card-subtitle mb-2">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
                 </div>
               </div>
 
-              <div class="col-4 mb-3">
+              <div class="col-3 mb-3">
                 <div class="form-floating">
                   <input name="city" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Christchurch" value="{{ request.form['city'] }}">
                   <label for="floatingInput">City*</label>
@@ -63,7 +63,7 @@
               <div class="col-4 offset-4">
                 <div class="mt-4">
                   <input type="checkbox" value="checked" name="tcs">
-                  <label class="text-white">Agree to <a class="text-decoration-underline text-secondary" href="{{url_for('views.tandc')}}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="right" title="Open Terms and Conditions">terms and conditions</a></label>  
+                  <label class="text-white">Agree to terms and conditions</label>  
                 </div>
               </div>
       

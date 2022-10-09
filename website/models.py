@@ -1,4 +1,3 @@
-from xmlrpc.client import DateTime
 from website import db
 from flask_login import UserMixin
 from datetime import datetime
@@ -64,7 +63,7 @@ class Borrower(db.Model):
     db.String(150),
     unique=False,
     nullable=False
-  )
+ )
     
   lName = db.Column(
     db.String(150),
@@ -164,6 +163,7 @@ class Lender(db.Model):
     nullable=False
   )
 
+
   phone = db.Column(
     db.Integer,
     unique=True,
@@ -200,7 +200,7 @@ class Borrowed_book(db.Model):
   )
 
   due_date = db.Column(
-    db.DateTime,
+    MyDateTime,
     nullable=False,
     unique=False,
     default=datetime.utcnow
