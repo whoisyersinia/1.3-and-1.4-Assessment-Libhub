@@ -1,4 +1,4 @@
-{% extends "dashboard/dashboard.html" %} {% block title %}Books Borrowed{% endblock %}{% block content%}
+{% extends "dashboard/dashboardbase.html" %} {% block title %}Books Borrowed{% endblock %}{% block content%}
 {% if booksborrowed.lender_confirm == False %}
   {% if books %}
   <h3 class="fs-4 mt-2">Books awaiting response</h3>

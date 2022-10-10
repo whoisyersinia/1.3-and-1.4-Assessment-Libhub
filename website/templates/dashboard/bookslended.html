@@ -1,20 +1,31 @@
-{% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
+{% extends "dashboard/dashboardbase.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 {% if books %}
 <div class="container-fluid pt-2 d-grid" id="library"> 
   <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
   {% for book in books %}
-    <div class="card row-mb-4 p-0" style="width: 18rem;">
+    <div class="card row-mb-4 p-1" style="width: 18rem;">
       <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start pb-2">
+        <div class="d-flex justify-content-between align-items-start">
           <h5 class="card-title">{{ book.title }}</h5> 
-          <a href="{{ url_for('views.edit', book_id=book.id ) }}" data-bs-toggle="tooltip" data-bs-placement="right" title="Edit">
+          <a href="{{ url_for('views.edit', book_id=book.id ) }}" class="mb-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Edit">
             <i class="bi bi-pencil-square px-3 pb-1 text-center" style="font-size: 1.5rem; color: #181C1F;"></i>
           </a>
         </div>
         <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
         {% if current_user.id == book.lender_id %}
-          <a href="{{ url_for('views.status', book_id=book.id) }}">Check Status</a>
-        {% endif %}
+          <a href="{{ url_for('views.status', book_id=book.id)}}" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="Check borrowers">
+            <button class="btn btn-success btn-sm">
+              <i class="bi bi-patch-check-fill"></i>             
+              Check status
+            </button>
+          </a>
+          <a href="{{ url_for('views.edit', book_id=book.id ) }}" class="px-3" data-bs-toggle="tooltip" data-bs-placement="right" title="Delete">
+            <button class="btn btn-warning btn-sm">
+              <i class="bi bi-trash3-fill"></i>             
+              Delete  
+            </button>
+          </a>
+        {% endif %}  
       </div>
     </div>
   {% endfor %}

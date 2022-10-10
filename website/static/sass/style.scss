@@ -205,8 +205,20 @@ body {
 .hover-zoom:hover{
   transform: scale(1.02);
   box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+  opacity: 1;
 }
 
+.nav-pills .nav-link{
+  transition: all 0.3s ease;
+  opacity: 0.95;
+}
+
+.nav-pills .nav-link:hover{
+  transform: scale(1.05);
+  background-color: #ecb0e1;
+  box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+  opacity: 1;
+}
 .active.fade-bottom {
   animation: fade-bottom 1s ease;
 }

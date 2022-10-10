@@ -28,7 +28,9 @@ def privacy():
 @views.route('/books')
 def books():
   if current_user.is_authenticated is True :
-    books = Book.query.filter(Book.lender_id != current_user.id).order_by(Book.created_on).limit(4).all()
+    books = Book.query.filter(Book.lender_id != current_user.id)\
+    .filter(Borrowed_book.lender_confirm == False)\
+    .order_by(Book.created_on).limit(4).all()
   else:
     books = Book.query.order_by(Book.created_on).limit(4).all()
   return render_template("books.html", user=current_user, books=books)
@@ -84,7 +86,7 @@ def lended(user_id):
 
   return render_template("dashboard/bookslended.html", user=current_user, books=books)
 
-@views.route('/dashboard/bookslended/bookstatus/<int:book_id>')
+@views.route('/dashboard/bookslended/bookstatus/<int:book_id>', methods=['GET', 'POST'])
 @login_required
 def status(book_id):
 
@@ -92,9 +94,11 @@ def status(book_id):
 
   borrowerlist = db.session.query(Borrower, Borrowed_book)\
     .filter(book_id == Borrowed_book.book_id)\
+    .filter(Borrowed_book.return_book == False)\
     .outerjoin(Borrowed_book, Borrowed_book.borrower_id==Borrower.id)\
     .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id)\
-    .filter(Borrower.id == Borrowed_book.borrower_id).all()
+    .filter(Borrower.id == Borrowed_book.borrower_id)\
+    .order_by(Borrowed_book.borrowed_date).all()
 
  
   if current_user.id != book.lender_id:
@@ -126,15 +130,11 @@ def accept(book_id, borrower_id):
 
       if not accept:
         flash('Please read and accept our terms and conditions!', category='error')
+      elif Borrowed_book.lender_confirm == True:
+        flash('Book already being borrowed', category='error')
       else:
         requests.lender_confirm = True
-        date_str = datetime.utcnow
-        date_str = str(date_str)
-        b = ".0"
-        date_str = date_str + b
-        date_object = datetime.strptime(date_str, '%y/%m/%d %H:%M:%S.%f')
-        datenow = date_object.strftime('%m/%d/%y')
-        requests.borrowed_date = datenow
+        requests.borrowed_date = datetime(2022, 10, 10, 10, 10 ,10)
         # requests.due_date =
 
         db.session.add(requests)
@@ -341,6 +341,7 @@ def lend():
 @login_required
 def borrow(book_id):
 
+  requests = Borrowed_book.query.get(book_id)
   books = Book.query.get_or_404(book_id)
 
   if current_user.id == books.lender_id:
@@ -384,11 +385,14 @@ def borrow(book_id):
         flash('Phone must be more than eight characters!', category='error')
       elif not accept:
         flash('Please read and accept our terms and conditions!', category='error')
+      elif requests.lender_confirm == True:
+        flash('Book already being borrowed. Please try again in the near future!', category='error')
       else:
         if not id:
           borrower = Borrower(fName=fName, lName=lName, address1=address1, city=city, username=current_user.username, email=current_user.email, phone=phone, user_id=current_user.id)
           requests = Borrowed_book(return_book=False, lender_confirm=False, borrower_id=current_user.id, book_id=book_id)
           db.session.add(borrower)
+
 
         else:
           requests = Borrowed_book(return_book=False, lender_confirm=False, borrower_id=current_user.id, book_id=book_id)
@@ -400,5 +404,5 @@ def borrow(book_id):
         return redirect(url_for('views.books'))
 
 
-  return render_template("borrow.html", user=current_user, book=books)
+  return render_template("borrow.html", user=current_user, book=books, requests=requests)
   

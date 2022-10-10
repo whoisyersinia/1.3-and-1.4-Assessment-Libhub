@@ -1,7 +1,8 @@
-{% extends "dashboard/dashboard.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
+{% extends "dashboard/dashboardbase.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 <div>
   <h4 class="pt-2 fw-semibold text-dark">{{ books.title }} by <small>{{ books.author }}</small></h4>
-  <h5 class="pt-3">Requests:</h5>
+  <h5>Requests/Borrowing:</h5>
+  <p class="pb-3">This is where you see all the requests for your book. They are ordered by who requested first. <strong> Only deny a borrower if you have a valid reason</strong>, e.g book returned in a bad condition. Upon accept, your book cannot be requested by other people.</p>
   {% if borrowerlist %}
   <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-center justify-content-evenly">
     {% for borrower in borrowerlist %}
@@ -12,20 +13,30 @@
             <h6 class="card-title">{{borrower.username}}</h6> 
           </a>
         </div>
-        <div class="d-flex justify-content-evenly align-items-center">
-          <a href="{{url_for('views.accept', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
-            <button class="btn btn-primary btn-sm">
-              <i class="bi bi-check-circle"></i>
-               Accept 
-            </button>
-          </a>
-          <a href="{{url_for('views.home')}}" data-bs-toggle="tooltip" data-bs-placement="right" title="Deny {{ borrower.username }}">
-            <button class="btn btn-secondary btn-sm">
-              <i class="bi bi-x-circle"></i> 
-              Deny         
-            </button>
-          </a>
-        </div>
+        {% if borrowerlist.lender_confirm == False%}
+          <div class="d-flex justify-content-evenly align-items-center">
+            <a href="{{url_for('views.accept', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
+              <button class="btn btn-primary btn-sm">
+                <i class="bi bi-check-circle"></i>
+                Accept 
+              </button>
+            </a>
+            <a href="{{url_for('views.home')}}" data-bs-toggle="tooltip" data-bs-placement="right" title="Deny {{ borrower.username }}">
+              <button class="btn btn-secondary btn-sm">
+                <i class="bi bi-x-circle"></i> 
+                Deny         
+              </button>
+            </a>
+          </div>
+        {% else %}
+        <form method="POST">
+          <p class="mb-1">Being borrowed</p>
+          <button class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Did {{ borrower.username }} return {{ books.title }}?">
+            <i class="bi bi-arrow-return-right"></i>            
+            Returned         
+          </button>
+        </form>
+        {% endif %}
       </div>
     </div>
     {% endfor %}
