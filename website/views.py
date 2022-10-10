@@ -27,7 +27,10 @@ def privacy():
 
 @views.route('/books')
 def books():
-  books = Book.query.filter(Book.lender_id != current_user.id).order_by(Book.created_on).limit(4).all()
+  if current_user.is_authenticated is True :
+    books = Book.query.filter(Book.lender_id != current_user.id).order_by(Book.created_on).limit(4).all()
+  else:
+    books = Book.query.order_by(Book.created_on).limit(4).all()
   return render_template("books.html", user=current_user, books=books)
 
 @views.route('/search/<path:searchterm>')

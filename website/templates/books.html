@@ -42,6 +42,11 @@
     </div>
   </div>
   {%endif%}
+  <div class="d-flex justify-content-center align-content-center">
+    <a href="{{url_for('views.lended', user_id=current_user.id)}}">
+      <button class="btn btn-secondary btn-md mb-3" type="button">Check Your Books</button>
+    </a>
+  </div>
 </body>
 
 {% endblock %}

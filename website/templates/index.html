@@ -9,7 +9,7 @@
     <div class="px-4 py-5 my-5 text-center content">
       <img class="d-block mx-auto" src="./static/images/Libhub-4.svg" alt="logo" >
       <div class="lead col-lg-6 mx-auto text-light fw-semibold">
-        <p class="lead mb-4 ">Libhub Incorporated &trade;. was founded, in 2022, by our esteemed CEO, Marcus Demafeliz. He had a dream that anyone, of any race, gender, and religion, can read a book at any time. Welcome to Libhub!</p>
+        <p class="lead mb-4 ">Libhub Incorporated &trade; was founded, in 2022, by our esteemed CEO, Marcus Demafeliz. He had a dream that anyone, of any race, gender, and religion, can read a book at any time. Welcome to Libhub!</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           {% if user.is_authenticated %}
           <button type="button" class="btn btn-outline-light btn-lg px-4 gap-3" onclick="window.location.href='/books'">Explore the Library</button>
@@ -27,15 +27,15 @@
   <div class="container-fluid my-5 d-grid">
     <div class="row row-cols-1 align-items-center justify-content-center overflow-hidden">
 
-      <div class="text-center col-sm-12 ">
+      <div class="text-center col-lg-12 col-sm-9">
         <h3 class="text_2 fs-1 text-dark display-3 fw-semibold">Find your book using</h3>
       </div>  
 
-      <div class="text-center col-sm-3 mx-auto">
+      <div class="text-center col-lg-3 mx-auto">
         <h3 class="text_3 fs-2 text-dark display-1 fw-normal">our extensive database.</h3>
       </div>  
 
-      <div class="col-sm-12 mt-4 ps-4 offset-9">
+      <div class="col-lg-12 mt-4 ps-lg-4 offset-lg-9 offset-4">
         <form method="POST">
           <div class="input-group">
             <input name="search" type="search" class="form-control-lg border border-1 border-secondary" placeholder="Enter book" value="1984" aria-label="search" aria-describedby="button-addon">
@@ -55,12 +55,12 @@
 
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
       <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/images/borrow.jpg');">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg hover-zoom" style="background-image: url('/static/images/borrow.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Borrow books at <strong>any time</strong>.</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" >
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo">
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
@@ -76,7 +76,7 @@
       </div>
 
       <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/images/lend.jpg');">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg hover-zoom" style="background-image: url('/static/images/lend.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">'If it exists we have it. If not, start <strong>lending</strong> today.'</h2>
             <ul class="d-flex list-unstyled mt-auto">
@@ -97,7 +97,7 @@
       </div>
 
       <div class="col">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/images/control.jpg');">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg hover-zoom" style="background-image: url('/static/images/control.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><strong>Limitless</strong> control over your books.</h2>
             <ul class="d-flex list-unstyled mt-auto">
@@ -179,17 +179,25 @@
         <h2>Borrowing at Libhub</h2>
         <p>Check our database and see if we have the book you're looking for. By borrowing at Libhub&trade; you ensure that your process will be safe and checked in real time. Make sure to borrow from books from people you personally know. </p>
         <a href="{{url_for('views.books')}}">
-          <button class="btn btn-outline-primary" type="button">Borrow Now</button>
+          <button class="btn btn-outline-primary reveal fade-left" type="button">Borrow Now</button>
         </a>
       </div>
     </div>
     <div class="col-md-6">
       <div class="h-100 p-5 bg-light border rounded-3">
         <h2>Lending at Libhub</h2>
-        <p>Lending at Libhub is easy, insert the book's, you wish to lend, title and author, as simple as that!. Your friends will now start to see your book and lend it! You will see all requests for the book using the <a href="{{ url_for('views.dashboard', user_id=current_user.id) }}">dashboard</a></p>
-        <a href="{{url_for('views.lend')}}">
-          <button class="btn btn-outline-secondary" type="button">Lend Now</button>
-        </a>
+        <p>Lending at Libhub is easy, insert the book's, you wish to lend, title and author, as simple as that! Your friends will now start to see your book and lend it! You will see all requests for the book using our 
+        {% if user.is_authenticated %}
+          <a class="text-dark" href="{{ url_for('views.dashboard', user_id=current_user.id) }}">dashboard.</a></p>
+          <a href="{{url_for('views.lend')}}">
+            <button class="btn btn-outline-secondary mb-3 reveal fade-right" type="button">Lend Now</button>
+          </a>
+        {% else %}
+          dashboard. <br>
+          <a href="{{url_for('views.lend')}}">
+            <button class="btn btn-outline-secondary my-2 reveal fade-right" type="button">Lend Now</button>
+          </a>
+        {% endif %}
       </div>
     </div>
   </div>

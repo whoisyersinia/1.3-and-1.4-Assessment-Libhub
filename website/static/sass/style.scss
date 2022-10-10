@@ -198,6 +198,15 @@ body {
   blinkTextCursor 500ms infinite;
 }
 
+.hover-zoom{
+  transition: all 0.3s ease;
+  opacity: 0.95;
+}
+.hover-zoom:hover{
+  transform: scale(1.02);
+  box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+}
+
 .active.fade-bottom {
   animation: fade-bottom 1s ease;
 }
