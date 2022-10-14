@@ -1,40 +1,144 @@
-{% extends "base.html" %} {% block title %}Libhub - Your Library{% endblock title %}
-{% block content
-%}
-<body class="bg-dark">
-  <div class="container-fluid position-absolute top-20 start-0 bg-dark px-3" >
-    {%if results%}
-      <h2 class="text-light px-4">Here's what we've found for '{{searchterm}}'</h2>
-    {%else%}
-      <h1 class="text-light">No results for '{{searchterm}}'</h1>
-      <h3 class="text-primary">Can't find it, lend it!</h3>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-start">
-       <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
-       <button type="button" class="btn btn-primary btn-sm px-4" onclick="window.location.href='/'">Go back</button>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="{{ url_for('static', filename='css/style.scss.css') }}"
+  rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/x-icon" href="/static/images/logo.svg">
+
+<title>Search - {{searchterm}}</title> 
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+
+  <div class="container-fluid">
+
+    <a href="{{ url_for('views.home') }}">
+     <img src="/static/images/banner.svg" alt="logo-banner" class="navbar-brand ms-4 ">
+    </a> 
+
+    <button
+      class="navbar-toggler me-4"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      id="nav_button"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    {% if user.is_authenticated %}
+    <div id="navbarNav" class="collapse navbar-collapse">
+      <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light fw-normal" href="{{ url_for('views.lend') }}">Lend</a>
+        </li>
+      </ul>
+      <div class="navbar navbar-nav pe-lg-4 px-sm-4 mb-sm-0">
+
+        <a href="{{ url_for('views.account', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account Settings">
+          <i class="bi bi-person-circle px-3 pb-1 text-center" style="font-size: 1.75rem; color: #c9ddff;"></i>
+        </a>
+
+        <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
+
+        <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm" onclick="window.location.href='/logout'" tabindex=0>Logout</button>
       </div>
-    {%endif%}
+    </div>
+
+    {% else %}
+    <div id="navbarNav" class="collapse navbar-collapse">
+      <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
+        </li>
+      </ul> 
+      <div class="navbar navbar-nav d-flex align-items-center justify-content-center pe-4">
+        <button type="button" class="nav-item btn btn-link navbar-btn btn-sm px-3 me-1.5 text-decoration-none" onclick="window.location.href='/login'" tabindex=0>Already have an account?</button>
+
+        <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm text-capitalize" onclick="window.location.href='/sign-up'" tabindex=0>Sign Up for Free</button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+  {% if category == 'error' %}
+  <div class="alert alert-danger alert-dismissable d-flex align-items-center fade show fixed-top" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    {{ message }}
+    
+    <button type="button" class="btn-close position-absolute top-25 end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>     
   </div>
 
-  {% if results %}
-  <div class="container-fluid position-absolute top-30 start-0 bg px-3"> 
-    <div class="position-relative d-flex align-items-start justify-content-sm-evenly row row-cols-4">
-    {% for result in results %}
-      <div class="card row-4 p-0" style="width: 12rem;">
-        <img src="/static/images/book.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{ result.title }}</h5>
-          <h6 class="card-subtitle mb-2">{{ result.author }}</h6>
-          {% if current_user.id == result.lender_id %}
-          <a href="{{ url_for('views.edit', book_id=result.id ) }}">Edit</a>
-          {% else %}
-          <a href="{{ url_for('views.borrow', book_id=result.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
-          {% endif %}
-        </div>
-      </div>
-    {% endfor %}
-    </div>
-  </div>  
-  {%endif%}
+  {% else %}
+  <div class="alert alert-success alert-dismissable d-flex align-items-center fade show fixed-top" role="alert">
 
-</body>
-{% endblock %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="me-2"
+      id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    {{ message }}
+
+    <button type="button" class="btn-close position-absolute top-25 end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button> 
+  </div>
+
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<html>
+  <body class="bg-dark">
+    <div class="container-fluid position-absolute top-20 start-0 bg-dark px-3" >
+      {%if results%}
+        <h2 class="text-light px-4">Here's what we've found for '{{searchterm}}'</h2>
+      {%else%}
+        <h1 class="text-light">No results for '{{searchterm}}'</h1>
+        <h3 class="text-primary">Can't find it, lend it!</h3>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-start">
+         <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
+         <button type="button" class="btn btn-primary btn-sm px-4" onclick="window.location.href='/'">Go back</button>
+        </div>
+      {%endif%}
+    </div>
+  
+    {% if results %}
+    <div class="container-fluid position-absolute top-30 start-0 bg px-3">
+      <div class="position-relative d-flex align-items-start justify-content-sm-evenly row row-cols-4">
+      {% for result in results %}
+        <div class="card row-4 p-0" style="width: 12rem;">
+          <img src="/static/images/book.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ result.title }}</h5>
+            <h6 class="card-subtitle mb-2">{{ result.author }}</h6>
+            {% if current_user.id == result.lender_id %}
+            <a href="{{ url_for('views.edit', book_id=result.id ) }}">Edit</a>
+            {% else %}
+            <a href="{{ url_for('views.borrow', book_id=result.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+    {%endif%}
+  
+  </body>
+</html>

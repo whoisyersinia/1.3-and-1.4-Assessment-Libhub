@@ -12,6 +12,7 @@
           <div class="list-group list-group-flush account-settings-links">
             <a class="list-group-item list-group-item-action active" data-toggle="list" href="{{url_for('views.account', user_id=current_user.id)}}">Username and Email</a>
             <a class="list-group-item list-group-item-action " data-toggle="list" href="{{url_for('views.passreset', user_id=current_user.id)}}">Password Reset</a>
+            <a class="list-group-item list-group-item-action " data-toggle="list" href="{{url_for('views.infoedit', user_id=current_user.id)}}">Personal Information</a>
           </div>
         </div>
         <div class="col-md-9">

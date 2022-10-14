@@ -56,6 +56,9 @@
             <li class="nav-item">
               <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-normal" href="{{ url_for('views.lend') }}">Lend</a>
+            </li>
           </ul>
           <div class="navbar navbar-nav pe-lg-4 px-sm-4 mb-sm-0">
 
@@ -119,9 +122,9 @@
       {% endif %}
     {% endwith %}
 
-    <div>{% block content %} {% endblock %}</div>
+    <section>{% block content %} {% endblock %}</section>
 
-    <div class="container-fluid bg-dark overflow-hidden">
+    <div class="container-fluid bg-dark">
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top footer">
         <p class="col-md-4 mb-0 text-light">&copy; 2022 Libhub, Inc</p>
     
@@ -157,6 +160,7 @@
     <script
     type="text/javascript"
     src="{{ url_for('static', filename='javascript/script.js') }}"
+    async
     ></script>
 
   </body>

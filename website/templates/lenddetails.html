@@ -1,22 +1,15 @@
-{% extends "base.html" %} {% block title %}Borrowing {{book.title}}{% endblock %}{% block content
+{% extends "base.html" %} {% block title %}Lending {{book.title}} - Libhub {% endblock %}{% block content
   %} 
   <div class="container-fluid bg-dark w-100 h-100 d-grid position-absolute top-0 start-0 overflow-hidden">
     <div class="row row-cols-2 align-items-center ">
       <div class="col-sm-4">
         <div class="row row-cols-1 justify-content-center">
-          <h1 class="text-center pb-3 text-light">Borrowing:</h1>
+          <h1 class="text-center pb-3 text-light">Lending:</h1>
           <div class="card col-mb-4 p-0" style="width: 18rem;">
             <img src="/static/images/book.jpg" class="card-img-top" alt="book">
             <div class="card-body">
               <h5 class="card-title"> {{ book.title }} </h5>
-              <h6 class="card-subtitle mb-2"> {{ book.author }} </h6>
-              <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
-              {% if requests.lender_confirm == True %}
-                <h6 class="card-subtitle text-warning mb-2">Book already being borrowed!</a></h6>
-              {% endif %}
-              {% if borrowed_before %}
-                <h6 class="card-subtitle text-warning mb-2">Book borrowed before!</a></h6>
-              {%endif%}
+              <h6 class="card-subtitle"> {{ book.author }} </h6>
             </div>
           </div>
         </div>
@@ -27,41 +20,41 @@
             <div class="row row-cols-2 gy-3">
               <div class="col-6 offset-3">
                 <img class="p-0 mb-2" src="/static/images/Libhub-2.svg" alt="logo">
-                <h1 class="h3 fw-semibold text-light">Enter Borrower Details</h1>
-                <p class="mb-3 fw-normal text-muted">Lender ({{book.lender_username}}) will immediately be notifed and will be sent any necessary details.</p>
+                <h1 class="h3 fw-semibold text-light">Enter Lender Details</h1>
+                <p class="mb-3 fw-normal text-muted">Your details will not be shared expect for people you've accpeted to borrow your book.</p>
               </div>
 
               <div class="col-4 offset-2">
                 <div class="form-floating">
-                  <input name="fName" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="First Name" value="{{ request.form['fName'] }}{{lender.fName}}">
+                  <input name="fName" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="First Name" value="{{ request.form['fName'] }}{{borrower.fName}}">
                   <label for="floatingInput">First Name*</label>
                 </div>
               </div>
 
               <div class="col-4">
                 <div class="form-floating">
-                  <input name="lName" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Last Name" value="{{ request.form['lName'] }}{{lender.lName}}">
+                  <input name="lName" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Last Name" value="{{ request.form['lName'] }}{{borrower.lName}}">
                   <label for="floatingInput">Last Name*</label>
                 </div>
               </div>
         
               <div class="col-4 offset-2">
                 <div class="form-floating">
-                  <input name="address" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="123 ABC St." value="{{ request.form['address1'] }}{{lender.address1}}">
+                  <input name="address" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="123 ABC St." value="{{ request.form['address1'] }}{{borrower.address1}}">
                   <label for="floatingInput">Address*</label>
                 </div>
               </div>
 
               <div class="col-4 mb-3">
                 <div class="form-floating">
-                  <input name="city" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Christchurch" value="{{ request.form['city'] }}{{lender.city}}">
+                  <input name="city" type="text" class="form-control border border-3 border-info" id="floatingInput" placeholder="Christchurch" value="{{ request.form['city'] }}{{borrower.city}}">
                   <label for="floatingInput">City*</label>
                 </div>
               </div>
 
               <div class="col-3 offset-2">
                 <div class="form-floating">
-                  <input name="phone" type="tel" class="form-control border border-3 border-info" id="floatingInput" placeholder="Phone Number" value="{{ request.form['phone'] }}0{{lender.phone}}">
+                  <input name="phone" type="tel" class="form-control border border-3 border-info" id="floatingInput" placeholder="Phone Number" value="{{ request.form['phone'] }}{{borrower.phone}}">
                   <label for="floatingInput">Phone No.*</label>
                 </div>
               </div>
@@ -75,7 +68,7 @@
       
               <div class="col-4 offset-4">
                 <div class="mt-4">
-                  <button class="btn btn-lg btn-primary w-100" type="submit">Borrow book</button>
+                  <button class="btn btn-lg btn-primary w-100" type="submit">Lend book</button>
                 </div>
               </div>
 

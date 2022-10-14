@@ -7,8 +7,10 @@
       <form method="POST">
         <img class="p-0 mb-2" src="./static/images/Libhub-2.svg" alt="logo">
         <h1 class="h3 fw-semibold text-light">Enter Book Details</h1>
-        <p class="fw-normal text-muted">Please enter details as accurately as possible</p>
-        <p class="fw-normal text-muted">Please do not add any duplicate books</p>
+        <p class="fw-normal text-muted">Please enter details as accurately as possible <br>
+        {% if current_user.details == True %}
+        Books will use the personal information entered <br> before to edit please <a href="{{url_for('views.infoedit', user_id=current_user.id)}}"target="_blank">click</a>.</p>
+        {%endif%}
 
 
         <div class="form-floating">

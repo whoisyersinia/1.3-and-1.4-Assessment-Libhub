@@ -1,17 +1,18 @@
 {% extends "dashboard/dashboardbase.html" %} {% block title %}Books Borrowed{% endblock %}{% block content%}
-{% if booksborrowed.lender_confirm == False %}
-  {% if books %}
-  <h3 class="fs-4 mt-2">Books awaiting response</h3>
+{% if bookslist.lender_confirm == False %}  
+  <p>Requests that are gone are denied</p>
+  <h3 class="fs-4 mt-2">Borrow requests:</h3>
+  {% if bookslist %}
   <div class="container-fluid pt-2 d-grid" id="library" > 
     <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
-    {% for book in books %}
+    {% for book in bookslist %}
       <div class="card col-mb-4 p-0" style="width: 18rem;">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start pb-2">
             <h5 class="card-title">{{ book.title }}</h5> 
           </div>
           <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
-          <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
+          <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=bookslist.lender_id)}}">{{ book.lender_username }}</a></h6>
         </div>
       </div>
     {% endfor %}
@@ -23,28 +24,58 @@
   </div>
 
 {% else %}
-  {% if books%}
-  <h3 class="fs-4 mt-2">Books borrowing</h3>
+  <h3 class="fs-4 mt-2">Books awaiting response</h3>
+  <p>No books found</p>
+  <a href="{{url_for('views.books')}}">
+    <button type="button" class="btn btn-primary btn-sm px-4">Borrow a Book</button>
+  </a>
+ 
+{% endif %}
+
+{% if bookslist.lender_confirm %}
+  <p>Books will be removed from this list once the lender has confirmed the book is returned.</p>
+  <h3 class="fs-4 mt-2">Books borrowing:</h3>
+  {% if bookslist %}
   <div class="container-fluid pt-2 d-grid" id="library" > 
-    <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
-    {% for book in books %}
-      <div class="card col-mb-4 p-0" style="width: 18rem;">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start pb-2">
-            <h5 class="card-title">{{ book.title }}</h5> 
+    <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-stretch justify-content-evenly">
+    {% for book in bookslist %}
+      <form method="POST">
+        <div class="card col-mb-4 p-0" style="width: 18rem;">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start pb-2">
+              <h5 class="card-title">{{ book.title }}</h5>
+            </div>
+            <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
+            <h6 class="card-subtitle mb-2">Lended by <a class="text-3" href="{{url_for('views.user', userid=bookslist.lender_id)}}">{{ book.lender_username }}</a></h6>
+            <h6 class="card-subtitle mb-2">Book due on: {{ bookslist.due_date }}</h6>
+            <a href="" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="">
+              <button class="btn btn-primary btn-sm">
+                <i class="bi bi-person-circle"></i>
+                Lender Details
+              </button>
+            </a>
+
+            <button class="btn btn-secondary btn-sm" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="Tell the lender you wish to return the book" type="submit" name="returned" value="returned">
+              <i class="bi bi-patch-check-fill"></i>
+              Return Book
+            </button>
+            
           </div>
-          <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
-          <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
         </div>
-      </div>
+      </form>
     {% endfor %}
     </div>
     {% else %}
       <p>No books found</p>
-      <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/lend'">Lend a Book</button>
+      <a href="{{url_for('views.books')}}">
+        <button type="button" class="btn btn-primary btn-sm px-4">Borrow a Book</button>
+      </a>
     {% endif %}
   </div>
 
+{% else %} 
+  <h3 class="fs-4 mt-5">Books borrowing:</h3>
+  <p>No books found</p>
 {% endif %}
 
 

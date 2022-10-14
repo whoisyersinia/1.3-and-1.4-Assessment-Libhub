@@ -168,7 +168,7 @@ class Lender(db.Model):
   )
 
   lender_id = db.relationship(
-    "Book",
+    "Borrowed_book",
     backref='lender',
     lazy=True
   )
@@ -203,6 +203,12 @@ class Borrowed_book(db.Model):
     default=False
   )
 
+  return_confirm = db.Column(
+    db.Boolean,
+    nullable=False,
+    default=False
+  )
+
   lender_confirm = db.Column(
     db.Boolean,
     nullable=False,
@@ -212,6 +218,12 @@ class Borrowed_book(db.Model):
   borrower_id = db.Column(
     db.Integer,
     db.ForeignKey('borrower.id'),
+    nullable=False
+  )
+
+  lender_id = db.Column(
+    db.Integer,
+    db.ForeignKey('lender.id'),
     nullable=False
   )
 
@@ -253,13 +265,15 @@ class User(db.Model, UserMixin):
     default=datetime.utcnow
   )
 
+  details = db.Column(
+    db.Boolean,
+    nullable=False,
+    default=False,
+  )
+
+
   user_id = db.relationship(
     "Borrower",
     backref='user',
     lazy=True
   )
-
-
-
-
-

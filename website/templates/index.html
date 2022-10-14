@@ -2,9 +2,7 @@
 {% block content
 %}
 <body>
-  <div
-  class="img-fluid banner-image w-100 vh-100 d-flex justify-content-center align-items-center"
-  > 
+  <div class="img-fluid banner-image w-100 vh-100 d-flex justify-content-center align-items-center"> 
   <main class="bg-text">
     <div class="px-4 py-5 my-5 text-center content">
       <img class="d-block mx-auto" src="./static/images/Libhub-4.svg" alt="logo" >
@@ -24,28 +22,32 @@
 
   </div>
 
-  <div class="container-fluid my-5 d-grid">
-    <div class="row row-cols-1 align-items-center justify-content-center overflow-hidden">
-
-      <div class="text-center col-lg-12 col-sm-9">
-        <h3 class="text_2 fs-1 text-dark display-3 fw-semibold">Find your book using</h3>
-      </div>  
-
-      <div class="text-center col-lg-3 mx-auto">
-        <h3 class="text_3 fs-2 text-dark display-1 fw-normal">our extensive database.</h3>
-      </div>  
-
-      <div class="col-lg-12 mt-4 ps-lg-4 offset-lg-9 offset-4">
-        <form method="POST">
-          <div class="input-group">
-            <input name="search" type="search" class="form-control-lg border border-1 border-secondary" placeholder="Enter book" value="1984" aria-label="search" aria-describedby="button-addon">
-          
-            <button type="submit" class="btn btn-outline-secondary" id="button_addon">
-              <i class="fa fa-search"></i>      
-            </button>           
-        </div>
-        </form>
+  <div class="container-fluid my-5 ">
+    <div class="row text-center">
+      <div class="col-md-12">   
+        <div class="row row-cols-1 align-items-center justify-content-center overflow-hidden">
+    
+          <div class="text-center col-lg-12 col-sm-9">
+            <h3 class="text_2 fs-1 text-dark display-3 fw-semibold">Find your book using</h3>
+          </div>  
+    
+          <div class="text-center col-lg-3 mx-auto">
+            <h3 class="text_3 fs-2 text-dark display-1 fw-normal">our extensive database.</h3>
+          </div>  
+    
+          <div class="col-lg-12 mt-4 ps-lg-4 offset-lg-9 offset-4">
+            <form method="POST">
+              <div class="input-group">
+                <input name="search" type="search" class="form-control-lg border border-1 border-secondary" placeholder="Search" value="" aria-label="search" aria-describedby="button-addon">
+              
+                <button type="submit" class="btn btn-outline-secondary" id="button_addon">
+                  <i class="fa fa-search"></i>      
+                </button>           
+              </div>
+            </form>
+          </div>
       </div>
+    </div>
 
 
     </div>
@@ -57,10 +59,10 @@
       <div class="col">
         <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg hover-zoom" style="background-image: url('/static/images/borrow.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Borrow books at <strong>any time</strong>.</h2>
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Borrow books at <strong>anytime</strong>.</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo">
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" loading="lazy">
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
@@ -81,7 +83,7 @@
             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">'If it exists we have it. If not, start <strong>lending</strong> today.'</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" >
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo"  loading="lazy">
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
@@ -102,7 +104,7 @@
             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><strong>Limitless</strong> control over your books.</h2>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo" >
+                <img class="rounded-circle border border-white" src="/static/images/footer.svg" width="32" height="32" alt="logo"  loading="lazy">
               </li>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
@@ -124,7 +126,7 @@
       <div class="col-md-12">
 
         <div id="carouselBasicExample" class="carousel slide carousel-dark" data-bs-ride="carousel">
-          <!-- Inner -->
+
           <div class="carousel-inner">
             <div class="carousel-item active">
               <p class="lead font-italic mx-4 mx-md-5">
@@ -133,7 +135,7 @@
               </p>
               <img src="https://i.pinimg.com/originals/8d/52/58/8d5258236478eb38405c01857d6a5d31.jpg"
               class="rounded-circle img-fluid shadow-1-strong" alt="sample image" width="100"
-              height="100" />
+              height="100"  loading="lazy"/>
               <p class="text-muted mb-0">- Aether</p>
             </div>
   
@@ -143,7 +145,7 @@
               </p>
               <img src="https://i.pinimg.com/originals/fe/ea/0d/feea0da6414eabed40ac137c08dbeef2.jpg"
               class="rounded-circle img-fluid shadow-1-strong" alt="sample image" width="100"
-              height="100" />
+              height="100"  loading="lazy"/>
               <p class="text-muted mb-0">- Anya Forger</p>
             </div>
   
@@ -153,7 +155,7 @@
               </p>
               <img src="https://resizing.flixster.com/zH89xCww4gO2SKbQwyJORooLSPU=/300x300/v2/https://flxt.tmsimg.com/assets/p185846_n165082_cc_v9_aa.jpg"
               class="rounded-circle img-fluid shadow-1-strong" alt="sample image" width="100"
-              height="100" />
+              height="100"  loading="lazy" />
               <p class="text-muted mb-0">- Walter White</p>
             </div>
           </div>
