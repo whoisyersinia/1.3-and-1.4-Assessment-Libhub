@@ -10,7 +10,7 @@
             <div class="card-body">
               <h5 class="card-title"> {{ book.title }} </h5>
               <h6 class="card-subtitle mb-2"> {{ book.author }} </h6>
-              <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_id)}}">{{ book.lender_username }}</a></h6>
+              <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_user_id)}}">{{ book.lender_username }}</a></h6>
               {% if requests.lender_confirm == True %}
                 <h6 class="card-subtitle text-warning mb-2">Book already being borrowed!</a></h6>
               {% endif %}

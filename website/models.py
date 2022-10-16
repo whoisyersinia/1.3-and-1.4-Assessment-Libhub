@@ -31,7 +31,7 @@ class Book(db.Model):
     default=datetime.utcnow
   )
 
-  lender_id= db.Column(
+  lender_user_id= db.Column(
     db.Integer,
     db.ForeignKey('lender.id'),
     nullable=False

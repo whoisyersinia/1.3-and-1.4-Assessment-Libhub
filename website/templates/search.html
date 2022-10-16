@@ -128,7 +128,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ result.title }}</h5>
             <h6 class="card-subtitle mb-2">{{ result.author }}</h6>
-            {% if current_user.id == result.lender_id %}
+            {% if current_user.id == result.lender_user_id %}
             <a href="{{ url_for('views.edit', book_id=result.id ) }}">Edit</a>
             {% else %}
             <a href="{{ url_for('views.borrow', book_id=result.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>

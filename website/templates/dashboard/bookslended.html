@@ -12,7 +12,7 @@
           </a>
         </div>
         <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
-        {% if current_user.id == book.lender_id %}
+        {% if current_user.id == book.lender_user_id %}
           <a href="{{ url_for('views.status', book_id=book.id)}}" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="Check borrowers">
             <button class="btn btn-success btn-sm">
               <i class="bi bi-patch-check-fill"></i>             
