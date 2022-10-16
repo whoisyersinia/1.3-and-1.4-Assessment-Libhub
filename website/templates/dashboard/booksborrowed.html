@@ -11,6 +11,11 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start pb-2">
             <h5 class="card-title">{{ book.title }}</h5> 
+            <form method="POST">
+              <button class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete Request" type="submit" name="delete" value="delete">
+                <i class="bi bi-trash3-fill" style="font-size: 1.25rem; color: #181c1f;"></i>
+              </button>
+            </form>
           </div>
           <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
           <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_user_id)}}">{{ book.lender_username }}</a></h6>
@@ -23,33 +28,41 @@
 <h3 class="fs-4 mt-2">Books borrowing:</h3>
 <p>Books will be removed from this list once the lender has confirmed the book is returned.</p>
   <div class="container-fluid pt-2 d-grid" id="library" > 
-    <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-stretch justify-content-evenly">
-      <form method="POST">
-        <div class="card col-mb-4 p-0" style="width: 18rem;">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start pb-2">
-              <h5 class="card-title">{{ book.title }}</h5>
-            </div>
-            <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
-            <h6 class="card-subtitle mb-2">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_user_id)}}">{{ book.lender_username }}</a></h6>
-            {% if book.return_book %}
-              <h6 class="card-subtitle mb-2">Lender notifed</h6>
-            {%endif%}
-            <h6 class="card-subtitle mb-2">Book due on: {{ book.due_date }}</h6>
-            <a href="{{url_for('views.lenderdetails', book_id=book.id, lender_id=book.lender_id)}}" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="View {{book.lender_username}} details">
-              <button class="btn btn-primary btn-sm" type="button">
-                <i class="bi bi-person-circle"></i>
-                Lender Details
-              </button>
-            </a>
-
-            <button class="btn btn-secondary btn-sm" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="Tell the lender you wish to return the book" type="submit" name="returned" value="returned">
-              <i class="bi bi-arrow-return-right"></i>
-              Return Book
-            </button>
+    <div class="row row-cols-4 d-flex align-self-stretch justify-content-evenly">
+      <div class="card col-mb-4 p-0" style="width: 18rem;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start pb-1">
+            <h5 class="card-title">{{ book.title }}</h5>
+          </div>
+          <div class="d-flex justify-content-center align-items-start flex-column">
+            <h6 class="card-subtitle mb-1">{{ book.author }}</h6>
+            <h6 class="card-subtitle mb-3" >Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_user_id)}}">{{ book.lender_username }}</a></h6>
+            {% if book.due_date.date() < datenow.date() %}
+            <h6 class="card-subtitle text-danger"> {{ book.due_date.strftime('Book overdue on: %b %d, %Y') }}</h6>
+            {%else%}
+            <h6 class="card-subtitle"> {{ book.due_date.strftime('Book due on: %b %d, %Y') }}</h6>
+            {% endif %}
           </div>
         </div>
-      </form>
+        <div class="d-flex justify-content-center align-items-center gap-3 bg-dark p-1 border border-top-0 rounded-1 border-1 flex-nowrap">
+          <a href="{{url_for('views.lenderdetails', book_id=book.id, lender_id=book.lender_id )}}" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="View {{book.lender_username}} details">
+            <button class="btn btn-primary btn-sm" type="button">
+              <i class="bi bi-person-circle"></i>
+              Lender Details
+            </button>
+          </a>
+          {% if not book.return_book%}
+            <form method="POST">
+                <button class="btn btn-secondary btn-sm" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="Tell the lender you've returned the book" type="submit" name="returned" value="returned">
+                  <i class="bi bi-arrow-return-right"></i>
+                  Return Book
+                </button>
+            </form>
+          {%else%}
+            <h6 class="pt-2 text-white">Lender notifed</h6>
+          {%endif%}
+        </div>
+      </div>
     </div>
   </div>
 {% endif %}
@@ -58,7 +71,6 @@
 {% else %} 
   <p>No books found</p>
   <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/books'">Borrow a Book</button>
-
 {%endif%}
 
 

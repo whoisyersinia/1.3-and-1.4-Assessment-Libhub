@@ -50,7 +50,7 @@
             </a>
           </li>
           <li>
-            <a href="{{url_for('views.borrowed', user_id=current_user.id)}}" class="nav-link text-white">
+            <a href="{{url_for('views.borrowed', user_id=current_user.id)}}" class="nav-link text-white" >
               <i class="bi bi-basket" style="font-size:1.1rem; padding-right:0.25rem;"></i>
               Books Borrowed
             </a>
@@ -109,7 +109,7 @@
   
 
         <h2>{% block title %} {% endblock %}</h2>
-        <div>{% block content %} {% endblock %}</div>
+        <section>{% block content %} {% endblock %}</section>
   
       </main>
 

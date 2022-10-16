@@ -1,8 +1,7 @@
-from crypt import methods
 from flask import Blueprint, render_template, request, url_for, flash, redirect, abort
 from flask_login import login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta
 from . import db
 from .models import User, Borrowed_book, Book, Borrower, Lender
 
@@ -80,22 +79,31 @@ def borrowed(user_id):
     .add_columns(Book.id, Book.lender_user_id, Borrowed_book.due_date, Borrowed_book.return_book, Borrowed_book.return_confirm, Book.title, Book.author, Book.lender_username, Borrowed_book.lender_confirm, Borrowed_book.lender_id)\
     .filter(Book.id == Borrowed_book.book_id).all()
 
+  datenow = datetime.today()
 
   if request.method == 'POST':
     for book in bookslist:
       requests = Borrowed_book.query.filter_by(borrower_id=borrower.id).filter_by(book_id=book.id).filter_by(return_confirm = False).first()
+    
+    if 'delete' in request.form:
 
-    if 'returned' in request.form:
+      db.session.delete(requests)
+      db.session.commit()
+
+      flash('Successfully deleted! Refreshing page..', category='success')
+      return redirect(url_for('views.borrowed', user_id=current_user.id))
+
+    elif 'returned' in request.form:
       
       requests.return_book = True
 
       db.session.add(requests)
       db.session.commit()
 
-      flash('Successfully confirmed! Now returning to dashboard', category='success')
+      flash('Successfully confirmed! Refreshing page..', category='success')
       return redirect(url_for('views.borrowed', user_id=current_user.id))
 
-  return render_template("dashboard/booksborrowed.html", user=current_user, bookslist=bookslist)
+  return render_template("dashboard/booksborrowed.html", user=current_user, bookslist=bookslist, datenow=datenow)
 
 @views.route('/dashboard/bookslended/<int:user_id>')
 @login_required
@@ -117,7 +125,6 @@ def status(book_id):
 
   borrowerlist = db.session.query(Borrower, Borrowed_book)\
     .filter(book_id == Borrowed_book.book_id)\
-    .filter(Borrowed_book.return_book == False)\
     .filter(Borrowed_book.return_confirm == False)\
     .outerjoin(Borrowed_book, Borrowed_book.borrower_id==Borrower.id)\
     .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrowed_book.lender_confirm, Borrowed_book.return_book)\
@@ -128,25 +135,27 @@ def status(book_id):
     abort(403)
 
   if request.method == 'POST':
-    borrower = Borrowed_book.query.filter_by(borrower_id = borrowerlist[0].borrower_id ).filter_by(book_id = book_id).first()
+    for borrower in borrowerlist:
+      requests = Borrowed_book.query.filter_by(borrower_id=borrower.id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
 
     if 'deny' in request.form:
+
       db.session.delete(borrower)
       db.session.commit()
       
-      flash('Request successfully deleted!', category='success')
-      return redirect(url_for('views.lended', user_id=current_user.id))
+      flash('Request successfully deleted! Refreshing page...', category='success')
+      return redirect(url_for('views.status', book_id=book_id))
 
     if 'returned' in request.form:
 
-      borrower.return_confirm = True
-      borrower.lender_confirm = False
+      requests.return_confirm = True
+      requests.lender_confirm = False
 
-      db.session.add(borrower)
+      db.session.add(requests)
       db.session.commit()
 
-      flash('Successfully confirmed!', category='success')
-      return redirect(url_for('views.lended', user_id=current_user.id))
+      flash('Successfully confirmed! Refreshing page...', category='success')
+      return redirect(url_for('views.status', book_id=book_id))    
     else:
       pass
 
@@ -163,32 +172,43 @@ def accept(book_id, borrower_id):
     .filter(book_id == Borrowed_book.book_id)\
     .filter(borrower_id == Borrowed_book.borrower_id)\
     .outerjoin(Borrower, Borrower.id==Borrowed_book.borrower_id)\
-    .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrower.fName, Borrower.lName, Borrower.address1, Borrower.city, Borrower.phone)\
+    .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrower.fName, Borrower.lName, Borrower.address1, Borrower.city, Borrower.phone, Borrowed_book.lender_confirm)\
     .filter(Borrower.id == Borrowed_book.borrower_id).first()
 
   if current_user.id != book.lender_user_id:
     abort(403)
 
+
   else:
     if request.method == 'POST':
+      for borrower in borrowerlist:
+        borrower = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
 
       accept = request.form.get('tcs')
 
-      if not accept:
+      if borrower.lender_confirm:
+        flash('Book already being borrowed.', category='error')
+        return redirect(url_for('views.status', book_id=book_id))    
+
+      elif not accept:
         flash('Please read and accept our terms and conditions!', category='error')
-      elif Borrowed_book.lender_confirm == True:
-        flash('Book already being borrowed', category='error')
+
       else:
 
         requests.lender_confirm = True
-        requests.borrowed_date = datetime(2022, 10, 13, 10, 10 ,10)
-        # requests.due_date =
+        
+        requests.borrowed_date = datetime.utcnow()
+        
+        due_date_set = timedelta(weeks = 2)
+        due_date = datetime.utcnow() + due_date_set
+
+        requests.due_date = due_date
 
         db.session.add(requests)
         db.session.commit()
 
         flash('Successfully confirmed! Now returning to dashboard', category='success')
-        return redirect(url_for('views.lended', user_id=current_user.id))
+        return redirect(url_for('views.status', book_id=book_id))    
 
 
   return render_template("accept.html", user=current_user, book=book, borrowerlist=borrowerlist)
@@ -578,6 +598,10 @@ def borrow(book_id):
   borrower = Borrower.query.filter_by(user_id=current_user.id).first()
   lender_id = Lender.query.filter_by(user_id = books.lender_user_id).first()
 
+  if current_user.details:
+    borrowed_before = Borrowed_book.query.filter_by(borrower_id = borrower.id).filter_by(book_id=book_id).filter_by(return_confirm = True).first()
+    check_request = Borrowed_book.query.filter_by(borrower_id = borrower.id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
+
   try:
     requests = Borrowed_book.query.filter_by(book_id = book_id).first()
 
@@ -603,12 +627,10 @@ def borrow(book_id):
       phone = request.form.get('phone')
       accept = request.form.get('tcs')
 
-      borrowed_before = Borrowed_book.query.filter_by(borrower_id = borrower.id).filter_by(book_id=book_id).filter_by(return_confirm = True).all()
+      borrowed_before = Borrowed_book.query.filter_by(borrower_id = borrower.id).filter_by(book_id=book_id).filter_by(return_confirm = True).first()
       phone_check = Borrower.query.filter_by(phone=phone).first()
       check_request = Borrowed_book.query.filter_by(borrower_id = borrower.id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
       id = Borrower.query.filter_by(user_id=current_user.id).first()
-
-      
 
       if current_user.details == False:
         if phone_check:
@@ -727,7 +749,4 @@ def borrow(book_id):
           flash('Details Added. Lender notifed, please wait for response!', category='success')
           return redirect(url_for('views.books'))
 
-      return render_template("borrow.html", user=current_user, book=books, requests=requests, lender=lender, borrowed_before=borrowed_before)
-
-
-  return render_template("borrow.html", user=current_user, book=books, requests=requests, lender=lender)
+  return render_template("borrow.html", user=current_user, book=books, requests=requests, lender=lender, borrowed_before=borrowed_before)

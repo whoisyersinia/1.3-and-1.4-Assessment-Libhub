@@ -34,6 +34,20 @@ body {
   background-color: #fff;
 }
 
+body::-webkit-scrollbar {
+  width: 0.5rem;
+  background-color: #181C1F;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: #ecb0e1;
+  border-radius: 10px;;
+}
+
 * {
   margin: 0;
   padding: 0;

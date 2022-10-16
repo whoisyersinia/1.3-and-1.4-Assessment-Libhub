@@ -24,126 +24,124 @@
 
     <title>{% block title %}{% endblock %}</title>
   </head>
-  <body>
-
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
 
-      <div class="container-fluid">
+    <div class="container-fluid">
 
-        <a href="{{ url_for('views.home') }}">
-         <img src="/static/images/banner.svg" alt="logo-banner" class="navbar-brand ms-4 ">
-        </a> 
+      <a href="{{ url_for('views.home') }}">
+        <img src="/static/images/banner.svg" alt="logo-banner" class="navbar-brand ms-4 ">
+      </a> 
 
-        <button
-          class="navbar-toggler me-4"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          id="nav_button"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <button
+        class="navbar-toggler me-4"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        id="nav_button"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        {% if user.is_authenticated %}
-        <div id="navbarNav" class="collapse navbar-collapse">
-          <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light fw-normal" href="{{ url_for('views.lend') }}">Lend</a>
-            </li>
-          </ul>
-          <div class="navbar navbar-nav pe-lg-4 px-sm-4 mb-sm-0">
+      {% if user.is_authenticated %}
+      <div id="navbarNav" class="collapse navbar-collapse">
+        <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light fw-normal" href="{{ url_for('views.lend') }}">Lend</a>
+          </li>
+        </ul>
+        <div class="navbar navbar-nav pe-lg-4 px-sm-4 mb-sm-0">
 
-            <a href="{{ url_for('views.account', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account Settings">
-              <i class="bi bi-person-circle px-3 pb-1 text-center" style="font-size: 1.75rem; color: #c9ddff;"></i>
-            </a>
+          <a href="{{ url_for('views.account', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Account Settings">
+            <i class="bi bi-person-circle px-3 pb-1 text-center" style="font-size: 1.75rem; color: #c9ddff;"></i>
+          </a>
 
-            <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
+          <a class="nav-link text-primary fw-normal me-lg-3" href="{{ url_for('views.dashboard', user_id=current_user.id) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">{{user.username}}</a>
 
-            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm" onclick="window.location.href='/logout'" tabindex=0>Logout</button>
-          </div>
+          <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm" onclick="window.location.href='/logout'" tabindex=0>Logout</button>
         </div>
-
-        {% else %}
-        <div id="navbarNav" class="collapse navbar-collapse">
-          <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
-            </li>
-          </ul> 
-          <div class="navbar navbar-nav d-flex align-items-center justify-content-center pe-4">
-            <button type="button" class="nav-item btn btn-link navbar-btn btn-sm px-3 me-1.5 text-decoration-none" onclick="window.location.href='/login'" tabindex=0>Already have an account?</button>
-
-            <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm text-capitalize" onclick="window.location.href='/sign-up'" tabindex=0>Sign Up for Free</button>
-          </div>
-        </div>
-        {% endif %}
-      </div>
-    </nav>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-      {% if category == 'error' %}
-      <div class="alert alert-danger alert-dismissable d-flex align-items-center fade show fixed-top" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-        </svg>
-        {{ message }}
-        
-        <button type="button" class="btn-close position-absolute top-25 end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>     
       </div>
 
       {% else %}
-      <div class="alert alert-success alert-dismissable d-flex align-items-center fade show fixed-top" role="alert">
+      <div id="navbarNav" class="collapse navbar-collapse">
+        <ul class="navbar navbar-nav bg-text-shadow me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-light fw-normal" href="{{ url_for('views.home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light fw-normal" href="{{ url_for('views.books') }}">Books</a>
+          </li>
+        </ul> 
+        <div class="navbar navbar-nav d-flex align-items-center justify-content-center pe-4">
+          <button type="button" class="nav-item btn btn-link navbar-btn btn-sm px-3 me-1.5 text-decoration-none" onclick="window.location.href='/login'" tabindex=0>Already have an account?</button>
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="me-2"
-          id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-        </svg>
-        {{ message }}
-  
-        <button type="button" class="btn-close position-absolute top-25 end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button> 
+          <button type="button" class="nav-item btn btn-secondary navbar-btn btn-sm text-capitalize" onclick="window.location.href='/sign-up'" tabindex=0>Sign Up for Free</button>
+        </div>
       </div>
-
       {% endif %}
-      {% endfor %}
-      {% endif %}
-    {% endwith %}
-
-    <section>{% block content %} {% endblock %}</section>
-
-    <div class="container-fluid bg-dark">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top footer">
-        <p class="col-md-4 mb-0 text-light">&copy; 2022 Libhub, Inc</p>
-    
-        <a href="#top" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none pt-sm-4 pt-lg-0">
-          <img class="d-block mx-auto" src="/static/images/footer.svg" alt="logo" >
-        </a>
-    
-        <ul class="nav col-md-4 justify-content-lg-end px-4">
-          <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link px-2 text-light">Home</a></li>
-          <li class="nav-item"><a href="{{url_for('views.privacy')}}" target="_blank" class="nav-link px-2 text-light">Privacy</a></li>
-          <li class="nav-item"><a href="{{url_for('views.tandc')}}" target="_blank" class="nav-link px-2 text-light">Terms of Use</a></li>
-          {% if user.is_authenticated %}
-            <li class="nav-item"><a href="{{url_for('views.user', userid=current_user.id)}}" class="nav-link px-2 text-light">User</a></li>
-          {%endif%}
-          <li class="nav-item"><a href="https://github.com/whoisyersinia/1.3-and-1.4-Assessment" target="_blank" class="nav-link px-2 text-light"><i class="bi bi-github" style="font-size: 1.10rem; padding-right: 0.5rem;"></i>Github</a></li>
-        </ul>
-      </footer>
     </div>
-    
+  </nav>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="alert alert-danger alert-dismissable d-flex align-items-center fade show fixed-top" role="alert">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+      </svg>
+      {{ message }}
+      
+      <button type="button" class="btn-close position-absolute top-25 end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>     
+    </div>
+
+    {% else %}
+    <div class="alert alert-success alert-dismissable d-flex align-items-center fade show fixed-top" role="alert">
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="me-2"
+        id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      </svg>
+      {{ message }}
+
+      <button type="button" class="btn-close position-absolute top-25 end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button> 
+    </div>
+
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <section>{% block content %} {% endblock %}</section>
+
+  <div class="container-fluid bg-dark">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top footer">
+      <p class="col-md-4 mb-0 text-light">&copy; 2022 Libhub, Inc</p>
+  
+      <a href="#top" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none pt-sm-4 pt-lg-0">
+        <img class="d-block mx-auto" src="/static/images/footer.svg" alt="logo" >
+      </a>
+  
+      <ul class="nav col-md-4 justify-content-lg-end px-4">
+        <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link px-2 text-light">Home</a></li>
+        <li class="nav-item"><a href="{{url_for('views.privacy')}}" target="_blank" class="nav-link px-2 text-light">Privacy</a></li>
+        <li class="nav-item"><a href="{{url_for('views.tandc')}}" target="_blank" class="nav-link px-2 text-light">Terms of Use</a></li>
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a href="{{url_for('views.user', userid=current_user.id)}}" class="nav-link px-2 text-light">User</a></li>
+        {%endif%}
+        <li class="nav-item"><a href="https://github.com/whoisyersinia/1.3-and-1.4-Assessment" target="_blank" class="nav-link px-2 text-light"><i class="bi bi-github" style="font-size: 1.10rem; padding-right: 0.5rem;"></i>Github</a></li>
+      </ul>
+    </footer>
+  </div>
+  
 
     <script 
     src="https://code.jquery.com/jquery-3.6.0.js"
@@ -160,10 +158,8 @@
     <script
     type="text/javascript"
     src="{{ url_for('static', filename='javascript/script.js') }}"
-    async
     ></script>
 
-  </body>
   <!-- Your MOm-->
 </html>
 

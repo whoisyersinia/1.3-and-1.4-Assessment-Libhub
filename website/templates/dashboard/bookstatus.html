@@ -1,54 +1,56 @@
 {% extends "dashboard/dashboardbase.html" %} {% block title %}Books Lended{% endblock %}{% block content%}
 <body>
-  <h4 class="pt-2 fw-semibold text-dark">{{ books.title }} by <small>{{ books.author }}</small></h4>
-  <p>This is where you see all the requests for your book. They are ordered by who requested first. <strong> Only deny a borrower if you have a valid reason</strong>, e.g book returned in a bad condition. Upon accept, your book cannot be requested by other people.</p>
-  <h5 class="pb-2">Requests/Borrowing:</h5>
-  {% if borrowerlist %}
-  <div class="row row-cols-4 d-flex align-self-md-stretch justify-content-md-evenly flex-nowrap">
-    {% for borrower in borrowerlist %}
-    <div class="card col-mb-4 p-0" style="width: 14rem;">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start pb-1">
-          <a href="{{url_for('views.user', userid=borrower.id)}}" data-bs-toggle="tooltip" data-bs-placement="right" title="Account Details">
-            <h6 class="card-title">{{borrower.username}}</h6>
-          </a>
-        </div>
-        {% if not borrower.lender_confirm %}
-          <div class="d-flex justify-content-evenly align-items-center">
-            <a href="{{url_for('views.accept', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
-              <button class="btn btn-primary btn-sm" type="button">
-                <i class="bi bi-check-circle"></i>
-                Accept
-              </button>
-            </a>
-            
-            <form method="POST">
-              <button class="btn btn-secondary btn-sm" type="submit" name="deny" value="deny">
-                <i class="bi bi-x-circle"></i>
-                Deny
-              </button>
-            </form>
-      
-            {% else %}
-              {% if borrowerlist.return_book %} 
-              <p class="mb-1">{{borrower.username}} has returned the book. Please confirm below!</p>
+  <div class="container">
+    <h4 class="pt-2 fw-semibold text-dark">{{ books.title }} by <small>{{ books.author }}</small></h4>
+    <p>This is where you see all the requests for your book. They are ordered by who requested first. <strong> Only deny a borrower if you have a valid reason</strong>, e.g book returned in a bad condition. Upon accept, your book cannot be requested by other people.</p>
+    <h5 class="pb-2">Requests/Borrowing:</h5>
+    {% if borrowerlist %}
+      {% for borrower in borrowerlist %}
+        <div class="row row-cols-4 d-flex align-self-md-stretch justify-content-md-evenly flex-nowrap">
+          <div class="card col-mb-4 p-0" style="width: 14rem;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start pb-1">
+                <a href="{{url_for('views.user', userid=borrower.id)}}" data-bs-toggle="tooltip" data-bs-placement="right" title="Account Details">
+                  <h6 class="card-title">{{borrower.username}}</h6>
+                </a>
+              </div>
+              {% if not borrower.lender_confirm %}
+                <div class="d-flex justify-content-evenly align-items-center">
+                  <a href="{{url_for('views.accept', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
+                    <button class="btn btn-primary btn-sm" type="button">
+                      <i class="bi bi-check-circle"></i>
+                      Accept
+                    </button>
+                  </a>
+        
+                  <form method="POST">
+                    <button class="btn btn-secondary btn-sm" type="submit" name="deny" value="deny">
+                      <i class="bi bi-x-circle"></i>
+                      Deny
+                    </button>
+                  </form>
+        
+                  {% else %}
+                    {% if borrower.return_book %}
+                    <h6 class="mb-1 card-subtitle">{{borrower.username}} has returned the book. Please confirm below!</h6>
+                    {%endif%}
+        
+                    <form method="POST">
+                      <p class="mb-1">Being borrowed</p>
+                      <button class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Did {{ borrower.username }} return {{ books.title }}?" type="submit" name="returned" value="returned">
+                        <i class="bi bi-arrow-return-right"></i>
+                        Returned?
+                      </button>
+                    </form>
+                </div>
               {%endif%}
-            
-              <form method="POST">
-                <p class="mb-1">Being borrowed</p>
-                <button class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Did {{ borrower.username }} return {{ books.title }}?" type="submit" name="returned" value="returned">
-                  <i class="bi bi-arrow-return-right"></i>
-                  Returned?
-                </button>             
-              </form> 
-          </div>         
-        {%endif%}
-      </div>
-    </div> 
+            </div>
+          </div>
+        </div>
+      {% endfor %}    
+    {%else%}
+      <p>No results found.</p>
+    {%endif%}
   </div>
-  {% endfor %}    
 </body>
-{%else%}
-  <p>No results found.</p>
-{%endif%}
 {%endblock%}
