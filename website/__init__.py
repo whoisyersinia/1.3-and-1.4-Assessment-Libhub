@@ -3,10 +3,8 @@ from flask import Flask
 from sassutils.wsgi import SassMiddleware
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_migrate import Migrate
 
 db = SQLAlchemy()
-migrate = Migrate()
 DB_NAME = 'database.db'
 
 
@@ -15,7 +13,6 @@ def create_app():
     app.config.from_object('config')
 
     db.init_app(app)
-    migrate.init_app(app, db)
 
     from .views import views
     from .auth import auth

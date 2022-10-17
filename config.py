@@ -1,4 +1,3 @@
-import os
 from website import db
 
 DB_NAME = 'database.db'

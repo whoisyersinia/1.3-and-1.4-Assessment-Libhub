@@ -1,26 +1,21 @@
 {% extends "dashboard/dashboardbase.html" %} {% block title %}Books Borrowed{% endblock %}{% block content%}
 
 {%if bookslist%}
-{% for book in bookslist %}
-{% if not book.lender_confirm%}
 <h3 class="fs-4 mt-2">Borrow requests:</h3>
 <p>Requests that are gone are denied</p>
-<div class="container-fluid pt-2 d-grid" id="library" > 
+{% for book in bookslist %}
+{% if not book.lender_confirm%}
+  <div class="container-fluid pt-2 d-grid" id="library"> 
     <div class="row row-cols-4 d-flex gy-3 gx-3 align-self-start justify-content-evenly">
       <div class="card col-mb-4 p-0" style="width: 18rem;">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start pb-2">
             <h5 class="card-title">{{ book.title }}</h5> 
-            <form method="POST">
-              <button class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete Request" type="submit" name="delete" value="delete">
-                <i class="bi bi-trash3-fill" style="font-size: 1.25rem; color: #181c1f;"></i>
-              </button>
-            </form>
           </div>
           <h6 class="card-subtitle mb-2">{{ book.author }}</h6>
           <h6 class="card-subtitle">Lended by <a class="text-3" href="{{url_for('views.user', userid=book.lender_user_id)}}">{{ book.lender_username }}</a></h6>
-        </div>
-      </div>
+       </div>
+     </div>
     </div> 
   </div>
 
@@ -51,14 +46,16 @@
               Lender Details
             </button>
           </a>
-          {% if not book.return_book%}
-            <form method="POST">
+
+          {% if not book.return_book%}     
+              <a href="{{url_for('views.returned', book_id=book.id, lender_id=book.lender_id )}}">
                 <button class="btn btn-secondary btn-sm" class="text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="left" title="Tell the lender you've returned the book" type="submit" name="returned" value="returned">
                   <i class="bi bi-arrow-return-right"></i>
                   Return Book
                 </button>
-            </form>
+              </a>
           {%else%}
+          
             <h6 class="pt-2 text-white">Lender notifed</h6>
           {%endif%}
         </div>
@@ -70,7 +67,7 @@
 {%endfor%}
 {% else %} 
   <p>No books found</p>
-  <button type="button" class="btn btn-secondary btn-sm px-4" onclick="window.location.href='/books'">Borrow a Book</button>
+  <button type="button" class="btn btn-primary btn-sm px-4" onclick="window.location.href='/books'">Borrow a Book</button>
 {%endif%}
 
 

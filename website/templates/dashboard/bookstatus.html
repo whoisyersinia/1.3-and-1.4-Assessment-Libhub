@@ -22,26 +22,26 @@
                       Accept
                     </button>
                   </a>
-        
-                  <form method="POST">
-                    <button class="btn btn-secondary btn-sm" type="submit" name="deny" value="deny">
+
+                  <a href="{{url_for('views.deny', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
+                    <button class="btn btn-secondary btn-sm" type="buttton">
                       <i class="bi bi-x-circle"></i>
                       Deny
-                    </button>
-                  </form>
+                    </button>      
+                  </a>
         
                   {% else %}
                     {% if borrower.return_book %}
                     <h6 class="mb-1 card-subtitle">{{borrower.username}} has returned the book. Please confirm below!</h6>
                     {%endif%}
         
-                    <form method="POST">
-                      <p class="mb-1">Being borrowed</p>
-                      <button class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Did {{ borrower.username }} return {{ books.title }}?" type="submit" name="returned" value="returned">
+                    <p class="mb-1">Being borrowed</p>
+                    <a href="{{url_for('views.return_confirm', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
+                      <button class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Did {{ borrower.username }} return {{ books.title }}?" type="button">
                         <i class="bi bi-arrow-return-right"></i>
                         Returned?
                       </button>
-                    </form>
+                    </a>
                 </div>
               {%endif%}
             </div>

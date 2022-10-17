@@ -1,0 +1,73 @@
+{% extends "base.html" %} {% block title %}Confirm Return {{book.title}}{% endblock %}{% block content
+  %} 
+  <div class="container-fluid bg-dark w-100 h-100 d-grid position-absolute top-0 start-0 overflow-hidden">
+    <div class="row row-cols-2 align-items-center ">
+      <div class="col-sm-4">
+        <div class="row row-cols-1 justify-content-center">
+          <h1 class="text-center pb-3 text-light">Borrowing:</h1>
+          <div class="card col-mb-4 p-0" style="width: 18rem;">
+            <img src="/static/images/book.jpg" class="card-img-top" alt="book">
+            <div class="card-body">
+              <h5 class="card-title"> {{ book.title }} </h5>
+              <h6 class="card-subtitle mb-2"> {{ book.author }} </h6>
+              <h6 class="card-subtitle">{{ borrowerlist.due_date.strftime('Due on: %b %d, %Y') }}</h6>
+            </div>
+          </div>
+          <a class="text-decoration-none" href="{{ url_for('views.status', book_id=book.id) }}">
+            <button class="btn btn-md btn-secondary w-50 d-flex justify-content-center align-items-center mt-5 mx-auto">Return</button>
+          </a>     
+        </div>
+      </div>
+      <div class="col-sm-8 p-3">
+        <main class="text-center px-4 py-4 m-auto">
+          <form method="POST">
+            <div class="row row-cols-2 gy-3">
+              <div class="col-6 offset-3">
+                <img class="p-0 mb-2" src="/static/images/Libhub-2.svg" alt="logo">
+                <h1 class="h3 fw-semibold text-light">Borrower Details</h1>
+                <p class="mb-3 fw-light text-muted">Borrower <a class="text-decoration-none text-secondary" href="{{url_for('views.user', userid=borrowerlist.id)}}">({{borrowerlist.username}})</a> will immediately be notifed and will be sent any necessary details.</p>
+
+              </div>
+
+              <div class="col-4 offset-2">
+                <h3 class="fs-5 text-white-50">First Name:</h3>
+                <h5 class="fs-6 text-white">{{borrowerlist.fName}}</h5>
+              </div>
+
+              <div class="col-4">
+                <h3 class="fs-5 text-white-50">Last Name:</h3>
+                <h5 class="fs-6 text-white">{{borrowerlist.lName}}</h5>
+              </div>
+        
+              <div class="col-4 offset-2">
+                <h3 class="fs-5 text-white-50">Address:</h3>
+                <h5 class="fs-6 text-white">{{borrowerlist.address1}}</h5>
+              </div>
+
+              <div class="col-4 mb-3">
+                <h3 class="fs-5 text-white-50">City:</h3>
+                <h5 class="fs-6 text-white">{{borrowerlist.city}}</h5>
+              </div>
+
+              <div class="col-8 offset-2">
+                <h3 class="fs-5 text-white-50">Phone Number:</h3>
+                <h5 class="fs-6 text-white">0{{borrowerlist.phone}}</h5>
+              </div>
+
+              <div class="col-8 offset-2">
+                  <p class="mt-3 text-center text-light fs-6">Confirm the book has been returned to you. This removes this from the book status page.</strong></p>
+              </div>
+
+              <div class="col-4 offset-4">
+                <div class="mt-2">
+                  <button class="btn btn-lg btn-primary w-100" type="submit">Confirm return</button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </main>
+      </div>
+    </div>
+  </div>
+{% endblock %}
