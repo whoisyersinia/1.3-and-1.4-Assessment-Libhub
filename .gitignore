@@ -2,9 +2,8 @@ __pycache__
 .DS_Store
 node_modules
 style.scss.css.map
-database.db
+/instance
 .tmp.drivedownload
 .tmp.driveupload
 style.scss.css
-/migrations
 /.venv

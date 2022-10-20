@@ -120,19 +120,21 @@
     </div>
   
     {% if results %}
-    <div class="container-fluid position-absolute top-30 start-0 bg px-3">
-      <div class="position-relative d-flex align-items-start justify-content-sm-evenly row row-cols-4">
+    <div class="container-fluid position-absolute top-30 start-0 px-3">
+      <div class=" row row-cols-sm-1 row-cols-lg-4 row-cols-md-2 g-4 d-flex align-items-center justify-content-sm-center">
       {% for result in results %}
-        <div class="card row-4 p-0" style="width: 12rem;">
-          <img src="/static/images/book.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">{{ result.title }}</h5>
-            <h6 class="card-subtitle mb-2">{{ result.author }}</h6>
-            {% if current_user.id == result.lender_user_id %}
-            <a href="{{ url_for('views.edit', book_id=result.id ) }}">Edit</a>
-            {% else %}
-            <a href="{{ url_for('views.borrow', book_id=result.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
-            {% endif %}
+        <div class="row d-flex justify-content-center align-self-center">
+          <div class="card p-0" style="width: 16rem;">
+            <img src="/static/images/book.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ result.title }}</h5>
+              <h6 class="card-subtitle mb-2">{{ result.author }}</h6>
+              {% if current_user.id == result.lender_user_id %}
+              <a href="{{ url_for('views.edit', book_id=result.id ) }}">Edit</a>
+              {% else %}
+              <a href="{{ url_for('views.borrow', book_id=result.id) }}" class="text-warning text-decoration-none">Borrow this book?</a>
+              {% endif %}
+            </div>
           </div>
         </div>
       {% endfor %}

@@ -52,8 +52,8 @@ My purpose for the assessment is to develop a place where my friends can borrow 
 
 Upon entry, you will be greeted by the landing page. Which at a glance the navbar is easily visible at the top, this sticks to the top as we scroll down the page. The navbar, itself, contains links which helps the user to navigate around Libhub. The books link takes the user to *books page* where 4 of the most recently lended books are displayed. 
 
-Additonally, here we can see the login links, that takes you to sign-up (if you don't have an account) or to log-in. **I created a authentication process (user acccounts) for users to easily see which one borrowed or lended what book.** 
-The home page is aesthetic with minimal clutter and buttons, which act as links for different parts of Libhub, and a small descripton of the website. The colours I chose were high in contrast against the background *(All images are sourced from [Unsplash](https://unsplash.com/))*, which fit under the Web Content Accessibilty Guidelines (WCAG), a universal and international guidelines for websites across the web to ensure that all content is readable and accessible. This page will also changed including the navbar once the user is logged in.
+Additonally, here we can see the login links, that takes you to sign-up (if you don't have an account) or to log-in. **I created a authentication process (user accounts) for users to easily see who borrowed or lended what book.** 
+The home page is aesthetic with minimal clutter and buttons, which act as links for different parts of Libhub, and a small descripton of the website. The colours I chose were high in contrast against the background *(All images are sourced from [Unsplash](https://unsplash.com/))*, which fit under the Web Content Accessibilty Guidelines (WCAG), a universal and international guidelines for websites across the web to ensure that all content is readable and accessible. This page will also changed, including the navbar, once the user has logged in.
 <figure>
     <img src="./assets/images/home.png" width="850px" height="475px">
     <em>
@@ -61,7 +61,7 @@ The home page is aesthetic with minimal clutter and buttons, which act as links 
     </em>
 </figure>
 
-As we scroll down the navbar still sticks at the top while giving it a solid black background. This is done to keep the navbar way from clipping to other texts as the it is originally transparent. The searchbar searches books based of the the book's title, its author, and the username of the user who lended the book. 
+As we scroll down the navbar still sticks at the top while giving it a solid black background. This is done to keep the navbar way from clipping to other texts as  it is originally transparent. The searchbar searches books based of the the book's title, its author, and the username of the user who lended the book. 
 The cards visualises and represents Libhub's vision for a satisfactory end user experience.
 
 - Borrow books at anytime
@@ -72,7 +72,7 @@ The cards visualises and represents Libhub's vision for a satisfactory end user 
 <figure>
     <img src="./assets/images/home1.png" width="850px" height="475px">
     <em>
-        <figcaption>Searchbar and cards for <em>aesthetics</em></figcaption>
+        <figcaption>Searchbar and cards for <em>aesthetics</em> and interactivity </figcaption>
     </em>
 </figure>
 
@@ -107,7 +107,7 @@ When we scroll down we see the 4 most recent lended books by other users. Each c
 <figure>
     <img src="./assets/images/library2.png" width="850px" height="475px">
     <em>
-        <figcaption>Books avaliable here we can borrow books</figcaption>
+        <figcaption>Books avaliable. Here we can borrow books</figcaption>
     </em>
 </figure>
 
@@ -115,7 +115,7 @@ When we scroll down we see the 4 most recent lended books by other users. Each c
 
 ### Already have an account?
 
-If the user tries access a page that has a login-requried attribute, which includes the borrowing, lending page, as well as the personal dashbord, they will be redirected to the login page. Here, like any other login page, you can enter either the username associated to your account or the email and enter the password as well. If you don't have an account the link *Sign up now* will take you to the sign up page. 
+If the user tries access a page that has a login-requried attribute, which includes the borrowing, lending, as well as the personal dashboard pages, they will be redirected to the login page. Here, like any other login page, you can enter either the username associated to your account or the email and enter the password as well. If you don't have an account the link *Sign up now* will take you to the sign up page. 
 
 <figure>
     <img src="./assets/images/login.png" width="850px" height="475px">
@@ -141,7 +141,7 @@ Here is where you have to sign-up using a valid email while picking your usernam
     </em>
 </figure>
 
-After sign up the newly_created user will be automitically redirected to the home page. Here a new version of the homepage can be seen. The first noticable difference is in the navbar. The sign up for free button turns into a logout button. A lend option is added to easily access the lend page. The user icon takes you to the account settings page, which allows the user to change their username, email, password, and other personal information. The dashboard, which allows the user to view books that've lended or borrowed, can be accessed by clicking the user's username. A pop up on hover will appear for users navigating. The sign up button on the main page turns a button to go to the books page. 
+After sign up, the newly created user will be automatically redirected to the home page. Here a new version of the homepage can be seen. The first noticable difference is in the navbar. The sign up for free button turns into a logout button. A lend option is added to easily access the lend page. The user icon takes you to the account settings page, which allows the user to change their username, email, password, and other personal information. The dashboard, which allows the user to view books that've lended or borrowed, can be accessed by clicking the user's username. A pop up on hover will appear for users navigating. The sign up button on the main page turns a button to go to the books page. 
 
 <figure>
     <img src="./assets/images/home3.png" width="850px" height="475px">
@@ -162,5 +162,14 @@ After sign up the newly_created user will be automitically redirected to the hom
 
 ### Borrowing and Lending 
 
+#### Lending
 
+Lending at Libhub is easy. Click the lend button on the navbar (once logged in), or the the button at the front of the Books page. Here you have put the book's title and its author. There are special requriments in order to 
+
+<figure>
+    <img src="./assets/images/lend.png" width="850px" height="475px">
+    <em>
+        <figcaption>Lending page</figcaption>
+    </em>
+</figure>
 
