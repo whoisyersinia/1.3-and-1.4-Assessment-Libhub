@@ -13,9 +13,12 @@
               <h6 class="card-subtitle"> Due date will be two weeks after today. </h6>
             </div>
           </div>
-          <a class="text-decoration-none" href="{{ url_for('views.status', book_id=book.id) }}">
-            <button class="btn btn-md btn-secondary w-50 d-flex justify-content-center align-items-center mt-5 mx-auto">Return</button>
-          </a>     
+          {% if not borrower_exists %}
+            <a class="text-decoration-none" href="{{ url_for('views.status', book_id=book.id) }}">
+              <button class="btn btn-md btn-secondary w-50 d-flex justify-content-center align-items-center mt-5 mx-auto">Return</button>
+            </a>     
+          {%endif%}
+
         </div>
       </div>
       <div class="col-sm-8 p-3">
@@ -25,7 +28,11 @@
               <div class="col-6 offset-3">
                 <img class="p-0 mb-2" src="/static/images/Libhub-2.svg" alt="logo">
                 <h1 class="h3 fw-semibold text-light">Borrower Details</h1>
+                {%if borrower_exists%}
+                <p class="mb-3 fw-light text-warning">Borrower  <a class="text-decoration-none text-primary" href="{{url_for('views.user', userid=borrowerlist.id)}}">({{borrowerlist.username}})</a> already at limit (1/1). Borrower cannot borrower any books!</p>
+                {%else%}
                 <p class="mb-3 fw-light text-muted">Borrower <a class="text-decoration-none text-secondary" href="{{url_for('views.user', userid=borrowerlist.id)}}">({{borrowerlist.username}})</a> will immediately be notifed and will be sent any necessary details.</p>
+                {%endif%}
 
               </div>
 
@@ -63,12 +70,21 @@
                 <label class="text-white">Agree to  <a class="text-decoration-underline text-secondary" href="{{url_for('views.tandc')}}" target="_blank" data-bs-toggle="" data-bs-placement="right" title="Open Terms and Conditions">terms and conditions</a></label>  
               </div>
 
+              {%if borrower_exists%}
+              <div class="col-4 offset-4">
+                <div class="mt-2">
+                  <a class="text-decoration-none" href="{{ url_for('views.status', book_id=book.id) }}">
+                    <button class="btn btn-md btn-warning w-100">Return</button>
+                  </a>         
+                </div>
+              {%else%}
               <div class="col-4 offset-4">
                 <div class="mt-2">
                   <button class="btn btn-lg btn-primary w-100" type="submit">Accept Borrower</button>
                 </div>
+              {%endif%}
+                
               </div>
-
             </div>
           </form>
         </main>

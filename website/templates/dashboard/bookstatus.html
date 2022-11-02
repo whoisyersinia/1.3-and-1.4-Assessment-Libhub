@@ -3,6 +3,7 @@
   <div class="container">
     <h4 class="pt-2 fw-semibold text-dark">{{ books.title }} by <small>{{ books.author }}</small></h4>
     <p>This is where you see all the requests for your book. They are ordered by who requested first. <strong> Only deny a borrower if you have a valid reason</strong>, e.g book returned in a bad condition. Upon accept, your book cannot be requested by other people.</p>
+    <p class="text-warning">Borrowers can only borrow 1 book at a time!</p>
     <h5 class="pb-2">Requests/Borrowing:</h5>
     {% if borrowerlist %}
       {% for borrower in borrowerlist %}
@@ -23,7 +24,7 @@
                     </button>
                   </a>
 
-                  <a href="{{url_for('views.deny', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Accept {{ borrower.username }}">
+                  <a href="{{url_for('views.deny', book_id=books.id, borrower_id=borrower.id )}}" data-bs-toggle="tooltip" data-bs-placement="left" title="Deny {{ borrower.username }}">
                     <button class="btn btn-secondary btn-sm" type="buttton">
                       <i class="bi bi-x-circle"></i>
                       Deny
