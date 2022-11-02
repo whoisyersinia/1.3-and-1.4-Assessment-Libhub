@@ -46,13 +46,20 @@
   {%endif%}
   
   {% if user.is_authenticated %}
-    <div class="d-flex justify-content-center align-items-center py-3">
+  
+  <div class="d-flex justify-content-center align-items-center py-1">
+    <strong class="text-warning">You only borrow one book at a time! But you can request for multiple books.</strong>
+  </div>
+  <div class="d-flex justify-content-center align-items-center py-3">
       <a href="{{url_for('views.lended', user_id=current_user.id)}}">
         <button class="btn btn-secondary btn-md mb-3" type="button">Your Books</button>
         
       </a>
       <a href="{{url_for('views.borrowed', user_id=current_user.id)}}">
         <button class="btn btn-primary btn-md mb-3 mx-1" type="button">Borrowed Books</button>      
+      </a>
+      <a href="/#search">
+        <button class="btn btn-dark btn-md mb-3 mx-1" type="button">Search</button>      
       </a>
 
       

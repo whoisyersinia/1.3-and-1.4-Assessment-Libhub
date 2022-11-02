@@ -71,13 +71,16 @@ def borrowed(user_id):
 
   borrower = Borrower.query.filter_by(user_id=user_id).first()
 
-
-  bookslist = db.session.query(Borrowed_book, Book)\
-    .filter(Borrowed_book.borrower_id == borrower.id)\
-    .filter(Borrowed_book.return_confirm == False)\
-    .outerjoin(Borrowed_book, Borrowed_book.book_id == Book.id)\
-    .add_columns(Book.id, Book.lender_user_id, Borrowed_book.due_date, Borrowed_book.return_book, Borrowed_book.return_confirm, Book.title, Book.author, Book.lender_username, Borrowed_book.lender_confirm, Borrowed_book.lender_id)\
-    .filter(Book.id == Borrowed_book.book_id).all()
+  if not borrower:
+    flash('Enter personal details!', category='error')
+    return redirect(url_for('views.infoedit', user_id=current_user.id))
+  else:
+    bookslist = db.session.query(Borrowed_book, Book)\
+      .filter(Borrowed_book.borrower_id == borrower.id)\
+      .filter(Borrowed_book.return_confirm == False)\
+      .outerjoin(Borrowed_book, Borrowed_book.book_id == Book.id)\
+      .add_columns(Book.id, Book.lender_user_id, Borrowed_book.due_date, Borrowed_book.return_book, Borrowed_book.return_confirm, Book.title, Book.author, Book.lender_username, Borrowed_book.lender_confirm, Borrowed_book.lender_id)\
+      .filter(Book.id == Borrowed_book.book_id).all()
 
   datenow = datetime.today()
 
@@ -210,6 +213,12 @@ def accept(book_id, borrower_id):
     .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrower.fName, Borrower.lName, Borrower.address1, Borrower.city, Borrower.phone, Borrowed_book.lender_confirm)\
     .filter(Borrower.id == Borrowed_book.borrower_id).first()
 
+  borrower_exists = db.session.query(Borrower, Borrowed_book)\
+    .filter(borrower_id == Borrowed_book.borrower_id)\
+    .filter(Borrowed_book.lender_confirm == True)\
+    .outerjoin(Borrower, Borrower.id==Borrowed_book.borrower_id)\
+    .filter(Borrower.id == Borrowed_book.borrower_id).first()
+
   if current_user.id != book.lender_user_id:
     abort(403)
 
@@ -224,6 +233,11 @@ def accept(book_id, borrower_id):
       if borrower.lender_confirm:
         flash('Book already being borrowed.', category='error')
         return redirect(url_for('views.status', book_id=book_id))    
+
+      elif borrower_exists:
+        flash('Borrower is already at limit (1/1)', category='error')
+        return redirect(url_for('views.status', book_id=book_id))    
+
 
       elif not accept:
         flash('Please read and accept our terms and conditions!', category='error')
@@ -246,7 +260,7 @@ def accept(book_id, borrower_id):
         return redirect(url_for('views.status', book_id=book_id))    
 
 
-  return render_template("accept.html", user=current_user, book=book, borrowerlist=borrowerlist)
+  return render_template("accept.html", user=current_user, book=book, borrowerlist=borrowerlist, borrower_exists=borrower_exists)
 
 @views.route('/return/<int:book_id>/borrower/<int:lender_id>', methods=['GET', 'POST'])
 @login_required
@@ -769,7 +783,8 @@ def borrow(book_id):
             flash('Phone number already in use!', category='error')
           elif check_request:
             flash('Request already sent!', category='error')
-            return redirect(url_for('views.books')) 
+          elif not accept:
+            flash('Please read and accept our terms and conditions!', category='error')
           else:
             if not id:
               lender = Lender(fName=fName, lName=lName, address1=address1, city=city, username=current_user.username, email=current_user.email, phone=phone, user_id=current_user.id)
@@ -796,6 +811,7 @@ def borrow(book_id):
             return redirect(url_for('views.books'))
 
         else:
+  
           if not id:
             lender = Lender(fName=fName, lName=lName, address1=address1, city=city, username=current_user.username, email=current_user.email, phone=phone, user_id=current_user.id)
             new_borrower = Borrower(fName=fName, lName=lName, address1=address1, city=city, username=current_user.username, email=current_user.email, phone=phone, user_id=current_user.id)
@@ -814,6 +830,9 @@ def borrow(book_id):
           elif check_request:
             flash('Request already sent!', category='error')
             return redirect(url_for('views.books')) 
+
+          elif not accept:
+            flash('Please read and accept our terms and conditions!', category='error')
 
           else:
             requests = Borrowed_book(return_book=False, return_confirm=False, lender_confirm=False, borrower_id=borrower.id, lender_id=lender_id.id, book_id=book_id)
