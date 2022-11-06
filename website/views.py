@@ -10,6 +10,9 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
+  """'
+  This is my home page, users can search books here
+  """
   if request.method == 'POST':
     term = request.form.get('search')
     
@@ -19,14 +22,23 @@ def home():
 
 @views.route('/termsandconditions')
 def tandc():
+  """
+  This is my terms and conditions page
+  """
   return render_template('tc.html')
 
 @views.route('/privacypolicy')
 def privacy():
+  """
+  This is my privacy policy page
+  """
   return render_template('privacypolicy.html')
 
 @views.route('/books')
 def books():
+  """
+  This is my books page, it prints out the first 4 recently added books that current user does not own.
+  """
   if current_user.is_authenticated is True:
     books = Book.query.filter(Book.lender_user_id != current_user.id)\
     .order_by(Book.created_on.desc()).limit(4).all()
@@ -36,6 +48,10 @@ def books():
 
 @views.route('/search/<path:searchterm>')
 def search(searchterm):
+  """
+  This is my search page, users redirect to this page once they've searched in the home page.
+  """
+  
   term = "%{}%".format(searchterm)
 
   search = Book.query.filter((Book.title.like(term)) | (Book.author.like(term)) | (Book.lender_username.like(term))).all()
@@ -45,6 +61,9 @@ def search(searchterm):
 
 @views.route('/user/<int:userid>')
 def user(userid):
+  """
+  This prints user information
+  """
 
   user = User.query.get_or_404(userid)
 
@@ -54,6 +73,9 @@ def user(userid):
 @views.route('/dashboard/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def dashboard(user_id):
+  """
+  This is the base dashboard page, users must be logged in to access
+  """
 
   if current_user.id != user_id:
     abort(403)
@@ -65,7 +87,9 @@ def dashboard(user_id):
 @views.route('/dashboard/booksborrowed/<int:user_id>')
 @login_required
 def borrowed(user_id):
-
+  """
+  This is borrowed page, it takes the current user id and checks if they have books borrowed under their account and prints it out on the page.
+  """
   if current_user.id != user_id:
     abort(403)
 
@@ -89,6 +113,9 @@ def borrowed(user_id):
 @views.route('/dashboard/bookslended/<int:user_id>')
 @login_required
 def lended(user_id):
+  """
+  This is my lended page, it takes the current user id and checks if they have books that they've lended on the system and it prints it out on the page. 
+  """
 
   if current_user.id != user_id:
     abort(403)
@@ -100,6 +127,9 @@ def lended(user_id):
 @views.route('/dashboard/bookslended/bookstatus/<int:book_id>')
 @login_required
 def status(book_id):
+  """
+  This is my status page, it takes the book id that the user has lended and checks if anyone has requested or is currently borrowing that book. 
+  """
 
   book = Book.query.get_or_404(book_id)
 
@@ -120,6 +150,9 @@ def status(book_id):
 @views.route('/deny/<int:book_id>/borrower/<int:borrower_id>', methods=['GET', 'POST'])
 @login_required
 def deny(book_id, borrower_id):
+  """
+  This allows the lender to deny a user to borrow a book.
+  """
   book = Book.query.get_or_404(book_id)
 
   requests = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
@@ -158,50 +191,14 @@ def deny(book_id, borrower_id):
 
   return render_template("deny.html", user=current_user, book=book, borrowerlist=borrowerlist)
 
-@views.route('/returned/<int:book_id>/borrower/<int:borrower_id>', methods=['GET', 'POST'])
-@login_required
-def return_confirm(book_id, borrower_id):
-  book = Book.query.get_or_404(book_id)
-
-  requests = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
-
-  borrowerlist = db.session.query(Borrower, Borrowed_book)\
-    .filter(book_id == Borrowed_book.book_id)\
-    .filter(borrower_id == Borrowed_book.borrower_id)\
-    .outerjoin(Borrower, Borrower.id==Borrowed_book.borrower_id)\
-    .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrower.fName, Borrower.lName, Borrower.address1, Borrower.city, Borrower.phone, Borrowed_book.lender_confirm, Borrowed_book.due_date)\
-    .filter(Borrower.id == Borrowed_book.borrower_id).first()
-
-  if current_user.id != book.lender_user_id:
-    abort(403)
-
-
-  else:
-    if request.method == 'POST':
-      for borrower in borrowerlist:
-        borrower = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
-
-      if borrower.return_confirm:
-        flash('Book already being borrowed.', category='error')
-        return redirect(url_for('views.status', book_id=book_id))    
-
-      else:
-
-        requests.return_confirm = True
-        requests.lender_confirm = False
-
-        db.session.add(requests)
-        db.session.commit()
-
-        flash('Successfully confirmed! Now returning to dashboard', category='success')
-        return redirect(url_for('views.status', book_id=book_id))    
-
-  return render_template("return_confirm.html", user=current_user, book=book, borrowerlist=borrowerlist)
 
 
 @views.route('/accept/<int:book_id>/borrower/<int:borrower_id>', methods=['GET', 'POST'])
 @login_required
 def accept(book_id, borrower_id):
+  """
+  This allows the lender to accept requests, it sets the due date to weeks from hitting the accept button on this page. 
+  """
   book = Book.query.get_or_404(book_id)
 
   requests = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
@@ -262,9 +259,55 @@ def accept(book_id, borrower_id):
 
   return render_template("accept.html", user=current_user, book=book, borrowerlist=borrowerlist, borrower_exists=borrower_exists)
 
+@views.route('/returned/<int:book_id>/borrower/<int:borrower_id>', methods=['GET', 'POST'])
+@login_required
+def return_confirm(book_id, borrower_id):
+  """
+  This allows the lender to confirm that the borrower has returned the book
+  """
+  book = Book.query.get_or_404(book_id)
+
+  requests = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
+
+  borrowerlist = db.session.query(Borrower, Borrowed_book)\
+    .filter(book_id == Borrowed_book.book_id)\
+    .filter(borrower_id == Borrowed_book.borrower_id)\
+    .outerjoin(Borrower, Borrower.id==Borrowed_book.borrower_id)\
+    .add_columns(Borrower.username, Borrower.id, Borrowed_book.borrower_id, Borrower.fName, Borrower.lName, Borrower.address1, Borrower.city, Borrower.phone, Borrowed_book.lender_confirm, Borrowed_book.due_date)\
+    .filter(Borrower.id == Borrowed_book.borrower_id).first()
+
+  if current_user.id != book.lender_user_id:
+    abort(403)
+
+
+  else:
+    if request.method == 'POST':
+      for borrower in borrowerlist:
+        borrower = Borrowed_book.query.filter_by(borrower_id=borrower_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
+
+      if borrower.return_confirm:
+        flash('Book already being borrowed.', category='error')
+        return redirect(url_for('views.status', book_id=book_id))    
+
+      else:
+
+        requests.return_confirm = True
+        requests.lender_confirm = False
+
+        db.session.add(requests)
+        db.session.commit()
+
+        flash('Successfully confirmed! Now returning to dashboard', category='success')
+        return redirect(url_for('views.status', book_id=book_id))    
+
+  return render_template("return_confirm.html", user=current_user, book=book, borrowerlist=borrowerlist)
+
 @views.route('/return/<int:book_id>/borrower/<int:lender_id>', methods=['GET', 'POST'])
 @login_required
 def returned(book_id, lender_id):
+  """
+  This allows the borrower to notify the lender that they are going to return the book
+  """
   book = Book.query.get_or_404(book_id)
 
   requests = Borrowed_book.query.filter_by(lender_id=lender_id).filter_by(book_id=book_id).filter_by(return_confirm = False).first()
@@ -305,6 +348,9 @@ def returned(book_id, lender_id):
 @views.route('/lenderdetails/<int:book_id>/lender/<int:lender_id>', methods=['GET', 'POST'])
 @login_required
 def lenderdetails(book_id, lender_id):
+  """
+  This allows the borrower to check the book's lender details
+  """
   book = Book.query.get_or_404(book_id)
 
   borrower = Borrower.query.filter_by(user_id=current_user.id).first()
@@ -326,6 +372,9 @@ def lenderdetails(book_id, lender_id):
 @views.route('/account/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def account(user_id):
+  """
+  This allows users to change their email or username
+  """
 
   user = User.query.filter_by(id=user_id).first()
 
@@ -378,6 +427,9 @@ def account(user_id):
 @views.route('/account/passwordreset/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def passreset(user_id):
+  """
+  This lets users reset their password
+  """
   user = User.query.filter_by(id=user_id).first()
 
   if current_user.id != user_id:
@@ -417,7 +469,9 @@ def passreset(user_id):
 @views.route('/account/personaldetails/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def infoedit(user_id):
-
+  """
+  This allows the users to edit their personal information
+  """
   lender = Lender.query.filter_by(user_id=user_id).first()
   borrower = Borrower.query.filter_by(user_id=current_user.id).first()
 
@@ -529,6 +583,9 @@ def infoedit(user_id):
 @views.route('/edit/<int:book_id>', methods=['GET', 'POST'])
 @login_required
 def edit(book_id):
+  """
+  This page takes the book_id and edit title and/or author or delete the book
+  """
 
   book = Book.query.get_or_404(book_id)
 
@@ -578,6 +635,9 @@ def edit(book_id):
 @views.route('/lend', methods=['GET', 'POST'])
 @login_required
 def lend():
+  """
+  This allows the user to lend a book by inserting its title and author. 
+  """
   if request.method == 'POST':
     
     book = Book.query.filter_by(lender_user_id=current_user.id).all()
@@ -614,6 +674,9 @@ def lend():
 @views.route('/lenddetails/<int:book_id>', methods=['GET', 'POST'])
 @login_required
 def lendinfo(book_id):
+  """
+  If the user hasn't inserted their personal details before lending a book, they redirect to this page to do so
+  """
 
   books = Book.query.get_or_404(book_id)
   borrower = Borrower.query.filter_by(user_id=current_user.id).first()
@@ -680,8 +743,9 @@ def lendinfo(book_id):
 @views.route('/borrow/<int:book_id>', methods=['GET', 'POST'])
 @login_required
 def borrow(book_id):
-
- 
+  """
+  This allows users to borrow books without spamming requests.
+  """
   books = Book.query.get_or_404(book_id)
   lender = Lender.query.filter_by(user_id=current_user.id).first()
   borrower = Borrower.query.filter_by(user_id=current_user.id).first()
