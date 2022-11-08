@@ -187,7 +187,7 @@ After sign up, the newly created user will be automatically redirected to the ho
 
 #### Lending
 
-Lending at Libhub is easy. Click the lend button on the navbar (once logged in), or the the button at the front of the Books page. Here you have put the book's title and its author. There are special requriments in order to 
+Lending at Libhub is easy. Click the lend button on the navbar (once logged in), or the the button at the front of the Books page. Here you have put the book's title and its author.
 
 <figure>
     <img src="assets /images/lend.png" width="850px" height="475px">
