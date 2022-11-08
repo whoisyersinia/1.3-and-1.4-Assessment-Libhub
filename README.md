@@ -8,7 +8,7 @@ My purpose for the assessment is to develop a place where my friends can borrow 
 
 ---
 
-## **Prerequistes / How to run locally**
+## **Prerequistes / How to run locally on cloning(downloading) repo**
 1. Install a version of Python 3 (for which this tutorial is written). 
 
     - (Linux) The built-in Python 3 installation works well, but to install other Python packages you must run (bash/terminal)
@@ -37,9 +37,32 @@ My purpose for the assessment is to develop a place where my friends can borrow 
 
 7. Run `npm ci` on terminal, which downloads the node_modules fodler
 
-8. To run put `flask run`, and click the link provided to view.
+8. To run use `flask run`, and click the link provided to view.
    
 ---
+
+## **How to run locally (for Moderation)**
+1. Install a version of Python 3. 
+
+    - (Linux) The built-in Python 3 installation works well, but to install other Python packages you must run (bash/terminal)
+        
+            sudo apt install python3-pip 
+
+2. Update pip:
+        
+        pip install --upgrade pip
+
+
+3. Install Python packages in *requirements.txt* using terminal:
+        
+        $ pip install -r requirements.txt
+
+4. cd into the 1.3 and 1.4 assessment folder
+
+4. To run use `flask run`, and click the link provided to view.
+   
+---
+
 
 ## **Libhub**
 *My vision of Libhub is to provide end users (my friends) an easy, accessible and functional site to view, track, and lend books. In order to achieve that goal, I developed the website to be easy to use, accessible, functional, while maintaing visually pleasant aesthetics*
