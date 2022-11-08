@@ -1,7 +1,7 @@
 # 1.3-and-1.4-Assessment - Libhub
 
 ## **About**
-Welcome to Libhub. A library, borrowing/lending, website using Flask, SQlite using the ORM Flask-SQLalchemy, Flask-Login, Bootstrap 5, SCSS and Javascript. This assessment was made for the Level 1, 1.3 and 1.4, Digital Technologies Standards for NCEA. This project took approximately 20 hours to develop.
+Welcome to Libhub. A library, borrowing/lending, website using Flask, SQlite using the ORM Flask-SQLalchemy, Flask-Login, Bootstrap 5, SCSS and Javascript. This assessment was made for the Level 1, 1.3 and 1.4, Digital Technologies Standards for NCEA. This project took approximately 20 hours to develop. Completed on the 8th of Novemeber 2022.
 
 ### My Purpose
 My purpose for the assessment is to develop a place where my friends can borrow and lend books to each other, all in one place, using the website as a hub *(hence the name Libhub)* to track the process of borrowing and lending books. 
