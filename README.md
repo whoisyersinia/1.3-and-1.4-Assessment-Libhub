@@ -31,7 +31,7 @@ My purpose for the assessment is to develop a place where my friends can borrow 
 
 5. Install Python packages in *requirements.txt* using terminal:
         
-        $ pip install -r requirements.txt --no-index --find-links file:///tmp/packages
+        $ pip install -r requirements.txt
 
 6. Install a version of [node.js](https://nodejs.org/en/download) (latest)
 
@@ -78,7 +78,7 @@ Upon entry, you will be greeted by the landing page. Which at a glance the navba
 Additonally, here we can see the login links, that takes you to sign-up (if you don't have an account) or to log-in. **I created a authentication process (user accounts) for users to easily see who borrowed or lended what book.** 
 The home page is aesthetic with minimal clutter and buttons, which act as links for different parts of Libhub, and a small descripton of the website. The colours I chose were high in contrast against the background *(All images are sourced from [Unsplash](https://unsplash.com/))*, which fit under the Web Content Accessibilty Guidelines (WCAG), a universal and international guidelines for websites across the web to ensure that all content is readable and accessible. This page will also changed, including the navbar, once the user has logged in.
 <figure>
-    <img src="./assets/images/home.png" width="850px" height="475px">
+    <img src="assets /images/home.png" width="850px" height="475px">
     <em>
         <figcaption>The homepage of Libhub (not logged in)</figcaption>
     </em>
@@ -93,7 +93,7 @@ The cards visualises and represents Libhub's vision for a satisfactory end user 
 - Limitless control over your books
 
 <figure>
-    <img src="./assets/images/home1.png" width="850px" height="475px">
+    <img src="assets /images/home1.png" width="850px" height="475px">
     <em>
         <figcaption>Searchbar and cards for <em>aesthetics</em> and interactivity </figcaption>
     </em>
@@ -106,7 +106,7 @@ Before the footer we have a section dedicated to explaining the lending and borr
 The footer, I believe, is the cherry on top. It adds a finshed look to the landing page while adding functionally. The links take you to the resepective pages, such as this Github page. While the privacy and Terms of Use links opens a seperate tab explaining the Terms and Conditons of Libhub. While this is unnecessary for website whose target audience is just my friends (interpersonal), it adds a bit of layering especailly when this project scales larger, adding more users (possibly user I don't know personally), the Privacy Policy and T&Cs declares the user's privacy rights for legal reasons. The footer is visble in most pages.
 
 <figure>
-    <img src="./assets/images/home2.png" width="850px" height="475px">
+    <img src="assets /images/home2.png" width="850px" height="475px">
     <em>
         <figcaption>Testimonals Carousel, more cards for <strong>aesthetics</strong> and footer</figcaption>
     </em>
@@ -119,7 +119,7 @@ The footer, I believe, is the cherry on top. It adds a finshed look to the landi
 The library page consists of the books that I personally haven't lended, here we can borrow books. 
 
 <figure>
-    <img src="./assets/images/library.png" width="850px" height="475px">
+    <img src="assets /images/library.png" width="850px" height="475px">
     <em>
         <figcaption>The Library when logged in</figcaption>
     </em>
@@ -128,7 +128,7 @@ The library page consists of the books that I personally haven't lended, here we
 When we scroll down we see the 4 most recent lended books by other users. Each card represents a book and it includes the book's title and its author as well. If we find a book that we like, we can request to borrow it by clicking the *borrow this book* link. If we aren't logged in we are taken to the login page. As users who are not logged in cannot borrow books.
 
 <figure>
-    <img src="./assets/images/library2.png" width="850px" height="475px">
+    <img src="assets /images/library2.png" width="850px" height="475px">
     <em>
         <figcaption>Books avaliable. Here we can borrow books</figcaption>
     </em>
@@ -141,7 +141,7 @@ When we scroll down we see the 4 most recent lended books by other users. Each c
 If the user tries access a page that has a login-requried attribute, which includes the borrowing, lending, as well as the personal dashboard pages, they will be redirected to the login page. Here, like any other login page, you can enter either the username associated to your account or the email and enter the password as well. If you don't have an account the link *Sign up now* will take you to the sign up page. 
 
 <figure>
-    <img src="./assets/images/login.png" width="850px" height="475px">
+    <img src="assets /images/login.png" width="850px" height="475px">
     <em>
         <figcaption>Login page</figcaption>
     </em>
@@ -150,7 +150,7 @@ If the user tries access a page that has a login-requried attribute, which inclu
 Here is where you have to sign-up using a valid email while picking your username. Users will to confirm their password by making it sure it matches. The passwords must also be 7 characters long or more to ensure a strong password. Users who plugged in passwords that don't fit this criteria will be unable to create an account and a warning will pop up, forcing them to correct their mistake. Anothing is that users cannot share the same email or username, either one will lead to an warning to pop up. As long as there the criteria is met for sign up, the user will be created and be autonomically logged in. 
 
 <figure>
-    <img src="./assets/images/sign-up.png" width="850px" height="475px">
+    <img src="assets /images/sign-up.png" width="850px" height="475px">
     <em>
         <figcaption>Sign up page</figcaption>
     </em>
@@ -158,7 +158,7 @@ Here is where you have to sign-up using a valid email while picking your usernam
 
 
 <figure>
-    <img src="./assets/images/warning.png" width="1250px" height="42px">
+    <img src="assets /images/warning.png" width="1250px" height="42px">
     <em>
         <figcaption>Passwords do not match error</figcaption>
     </em>
@@ -167,7 +167,7 @@ Here is where you have to sign-up using a valid email while picking your usernam
 After sign up, the newly created user will be automatically redirected to the home page. Here a new version of the homepage can be seen. The first noticable difference is in the navbar. The sign up for free button turns into a logout button. A lend option is added to easily access the lend page. The user icon takes you to the account settings page, which allows the user to change their username, email, password, and other personal information. The dashboard, which allows the user to view books that've lended or borrowed, can be accessed by clicking the user's username. A pop up on hover will appear for users navigating. The sign up button on the main page turns a button to go to the books page. 
 
 <figure>
-    <img src="./assets/images/home3.png" width="850px" height="475px">
+    <img src="assets /images/home3.png" width="850px" height="475px">
     <em>
         <figcaption>The homepage of Libhub (logged in)</figcaption>
     </em>
@@ -175,7 +175,7 @@ After sign up, the newly created user will be automatically redirected to the ho
 
 
 <figure>
-    <img src="./assets/images/popup.png" width="500px" height="200px">
+    <img src="assets /images/popup.png" width="500px" height="200px">
     <em>
         <figcaption>Dashboard popup on hover</figcaption>
     </em>
@@ -190,7 +190,7 @@ After sign up, the newly created user will be automatically redirected to the ho
 Lending at Libhub is easy. Click the lend button on the navbar (once logged in), or the the button at the front of the Books page. Here you have put the book's title and its author. There are special requriments in order to 
 
 <figure>
-    <img src="./assets/images/lend.png" width="850px" height="475px">
+    <img src="assets /images/lend.png" width="850px" height="475px">
     <em>
         <figcaption>Lending page</figcaption>
     </em>
